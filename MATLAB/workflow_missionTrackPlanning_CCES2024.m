@@ -2,14 +2,14 @@
 %	Planned mission path kmls to targets file and pretty map
 %
 %	Description:
-%       This script takes mission tracks created in Google Earth and saved
+%       This script takes planned tracks created in Google Earth and saved
 %       as .kml files and:
 %       (1) creates properly formatted 'targets' files to be loaded onto
 %       the gliders
-%       (2) adds them to a publication-ready planned mission map figure
+%       (2) adds them to a publication-ready planned mission map
 %       (3) creates a plot of the bathymetry profile along the targets
 %       track 
-%       (4) exports .csv of 5-km spaced waypoints and estimated arrival
+%       (4) exports .csv of 5-km spaced waypoints for estimating arrival
 %       dates/times to send to the Navy as a courtesy
 %       (5) calculates full planned track distance and distance to end from
 %       each waypoint for mission duration estimation
