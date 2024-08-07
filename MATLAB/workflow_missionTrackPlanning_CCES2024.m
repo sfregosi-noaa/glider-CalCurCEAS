@@ -1,12 +1,12 @@
-% WORKFLOW_SURVEYTRACKPLANNING for OR-CCES 2024 Glider Missions
+% WORKFLOW_MISSIONTRACKPLANNING for OR-CCES 2024 Glider Missions
 %	Planned mission path kmls to targets file and pretty map
 %
 %	Description:
-%       This script takes survey tracks created in Google Earth and saved
+%       This script takes mission tracks created in Google Earth and saved
 %       as .kml files and:
 %       (1) creates properly formatted 'targets' files to be loaded onto
 %       the gliders
-%       (2) adds them to a publication-ready planned survey map figure
+%       (2) adds them to a publication-ready planned mission map figure
 %       (3) creates a plot of the bathymetry profile along the targets
 %       track 
 %       (4) exports .csv of 5-km spaced waypoints and estimated arrival
@@ -18,7 +18,7 @@
 %       requires manual creation of the track in Google Earth. Track must
 %       be saved as a kml containing just a single track/path. More
 %       information on creating a path in Google Earth can be found at 
-%       https://sfregosi.github.io/agate-public/survey-planning.html#create-planned-track-using-google-earth-pro
+%       https://sfregosi.github.io/agate-public/mission-planning.html#create-planned-track-using-google-earth-pro
 %
 %	See also
 %
@@ -43,7 +43,7 @@ avgSpd = 18; % km/day
 CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg639_CCES_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'survey_planning', 'A_Nearshore_2024-08-06.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-08-06.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -74,14 +74,14 @@ plotTrackBathyProfile(CONFIG, targetsFile)
 title(['Targets Bathymetry Profile: ' targetsName])
 
 % save as .png
-exportgraphics(gcf, fullfile(path_repo, 'survey_planning', ...
+exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
 	 ['targetsBathymetryProfile_' targetsName, '.png']), ...
     'Resolution', 300)
 
 % (4) Export approx 5 km spacing
 % this will make points between 5 and 6 km apart along each segment
 interpTrack = interpolatePlannedTrack(CONFIG, targetsFile, 5);
-writetable(interpTrack, fullfile(path_repo, 'survey_planning', ...
+writetable(interpTrack, fullfile(path_repo, 'mission_planning', ...
 	['trackPoints_', targetsName, '.csv']));
 % have to manually add time information based on estimated glider speed
 
@@ -99,7 +99,7 @@ fprintf(1, 'Estimated mission duration, at %i km/day: %.1f days\n', avgSpd, ...
 CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg679_CCES_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'survey_planning', 'B_Nearshore_2024-08-06.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-08-06.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -124,14 +124,14 @@ plotTrackBathyProfile(CONFIG, targetsFile)
 title(['Targets Bathymetry Profile: ' targetsName])
 
 % save as .png
-exportgraphics(gcf, fullfile(path_repo, 'survey_planning', ...
+exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
 	 ['targetsBathymetryProfile_' targetsName, '.png']), ...
     'Resolution', 300)
 
 % (4) Export approx 5 km spacing
 % this will make points between 5 and 6 km apart along each segment
 interpTrack = interpolatePlannedTrack(CONFIG, targetsFile, 5);
-writetable(interpTrack, fullfile(path_repo, 'survey_planning', ...
+writetable(interpTrack, fullfile(path_repo, 'mission_planning', ...
 	['trackPoints_', targetsName, '.csv']));
 % have to manually add time information based on estimated glider speed
 
@@ -149,7 +149,7 @@ fprintf(1, 'Estimated mission duration, at %i km/day: %.1f days\n', avgSpd, ...
 CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg680_CCES_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'survey_planning', 'C_Offshore_2024-08-06.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'C_Offshore_2024-08-06.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -174,14 +174,14 @@ plotTrackBathyProfile(CONFIG, targetsFile)
 title(['Targets Bathymetry Profile: ' targetsName])
 
 % save as .png
-exportgraphics(gcf, fullfile(path_repo, 'survey_planning', ...
+exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
 	 ['targetsBathymetryProfile_' targetsName, '.png']), ...
     'Resolution', 300)
 
 % (4) Export approx 5 km spacing
 % this will make points between 5 and 6 km apart along each segment
 interpTrack = interpolatePlannedTrack(CONFIG, targetsFile, 5);
-writetable(interpTrack, fullfile(path_repo, 'survey_planning', ...
+writetable(interpTrack, fullfile(path_repo, 'mission_planning', ...
 	['trackPoints_', targetsName, '.csv']));
 % have to manually add time information based on estimated glider speed
 
@@ -203,6 +203,6 @@ legend(h(1:3), 'Interpreter', 'none', 'Location', 'southwest', 'FontSize', 12)
 title('Planned CCES 2024 Glider Tracks')
 
 % save as .png
-exportgraphics(gcf, fullfile(path_repo, 'survey_planning', ...
+exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
 	'option6_three_gliders.png'), 'Resolution', 300)
 
