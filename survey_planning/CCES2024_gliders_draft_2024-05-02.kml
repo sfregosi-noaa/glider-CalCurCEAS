@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>CCES2024_gliders_draft_2024-05-02.kml</name>
+	<Style id="inline">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline0">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline1">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline12">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline13</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline13">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline3">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline6">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline60">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline61">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline7">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline60</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline70">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline61</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline71">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline6</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="m_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_star">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_star</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_star</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/star.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl3">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/star.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="sh_star">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/star.png</href>
+			</Icon>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sn_star">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/star.png</href>
+			</Icon>
+		</IconStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Folder>
+		<name>CCES2024</name>
+		<open>1</open>
+		<Placemark>
+			<name>La Push</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>-124.6357763690584</longitude>
+				<latitude>47.30426835554439</latitude>
+				<altitude>0</altitude>
+				<heading>-1.152860534439809</heading>
+				<tilt>0</tilt>
+				<range>260393.4601606674</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_star</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-124.640735092724,47.89758570656164,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Eureka</name>
+			<LookAt>
+				<longitude>-124.1705801768419</longitude>
+				<latitude>40.82176778283173</latitude>
+				<altitude>0</altitude>
+				<heading>-0.004514498044935377</heading>
+				<tilt>0</tilt>
+				<range>49438.50129508875</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin0</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-124.1637130687682,40.79897023305303,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Newport</name>
+			<LookAt>
+				<longitude>-124.412921577437</longitude>
+				<latitude>44.17829843151937</latitude>
+				<altitude>0</altitude>
+				<heading>-0.2144947376638914</heading>
+				<tilt>0</tilt>
+				<range>268985.6793427062</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin0</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-124.052301944175,44.60957106301363,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>La Push to Newport Offshore</name>
+			<styleUrl>#inline7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-125.1220774279184,47.77099308474933,0 -128.9531963038776,46.5484725663418,0 -127.010361342865,46.29678654217023,0 -128.7071219716655,45.64631102409253,0 -126.872583206833,45.24829186165481,0 -128.6645755581298,44.37599426120352,0 -127.5201275585794,44.23334828821889,0 -124.8309966821288,44.59150999919576,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>La Push to Newport Inshore</name>
+			<styleUrl>#inline70</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-125.1220774279184,47.77099308474933,0 -126.987642063046,47.5696341969542,0 -125.2625580930373,47.2638112692966,0 -127.1275776743195,46.7085503075078,0 -124.9282783650244,46.44167893004461,0 -127.1372535416624,45.80775621089587,0 -124.9768616976037,45.43715660115188,0 -126.7874209767233,44.8324873752878,0 -124.8309966821288,44.59150999919576,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Newport to Eureka Offshore</name>
+			<styleUrl>#inline12</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.8448278645998,44.5914837040612,0 -128.9625960094902,43.38004058101858,0 -127.2026636976848,42.97929312709925,0 -129.0000247478389,42.21403921383389,0 -127.233935791777,41.78810647333284,0 -128.696975417676,40.73475139931808,0 -124.6438137348879,40.79689705883464,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Newport to Eureka Inshore</name>
+			<styleUrl>#inline71</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.8430552623979,44.59491759665594,0 -127.2023871297626,43.58201108419462,0 -124.8489941857898,43.30823392190796,0 -127.2464931570149,42.55878019632986,0 -124.7815444223945,42.15305832549265,0 -127.2028870694025,41.25022140053689,0 -124.6410657174233,40.8126111252848,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

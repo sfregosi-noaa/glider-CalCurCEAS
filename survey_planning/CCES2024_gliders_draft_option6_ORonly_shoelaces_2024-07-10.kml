@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>CCES2024_gliders_draft_option6_ORonly_shoelaces_2024-07-10.kml</name>
+	<Style id="inline0100">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline1">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline1000">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline122">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline132</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline310</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline132">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline310">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline60000">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline611">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline621">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline70">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline1000</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline60000</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline71">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline0100</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline611</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline721">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline621</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Folder>
+		<name>Mission Option 6</name>
+		<open>1</open>
+		<Placemark>
+			<name>Nearshore1</name>
+			<styleUrl>#inline71</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.5303559672473,40.79850890070045,0 -125.0082377773794,41.1092103341857,0 -124.5786088718838,41.30045134203185,0 -125.9493750428565,41.4273943159547,0 -124.6807018691025,41.96387199929233,0 -125.9424200730232,42.20079533367283,0 -124.7911656784995,42.67114313429841,0 -126.0577779394981,42.96720231657327,0 -124.7810176799854,43.4472513492375,0 -126.144381761568,43.72396473502122,0 -124.9959511928355,44.08494280207297,0 -126.2051097758848,44.58872122546462,0 -124.7274011987498,44.64847144856079,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Nearshore2</name>
+			<styleUrl>#inline70</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.5283821866967,40.79705021767325,0 -125.8690418597658,41.07609998504066,0 -124.597687718258,41.61538711645814,0 -125.9756663405217,41.86145258406548,0 -124.8062842514497,42.25287301874395,0 -126.035442480237,42.58290039678068,0 -124.9943444009226,42.96244226163694,0 -126.184077357125,43.35842255238424,0 -124.9524123677242,43.79619610570953,0 -126.2209052827628,44.12724117156768,0 -124.8952111559662,44.35486550989754,0 -125.7968309439833,44.84368679701004,0 -124.7293737357571,44.64848237039699,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Offshore1</name>
+			<styleUrl>#inline122</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.7283874808626,44.64847689663145,0 -128.0051773583531,43.99602577336888,0 -126.2176790756197,43.53717781574028,0 -127.9091869844707,42.67607042664879,0 -126.0913336531068,42.23897881633337,0 -127.6480903887787,41.31071591916277,0 -124.5228450617169,40.79649836521629,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>Offshore2</name>
+			<styleUrl>#inline721</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.7264315212818,44.64706555398011,0 -127.9379725672826,43.37152347810686,0 -126.1422427397016,42.88019452070142,0 -127.8080992123571,41.98753881527085,0 -126.0474735405302,41.5104135513885,0 -127.5071215697221,40.55566260180156,0 -124.5254093335569,40.79485363348345,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

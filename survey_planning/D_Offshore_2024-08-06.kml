@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>D_Offshore.kml</name>
+	<Style id="inline17">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline6210">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline7210">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline17</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline6210</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark>
+		<name>D_Offshore</name>
+		<styleUrl>#inline7210</styleUrl>
+		<LineString>
+			<tessellate>1</tessellate>
+			<coordinates>
+				-124.7264315212818,44.64706555398011,0 -127.9379725672826,43.37152347810686,0 -126.1422427397016,42.88019452070142,0 -127.8080992123571,41.98753881527085,0 -126.0474735405302,41.5104135513885,0 -127.5071215697221,40.55566260180156,0 -124.5254093335569,40.79485363348345,0 
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>

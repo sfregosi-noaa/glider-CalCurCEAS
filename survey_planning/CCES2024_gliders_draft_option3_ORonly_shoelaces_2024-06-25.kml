@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>CCES2024_gliders_draft_option3_ORonly_shoelaces_2024-06-25.kml</name>
+	<Style id="inline">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline01">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline10">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline12">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline13</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline13">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline3">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline600">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline61">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline62">
+		<LineStyle>
+			<color>ffff02c8</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline70">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline10</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline600</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline71">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline01</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline61</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="inline72">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline62</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Folder>
+		<name>Mission Option 3</name>
+		<open>1</open>
+		<Placemark>
+			<name>A - Most Inshore</name>
+			<styleUrl>#inline71</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.4574482550689,40.78062965347345,0 -124.7801875766482,41.26533598679328,0 -125.8115845841922,41.2490732318339,0 -124.6953554343257,42.06130024388159,0 -126.0484979970824,42.10845011532259,0 -124.7186152735233,42.65599261963835,0 -125.9270973714357,42.9955167440114,0 -124.6292859934391,43.44544354536603,0 -125.9811762144163,43.75682512447986,0 -124.6336219332265,44.07746155762897,0 -126.3381163037989,44.4734792394604,0 -124.7274011987498,44.64847144856079,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>B - Mid Inshore</name>
+			<styleUrl>#inline70</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.4488769646224,40.795452277569,0 -125.891397021173,41.04180978614442,0 -124.7136385261935,41.53475771152337,0 -125.9360906954358,41.74443394756531,0 -124.907844943314,42.24745668568784,0 -126.0385108021224,42.5742515327463,0 -124.8398336538813,42.95333612919423,0 -126.0885094074677,43.35488704683773,0 -124.8431648256319,43.72986739163966,0 -126.1950586295195,44.07545669737505,0 -124.7395656092079,44.4130937480212,0 -125.6852699096577,44.78861064137051,0 -124.7293737357571,44.64848237039699,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>C - Mid Offshore</name>
+			<styleUrl>#inline12</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.7283874808626,44.64847689663145,0 -128.8349603343331,43.81669477224825,0 -127.5963805651029,43.26358013881849,0 -129.0260460151484,42.44235703972455,0 -127.5393083479757,41.75969679780207,0 -128.6955402253878,40.71775524843662,0 -124.4805197555225,40.78276110359023,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>D - Most Offshore</name>
+			<styleUrl>#inline72</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-124.7264315212818,44.64706555398011,0 -128.9019517137301,43.13985223702875,0 -127.4902608400972,42.60672811699865,0 -128.6481362295939,41.64696893247072,0 -127.2463824672418,41.15857663766053,0 -128.6397128555306,40.36205747000253,0 -124.5648361152991,40.80761592281595,0 
+				</coordinates>
+			</LineString>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

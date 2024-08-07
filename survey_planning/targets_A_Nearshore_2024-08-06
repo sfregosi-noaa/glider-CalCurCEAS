@@ -1,0 +1,17 @@
+/ Targets file for mission sg639_CCES_Aug2024
+/ Created on 2024-08-07 21:58 UTC
+/ Deployment will take place at AN01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+AN01 lat=4047.9105 lon=-12431.8214 radius=2000 goto=AN02
+AN02 lat=4106.5526 lon=-12500.4943 radius=2000 goto=AN03
+AN03 lat=4118.0271 lon=-12434.7165 radius=2000 goto=AN04
+AN04 lat=4125.6437 lon=-12556.9625 radius=2000 goto=AN05
+AN05 lat=4157.8323 lon=-12440.8421 radius=2000 goto=AN06
+AN06 lat=4212.0477 lon=-12556.5452 radius=2000 goto=AN07
+AN07 lat=4240.2686 lon=-12447.4699 radius=2000 goto=AN08
+AN08 lat=4258.0321 lon=-12603.4667 radius=2000 goto=AN09
+AN09 lat=4326.8351 lon=-12446.8611 radius=2000 goto=AN10
+AN10 lat=4343.4379 lon=-12608.6629 radius=2000 goto=AN11
+AN11 lat=4405.0966 lon=-12459.7571 radius=2000 goto=AN12
+AN12 lat=4435.3233 lon=-12612.3066 radius=2000 goto=RECV
+RECV lat=4438.9083 lon=-12443.6441 radius=2000 goto=RECV

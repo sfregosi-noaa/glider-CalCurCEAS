@@ -1,0 +1,11 @@
+/ Targets file for mission sg680_CCES_Aug2024
+/ Created on 2024-08-07 21:58 UTC
+/ Deployment will take place at CO01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+CO01 lat=4438.9086 lon=-12443.7032 radius=2000 goto=CO02
+CO02 lat=4359.7615 lon=-12800.3106 radius=2000 goto=CO03
+CO03 lat=4332.2307 lon=-12613.0607 radius=2000 goto=CO04
+CO04 lat=4240.5642 lon=-12754.5512 radius=2000 goto=CO05
+CO05 lat=4214.3387 lon=-12605.4800 radius=2000 goto=CO06
+CO06 lat=4118.6430 lon=-12738.8854 radius=2000 goto=RECV
+RECV lat=4047.7899 lon=-12431.3707 radius=2000 goto=RECV
