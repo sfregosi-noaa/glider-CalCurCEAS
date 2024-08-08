@@ -8,7 +8,7 @@ Glider piloting files, raw acoustic files, and large analysis outputs *should no
 #### Working with this repository
 To avoid upstream/downstream conflicts, please **fork** this repository to your GitHub account. Then, make any changes directly in your fork of the repository. If you have made changes that should be incorporated into the main repository, then create a **pull request** to pull your changes to the primary repository. 
 
-If you have questions, suggestions, or problems, please open an [ISSUE](https://github.com/sfregosi/glider-CCES/issues)
+If you have questions, suggestions, or problems, please open an [ISSUE](https://github.com/sfregosi/glider-CalCurCEAS/issues)
 
 #### Google Drive Links
 [Glider Summit Folder](https://drive.google.com/drive/u/0/folders/1_1w17zMtWYugvaZtuxSfmWLgKcBNYzDD)
