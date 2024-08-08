@@ -1,6 +1,6 @@
-# glider-CCES
+# glider-CalCurCEAS
 
-Repository for passive acoustic glider efforts overlapping with CCES 2024. This project is part of NOAA's [IRA PAM Strategic Initiative](https://nmfs-ost.github.io/PAM_National_NMFS_Network/content/SI_Coordination.html) and IRA UxS Strategic Initiative. 
+Repository for passive acoustic glider efforts overlapping with CalCurCEAS (California Current Cetacean and Ecosystem Assessment Survey) 2024. This project is part of NOAA's [IRA PAM Strategic Initiative](https://nmfs-ost.github.io/PAM_National_NMFS_Network/content/SI_Coordination.html) and IRA UxS Strategic Initiative. 
 
 This repository contains survey planning and analysis documentation and code. 
 Glider piloting files, raw acoustic files, and large analysis outputs *should not* be stored here. 
