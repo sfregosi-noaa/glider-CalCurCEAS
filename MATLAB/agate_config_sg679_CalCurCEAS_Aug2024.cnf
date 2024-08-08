@@ -4,13 +4,13 @@
 %    https://sfregosi.github.io/agate-public/configuration.html
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %%%        SG679 CCES Aug 2024          %%%
+% %%%     SG679 CalCurCEAS Aug 2024       %%%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % %%%% REQUIRED CONFIG PARAMETERS %%%%%%%%%%%
 % define glider and mission information
 CONFIG.glider = 'sg679';  % glider serial number
-CONFIG.mission = 'CCES_Aug2024'; % mission identifier defined in sg_calib_constants.m 
+CONFIG.mission = 'CalCurCEAS_Aug2024'; % mission identifier defined in sg_calib_constants.m 
 CONFIG.sgVer = 67.0; % 66.12 or 67.0, firmware version displayed on glider start up
 CONFIG.tmd = 70; % target mission duration in days
 
@@ -18,7 +18,7 @@ CONFIG.tmd = 70; % target mission duration in days
 % mission path - path to umbrella folder that either contains previously 
 %                downloaded basestation and output files or will contain 
 %                downloaded and processed/produced files and figures
-CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg679_CCES_Aug2024';
+CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg679_CalCurCEAS_Aug2024';
 % analysis path - optional path to an 'analysis' folder that would typically
 %                 contain the outputs of acoustic analyses (e.g., Pamguard
 %                 or Triton)

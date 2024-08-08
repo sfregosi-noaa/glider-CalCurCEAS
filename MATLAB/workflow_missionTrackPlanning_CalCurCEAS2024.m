@@ -1,4 +1,4 @@
-% WORKFLOW_MISSIONTRACKPLANNING for OR-CCES 2024 Glider Missions
+% WORKFLOW_MISSIONTRACKPLANNING for CalCurCEAS 2024 Glider Missions
 %	Planned mission path kmls to targets file and pretty map
 %
 %	Description:
@@ -30,7 +30,7 @@
 %
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CCES';
+path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
 
 col_sg639 = [1 1 0];
 col_sg679 = [1 0.4 0];
@@ -40,7 +40,7 @@ col_sg680 = [1 0 0];
 avgSpd = 18; % km/day
 
 %% SG639 - Track A - Nearshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg639_CCES_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg639_CalCurCEAS_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-08-06.kml');
@@ -96,7 +96,7 @@ fprintf(1, 'Estimated mission duration, at %i km/day: %.1f days\n', avgSpd, ...
 	sum(targets.distToNext_km)/avgSpd);
 
 %% SG679 - Track B - Nearshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg679_CCES_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg679_CalCurCEAS_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-08-06.kml');
@@ -146,7 +146,7 @@ fprintf(1, 'Estimated mission duration, at %i km/day: %.1f days\n', avgSpd, ...
 	sum(targets.distToNext_km)/avgSpd);
 
 %% SG680 - Track C - Offshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg680_CCES_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg680_CalCurCEAS_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', 'C_Offshore_2024-08-06.kml');
@@ -200,7 +200,7 @@ set(0, 'currentfigure', baseFig);
 
 % add legend, title
 legend(h(1:3), 'Interpreter', 'none', 'Location', 'southwest', 'FontSize', 12)
-title('Planned CCES 2024 Glider Tracks')
+title('Planned CalCurCEAS 2024 Glider Tracks')
 
 % save as .png
 exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
