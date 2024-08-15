@@ -11,7 +11,9 @@ To avoid upstream/downstream conflicts, please **fork** this repository to your 
 If you have questions, suggestions, or problems, please open an [ISSUE](https://github.com/sfregosi/glider-CalCurCEAS/issues)
 
 #### Google Drive Links
-[Glider Summit Folder](https://drive.google.com/drive/u/0/folders/1_1w17zMtWYugvaZtuxSfmWLgKcBNYzDD)
+[CalCurCEAS Glider 2024 folder](https://drive.google.com/drive/u/0/folders/1h6PC8eH8BzDcbnq1kNLVLJI7YYhtB4r8)
+
+[Glider Summit folder](https://drive.google.com/drive/u/0/folders/1_1w17zMtWYugvaZtuxSfmWLgKcBNYzDD)
 
 [Meeting notes](https://docs.google.com/document/d/1nYkHaxqJKG1i3mgdO6H7gXtYwynZ-1RUO_NX5IPk3mE/edit#heading=h.398ih9qo4jqm)
 
