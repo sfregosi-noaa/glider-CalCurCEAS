@@ -3,9 +3,9 @@
 % Guide for creating configuration files:  
 %    https://sfregosi.github.io/agate-public/configuration.html
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %%%     SG639 CalCurCEAS Aug 2024       %%%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%% SG639 CalCurCEAS Aug 2024 - Nearshore A %%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % %%%% REQUIRED CONFIG PARAMETERS %%%%%%%%%%%
 % define glider and mission information

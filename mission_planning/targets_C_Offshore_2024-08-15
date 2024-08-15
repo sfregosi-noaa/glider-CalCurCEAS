@@ -1,0 +1,11 @@
+/ Targets file for mission sg679_CalCurCEAS_Aug2024
+/ Created on 2024-08-15 14:26 UTC
+/ Deployment will take place at CO01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+CO01 lat=4438.9086 lon=-12443.7032 radius=2000 goto=CO02
+CO02 lat=4359.7615 lon=-12800.3106 radius=2000 goto=CO03
+CO03 lat=4325.7295 lon=-12613.8028 radius=2000 goto=CO04
+CO04 lat=4228.8828 lon=-12749.1070 radius=2000 goto=CO05
+CO05 lat=4200.6998 lon=-12557.1484 radius=2000 goto=CO06
+CO06 lat=4101.8589 lon=-12733.3543 radius=2000 goto=RECV
+RECV lat=4047.7899 lon=-12431.3707 radius=2000 goto=RECV

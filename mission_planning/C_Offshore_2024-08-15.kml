@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>C_Offshore_2024-08-15.kml</name>
+	<StyleMap id="inline1220">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline132</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline3100</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline132">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline3100">
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>C_Offshore</name>
+		<styleUrl>#inline1220</styleUrl>
+		<LineString>
+			<tessellate>1</tessellate>
+			<coordinates>
+				-124.7283874808626,44.64847689663145,0 -128.0051773583531,43.99602577336888,0 -126.230046095261,43.42882496999552,0 -127.8184493298555,42.48138082413428,0 -125.9524741600989,42.01166386317126,0 -127.5559043930878,41.03098164609641,0 -124.5228450617169,40.79649836521629,0 
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>
