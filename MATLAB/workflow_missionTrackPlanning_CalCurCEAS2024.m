@@ -159,8 +159,10 @@ kmlFile = fullfile(path_repo, 'mission_planning', 'C_Offshore_2024-08-15.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
-prefix = 'CO'; % Any two letters make easy to reference and read options
-targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
+% prefix = 'CO'; % Any two letters make easy to reference and read options
+% targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
+% OR load if already created
+targetsFile = fullfile(path_repo, 'mission_planning', 'targets_C_Offshore_2024-08-15');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
 [~, targetsName, ~] = fileparts(targetsFile);
 legendName = 'SG679 - Offshore';
