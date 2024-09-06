@@ -1,7 +1,7 @@
 % %%%% agate - mission configuration file %%%
 % create a new file for each glider and mission
 % Guide for creating configuration files:  
-%    https://sfregosi.github.io/agate-public/configuration.html
+%    https://sfregosi.github.io/agate/configuration.html
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %%% SG679 CalCurCEAS Aug 2024 - Offshore %%%
@@ -27,10 +27,11 @@ CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg679_CalCurCEAS_Aug2024'
 
 % %%%% OPTIONAL - basestation %%%%%%%%%%%%%%%
 % specify basestation configuration file
-% CONFIG.bs.cnfFile = 'C:\Users\User.Name\Documents\gliders\basestation.cnf';
+CONFIG.bs.cnfFile = 'C:\Users\Selene.Fregosi\Desktop\sg679_CalCurCEAS_Aug2024\basestation_config_seagliderpub.cnf';
 % specify path to store downloaded basestation files
-% CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
-
+CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
+% specify path to remote files (e.g., glider's current/mission folder)
+CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg679/2024-08-23_CalCurCEAS_Aug2024';
 
 % %%%% OPTIONAL - acoustics %%%%%%%%%%%%%%%%%
 % PMAR settings
@@ -65,8 +66,8 @@ CONFIG.map.naLon = -129;
 
 % piloting plot settings
 % pre allocate fig numbers so figures are updated rather than created new
-% CONFIG.plots.figSeed = 111; % suggest using the glider serial e.g., 639
-% CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
+CONFIG.plots.figSeed = 111; % suggest using the glider serial e.g., 639
+CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
 % figNumList (1) = battery, (2) = voltagePackUse, (3) = humidity
 % and pressure, (4) = map, (5) = zoomed map, (6) = minimum voltage, 
 % (7) = voltage normalized, (8) = ERMA detections, (9) = ERMA reference
