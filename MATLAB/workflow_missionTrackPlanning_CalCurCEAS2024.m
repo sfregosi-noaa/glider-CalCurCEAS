@@ -109,8 +109,8 @@ kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-09-11.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
-prefix = 'BN'; % Any two letters make easy to reference and read options
-targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
+alphaNum = 'BN'; % Any two letters make easy to reference and read options
+targetsFile = makeTargetsFile(CONFIG, kmlFile, alphaNum, radius);
 % load if already created
 targetsFile = fullfile(path_repo, 'mission_planning', ...
 	'targets_B_Nearshore_2024-09-11');
@@ -165,8 +165,8 @@ kmlFile = fullfile(path_repo, 'mission_planning', 'C_Offshore_2024-08-15.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
-% prefix = 'CO'; % Any two letters make easy to reference and read options
-% targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
+% alphaNum = 'CO'; % Any two letters make easy to reference and read options
+% targetsFile = makeTargetsFile(CONFIG, kmlFile, alphaNum, radius);
 % OR load if already created
 targetsFile = fullfile(path_repo, 'mission_planning', 'targets_C_Offshore_2024-08-15');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
