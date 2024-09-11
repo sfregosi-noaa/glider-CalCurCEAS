@@ -27,7 +27,7 @@ CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg639_CalCurCEAS_Sep2024'
 
 % %%%% OPTIONAL - basestation %%%%%%%%%%%%%%%
 % specify basestation configuration file
-CONFIG.bs.cnfFile = 'C:\Users\Selene.Fregosi\Desktop\sg639_CalCurCEAS_Sep2024\basestation_config_seagliderpub.cnf';
+CONFIG.bs.cnfFile = 'C:\Users\Selene.Fregosi\Documents\gliders_local\basestation_configuration\basestation_config_seagliderpub.cnf';
 % specify path to store downloaded basestation files
 CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
 % specify path to remote files (e.g., glider's current/mission folder)
@@ -60,10 +60,10 @@ CONFIG.map.lonLim = [-129.50 -123.00];
 CONFIG.map.naLat = 44.4; % optional arguments for north arrow location on map; 
                           % leave empty '[]' for no north arrow
 CONFIG.map.naLon = -129;
-CONFIG.map.scalePos = [-0.05 0.775]; % optional arguments for scale bar location 
+CONFIG.map.scalePos = [-0.042 0.775]; % optional arguments for scale bar location 
                              % and ticks, leave empty '[]' for no scale bar
-% CONFIG.map.scaleMajor = [0:50:100];
-% CONFIG.map.scaleMinor = [0:12.5:25];
+CONFIG.map.scaleMajor = [0:50:100];
+CONFIG.map.scaleMinor = [0:25:50];
 
 % piloting plot settings
 % pre allocate fig numbers so figures are updated rather than created new
