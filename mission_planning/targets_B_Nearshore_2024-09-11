@@ -1,0 +1,13 @@
+/ Targets file for mission sg680_CalCurCEAS_Sep2024
+/ Created on 2024-09-11 18:34 UTC
+/ Deployment will take place at BN01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+BN01 lat=4437.8385 lon=-12445.8582 radius=2000 goto=BN02
+BN02 lat=4437.3685 lon=-12528.8062 radius=2000 goto=BN03
+BN03 lat=4402.0252 lon=-12501.7408 radius=2000 goto=BN04
+BN04 lat=4332.7435 lon=-12604.4446 radius=2000 goto=BN05
+BN05 lat=4257.6213 lon=-12501.2198 radius=2000 goto=BN06
+BN06 lat=4216.7065 lon=-12559.9564 radius=2000 goto=BN07
+BN07 lat=4148.6186 lon=-12445.8961 radius=2000 goto=BN08
+BN08 lat=4108.2966 lon=-12552.7030 radius=2000 goto=RECV
+RECV lat=4047.8822 lon=-12431.6640 radius=2000 goto=RECV

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>B_Nearshore_2024-09-11.kml</name>
+	<Style id="inline10000">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="inline600000">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline70">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline10000</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline600000</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark>
+		<name>B_Nearshore</name>
+		<styleUrl>#inline70</styleUrl>
+		<LineString>
+			<tessellate>1</tessellate>
+			<coordinates>
+				-124.7643034953565,44.63064221249967,0 -125.4801038207556,44.6228091434097,0 -125.029013080812,44.03375410746892,0 -126.074076004659,43.5457246633108,0 -125.020330694238,42.9603542944666,0 -125.9992728519291,42.27844170481308,0 -124.7649357372188,41.81030992114542,0 -125.8783841080163,41.13827630003716,0 -124.5277328904647,40.79803649980367,0 
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>
