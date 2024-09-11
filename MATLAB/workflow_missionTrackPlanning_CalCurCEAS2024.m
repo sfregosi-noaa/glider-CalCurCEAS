@@ -44,22 +44,22 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 	'agate_config_sg639_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-08-06.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-09-11.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
-% prefix = 'AN'; % Any two letters make easy to reference and read options
-% targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
+alphaNum = 'AN'; % Any two letters make easy to reference and read options
+targetsFile = makeTargetsFile(CONFIG, kmlFile, alphaNum, radius);
 % load if already created
-targetsFile = fullfile(path_repo, 'mission_planning', 'targets_A_Nearshore_2024-08-06');
+targetsFile = fullfile(path_repo, 'mission_planning', ...
+	'targets_A_Nearshore_2024-09-11');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
 [~, targetsName, ~] = fileparts(targetsFile);
 legendName = 'SG639 - Nearshore A';
 
 % (2) Create basemap and plot it 
 % create basemap plot
-bathyOn = 1; contourOn = 1;
-[baseFig] = createBasemap(CONFIG, bathyOn, contourOn, 20);
+[baseFig] = createBasemap(CONFIG, 'bathy', 1, 'contourOn', 1, 'figNum', 20);
 mapFigPosition = [60   60   900    650];
 baseFig.Position = mapFigPosition;
 
@@ -74,6 +74,7 @@ h(1) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg639,...
 
 % (3) Plot bathymetry profile of targets file
 plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
+set(gcf, 'Position', [60 60 1200 400])
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
@@ -100,17 +101,19 @@ fprintf(1, 'Estimated mission duration, at %i km/day: %.1f days\n', avgSpd, ...
 	sum(targets.distToNext_km)/avgSpd);
 
 %% SG680 - Track B - Nearshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg680_CalCurCEAS_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+	'agate_config_sg680_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-08-06.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-09-11.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
-% prefix = 'BN'; % Any two letters make easy to reference and read options
-% targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
+prefix = 'BN'; % Any two letters make easy to reference and read options
+targetsFile = makeTargetsFile(CONFIG, kmlFile, prefix, radius);
 % load if already created
-targetsFile = fullfile(path_repo, 'mission_planning', 'targets_B_Nearshore_2024-08-06');
+targetsFile = fullfile(path_repo, 'mission_planning', ...
+	'targets_B_Nearshore_2024-09-11');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
 [~, targetsName, ~] = fileparts(targetsFile);
 legendName = 'SG680 - Nearshore B';
@@ -127,6 +130,7 @@ h(2) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg680,...
 
 % (3) Plot bathymetry profile of targets file
 plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
+set(gcf, 'Position', [60 60 1200 400])
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
@@ -153,7 +157,8 @@ fprintf(1, 'Estimated mission duration, at %i km/day: %.1f days\n', avgSpd, ...
 	sum(targets.distToNext_km)/avgSpd);
 
 %% SG679 - Track C - Offshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg679_CalCurCEAS_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+	'agate_config_sg679_CalCurCEAS_Aug2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', 'C_Offshore_2024-08-15.kml');
@@ -222,5 +227,5 @@ textm(40.7990, -124.08, 'Eureka', 'Color', 'white', 'FontSize', 12)
 
 % save as .png
 exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
-	'option6_three_gliders_2024-08-15.png'), 'Resolution', 300)
+	'option6_three_gliders_2024-09-11.png'), 'Resolution', 300)
 
