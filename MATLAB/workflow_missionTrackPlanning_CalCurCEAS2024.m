@@ -126,7 +126,7 @@ h(2) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg680,...
     'DisplayName', legendName);
 
 % (3) Plot bathymetry profile of targets file
-plotTrackBathyProfile(CONFIG, targetsFile)
+plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
@@ -180,7 +180,7 @@ h(3) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg679,...
     'DisplayName', legendName);
 
 % (3) Plot bathymetry profile of targets file
-plotTrackBathyProfile(CONFIG, targetsFile)
+plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
