@@ -4,13 +4,13 @@
 %    https://sfregosi.github.io/agate-public/configuration.html
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %%% SG680 CalCurCEAS Aug 2024 - Nearshore B %%%
+% %%% SG680 CalCurCEAS Sep 2024 - Nearshore B %%%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % %%%% REQUIRED CONFIG PARAMETERS %%%%%%%%%%%
 % define glider and mission information
 CONFIG.glider = 'sg680';  % glider serial number
-CONFIG.mission = 'CalCurCEAS_Aug2024'; % mission identifier defined in sg_calib_constants.m 
+CONFIG.mission = 'CalCurCEAS_Sep2024'; % mission identifier defined in sg_calib_constants.m 
 CONFIG.sgVer = 67.0; % 66.12 or 67.0, firmware version displayed on glider start up
 CONFIG.tmd = 70; % target mission duration in days
 
@@ -18,7 +18,7 @@ CONFIG.tmd = 70; % target mission duration in days
 % mission path - path to umbrella folder that either contains previously 
 %                downloaded basestation and output files or will contain 
 %                downloaded and processed/produced files and figures
-CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg680_CalCurCEAS_Aug2024';
+CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg680_CalCurCEAS_Sep2024';
 % analysis path - optional path to an 'analysis' folder that would typically
 %                 contain the outputs of acoustic analyses (e.g., Pamguard
 %                 or Triton)
@@ -27,9 +27,11 @@ CONFIG.path.mission = 'C:\Users\Selene.Fregosi\Desktop\sg680_CalCurCEAS_Aug2024'
 
 % %%%% OPTIONAL - basestation %%%%%%%%%%%%%%%
 % specify basestation configuration file
-% CONFIG.bs.cnfFile = 'C:\Users\User.Name\Documents\gliders\basestation.cnf';
+CONFIG.bs.cnfFile = 'C:\Users\Selene.Fregosi\Desktop\sg680_CalCurCEAS_Sep2024\basestation_config_seagliderpub.cnf';
 % specify path to store downloaded basestation files
-% CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
+CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
+% specify path to remote files (e.g., glider's current/mission folder)
+CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg680/2024-09-12_CalCurCEAS_Sep2024';
 
 
 % %%%% OPTIONAL - acoustics %%%%%%%%%%%%%%%%%
@@ -58,14 +60,14 @@ CONFIG.map.lonLim = [-129.50 -123.00];
 CONFIG.map.naLat = 44.4; % optional arguments for north arrow location on map; 
                           % leave empty '[]' for no north arrow
 CONFIG.map.naLon = -129;
-% CONFIG.map.scalePos = [0 0]; % optional arguments for scale bar location 
+CONFIG.map.scalePos = [-0.05 0.775]; % optional arguments for scale bar location 
                              % and ticks, leave empty '[]' for no scale bar
 % CONFIG.map.scaleMajor = [0:50:100];
 % CONFIG.map.scaleMinor = [0:12.5:25];
 
 % piloting plot settings
 % pre allocate fig numbers so figures are updated rather than created new
-% CONFIG.plots.figSeed = 111; % suggest using the glider serial e.g., 639
+CONFIG.plots.figSeed = 680; % suggest using the glider serial e.g., 639
 % CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
 % figNumList (1) = battery, (2) = voltagePackUse, (3) = humidity
 % and pressure, (4) = map, (5) = zoomed map, (6) = minimum voltage, 

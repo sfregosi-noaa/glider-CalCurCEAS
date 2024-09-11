@@ -66,7 +66,7 @@ CONFIG.map.scalePos = [-0.05 0.775]; % optional arguments for scale bar location
 
 % piloting plot settings
 % pre allocate fig numbers so figures are updated rather than created new
-CONFIG.plots.figSeed = 111; % suggest using the glider serial e.g., 639
+CONFIG.plots.figSeed = 179; % suggest using the glider serial e.g., 639
 CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
 % figNumList (1) = battery, (2) = voltagePackUse, (3) = humidity
 % and pressure, (4) = map, (5) = zoomed map, (6) = minimum voltage, 
