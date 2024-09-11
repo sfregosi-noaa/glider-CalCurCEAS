@@ -1,5 +1,6 @@
-% WORKFLOW_DOWNLOADSCRIPT.M
+% WORKFLOW_DOWNLOADSCRIPT_SG679.M
 %	Download basestation files and generate piloting/monitoring plots
+%      ** SG679_CalCurCEAS_Aug2024 **
 %
 %	Description:
 %		This script provides a workflow that may be useful during an active
@@ -49,8 +50,7 @@ mkdir(CONFIG.path.bsLocal);
 %% (1) download files from the basestation
 downloadBasestationFiles(CONFIG);
 
-% To plot Seaglider Piloting Tools plots at this point, run DiveData below
-% DiveData
+% various status pieces will print in Command Window
 
 %% (2) extract piloting parameters
 

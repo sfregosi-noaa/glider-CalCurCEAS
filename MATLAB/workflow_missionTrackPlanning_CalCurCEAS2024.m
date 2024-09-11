@@ -40,7 +40,8 @@ col_sg679 = [1 0.4 0]; % orange - offshore
 avgSpd = 18; % km/day
 
 %% SG639 - Track A - Nearshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg639_CalCurCEAS_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+	'agate_config_sg639_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-08-06.kml');
@@ -56,10 +57,10 @@ targetsFile = fullfile(path_repo, 'mission_planning', 'targets_A_Nearshore_2024-
 legendName = 'SG639 - Nearshore A';
 
 % (2) Create basemap and plot it 
-% create masemap plot
+% create basemap plot
 bathyOn = 1; contourOn = 1;
 [baseFig] = createBasemap(CONFIG, bathyOn, contourOn, 20);
-mapFigPosition = [2000   300    900    650];
+mapFigPosition = [60   60   900    650];
 baseFig.Position = mapFigPosition;
 
 % plot planned track
@@ -72,7 +73,7 @@ h(1) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg639,...
     'DisplayName', legendName);
 
 % (3) Plot bathymetry profile of targets file
-plotTrackBathyProfile(CONFIG, targetsFile)
+plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
@@ -125,7 +126,7 @@ h(2) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg680,...
     'DisplayName', legendName);
 
 % (3) Plot bathymetry profile of targets file
-plotTrackBathyProfile(CONFIG, targetsFile)
+plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
@@ -179,7 +180,7 @@ h(3) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg679,...
     'DisplayName', legendName);
 
 % (3) Plot bathymetry profile of targets file
-plotTrackBathyProfile(CONFIG, targetsFile)
+plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
