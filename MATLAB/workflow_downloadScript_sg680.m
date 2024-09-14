@@ -1,6 +1,6 @@
-% WORKFLOW_DOWNLOADSCRIPT_SG679.M
+% WORKFLOW_DOWNLOADSCRIPT_SG680.M
 %	Download basestation files and generate piloting/monitoring plots
-%      ** SG679_CalCurCEAS_Aug2024 **
+%      ** SG680_CalCurCEAS_Sep2024 **
 %
 %	Description:
 %		This script provides a workflow that may be useful during an active
@@ -37,7 +37,7 @@ addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
 
 % initialize agate
 cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg679_CalCurCEAS_Aug2024.cnf'];
+	'MATLAB\fregosi_config_files\agate_config_sg680_CalCurCEAS_Sep2024.cnf'];
 CONFIG = agate(cnfFile);
 
 % specify the local piloting folder for this trip in CONFIG.path.mission
@@ -72,7 +72,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_C_Offshore_2024-08-15');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-13');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label
