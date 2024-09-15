@@ -26,7 +26,7 @@
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %
 %	FirstVersion: 	05 April 2023
-%	Updated:        07 August 2024
+%	Updated:        14 September 2024
 %
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,7 +44,7 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 	'agate_config_sg639_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-09-11.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-09-14.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -52,7 +52,7 @@ alphaNum = 'AN'; % Any two letters make easy to reference and read options
 targetsFile = makeTargetsFile(CONFIG, kmlFile, alphaNum, radius);
 % load if already created
 targetsFile = fullfile(path_repo, 'mission_planning', ...
-	'targets_A_Nearshore_2024-09-11');
+	'targets_A_Nearshore_2024-09-14');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
 [~, targetsName, ~] = fileparts(targetsFile);
 legendName = 'SG639 - Nearshore A';
@@ -105,7 +105,7 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 	'agate_config_sg680_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-09-11.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-09-14.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -113,7 +113,7 @@ alphaNum = 'BN'; % Any two letters make easy to reference and read options
 targetsFile = makeTargetsFile(CONFIG, kmlFile, alphaNum, radius);
 % load if already created
 targetsFile = fullfile(path_repo, 'mission_planning', ...
-	'targets_B_Nearshore_2024-09-11');
+	'targets_B_Nearshore_2024-09-14');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
 [~, targetsName, ~] = fileparts(targetsFile);
 legendName = 'SG680 - Nearshore B';
@@ -186,6 +186,7 @@ h(3) = linem(targets.lat, targets.lon, 'LineWidth', 2, 'Color', col_sg679,...
 
 % (3) Plot bathymetry profile of targets file
 plotTrackBathyProfile(CONFIG, 'targetsFile', targetsFile);
+set(gcf, 'Position', [60 60 1200 400])
 % change title
 title(['Targets Bathymetry Profile: ' targetsName])
 
@@ -227,5 +228,5 @@ textm(40.7990, -124.08, 'Eureka', 'Color', 'white', 'FontSize', 12)
 
 % save as .png
 exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
-	'option6_three_gliders_2024-09-11.png'), 'Resolution', 300)
+	'option6_three_gliders_2024-09-14.png'), 'Resolution', 300)
 

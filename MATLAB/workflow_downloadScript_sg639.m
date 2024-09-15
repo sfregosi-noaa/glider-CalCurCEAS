@@ -30,7 +30,7 @@
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 %
 %	FirstVersion: 	01 June 2023
-%	Updated:        13 September 2024
+%	Updated:        14 September 2024
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % add agate to the path
 addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
@@ -72,7 +72,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-13');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-14');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label

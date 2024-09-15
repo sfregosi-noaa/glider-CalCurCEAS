@@ -22,7 +22,7 @@
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %
 %	FirstVersion: 	22 August 2024
-%	Updated:        
+%	Updated:        14 September 2024
 %
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,11 +30,12 @@ path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
 
 
 %% SG639 - Track A - Nearshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg639_CalCurCEAS_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+	'agate_config_sg639_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', .. ...
-	'A_Nearshore_2024-08-06.kml');
+kmlFile = fullfile(path_repo, 'mission_planning',  ...
+	'A_Nearshore_2024-09-14_withMidpoints.kml');
 radius = 2000;
 
 % original targets file was created with prefix based naming but need to
@@ -44,11 +45,12 @@ radius = 2000;
 targetsOut = makeTargetsFile(CONFIG, kmlFile, 'file', radius);
 
 %% SG680 - Track B - Nearshore
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'agate_config_sg680_CalCurCEAS_Aug2024.cnf'));
+CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+	'agate_config_sg680_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', ...
-	'B_Nearshore_2024-08-06.kml');
+	'B_Nearshore_2024-09-14_withMidpoints.kml');
 radius = 2000;
 
 % original targets file was created with prefix based naming but need to
@@ -56,8 +58,6 @@ radius = 2000;
 % fill in the rest with intermediate names
 % use a text file with list of waypoint names; will prompt to select .txt
 targetsOut = makeTargetsFile(CONFIG, kmlFile, 'file', radius);
-
-
 
 
 %% SG679 - Track C - Offshore

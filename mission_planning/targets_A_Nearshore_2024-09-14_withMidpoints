@@ -1,0 +1,32 @@
+/ Targets file for mission sg639_CalCurCEAS_Sep2024
+/ Created on 2024-09-15 00:42 UTC
+/ Deployment will take place at AN01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+AN01 lat=4433.5832 lon=-12444.9648 radius=2000 goto=ANaa
+ANaa lat=4428.0058 lon=-12504.9844 radius=2000 goto=ANab
+ANab lat=4422.2005 lon=-12525.4870 radius=2000 goto=ANac
+ANac lat=4416.6744 lon=-12544.4625 radius=2000 goto=AN02
+AN02 lat=4409.8417 lon=-12608.1483 radius=2000 goto=ANba
+ANba lat=4400.6665 lon=-12548.0291 radius=2000 goto=ANbb
+ANbb lat=4352.4476 lon=-12529.6950 radius=2000 goto=ANbc
+ANbc lat=4342.1532 lon=-12507.4742 radius=2000 goto=AN03
+AN03 lat=4331.3423 lon=-12444.7761 radius=2000 goto=ANca
+ANca lat=4322.3977 lon=-12505.2287 radius=2000 goto=ANcb
+ANcb lat=4312.3917 lon=-12527.0042 radius=2000 goto=ANcc
+ANcc lat=4303.8448 lon=-12545.8945 radius=2000 goto=AN04
+AN04 lat=4254.2414 lon=-12606.6239 radius=2000 goto=ANda
+ANda lat=4246.6418 lon=-12548.0756 radius=2000 goto=ANdb
+ANdb lat=4238.2378 lon=-12528.6967 radius=2000 goto=ANdc
+ANdc lat=4230.5140 lon=-12510.5555 radius=2000 goto=AN05
+AN05 lat=4223.1749 lon=-12453.9350 radius=2000 goto=ANea
+ANea lat=4213.7184 lon=-12509.3617 radius=2000 goto=ANeb
+ANeb lat=4204.0752 lon=-12525.5063 radius=2000 goto=ANec
+ANec lat=4154.9974 lon=-12539.8277 radius=2000 goto=AN06
+AN06 lat=4143.7876 lon=-12557.8474 radius=2000 goto=ANfa
+ANfa lat=4135.8496 lon=-12539.2173 radius=2000 goto=ANfb
+ANfb lat=4127.9691 lon=-12520.7256 radius=2000 goto=AN07
+AN07 lat=4118.7475 lon=-12459.4185 radius=2000 goto=AN08
+AN08 lat=4117.5950 lon=-12439.4685 radius=2000 goto=AN09
+AN09 lat=4101.3286 lon=-12457.2507 radius=2000 goto=ANga
+ANga lat=4054.6508 lon=-12444.6781 radius=2000 goto=RECV
+RECV lat=4047.8526 lon=-12431.8418 radius=2000 goto=RECV
