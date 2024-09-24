@@ -34,10 +34,36 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % add agate to the path
 addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
 % specify planned recovery date and time
-recovery = '2024-10-25 09:00:00';
+recovery = '2024-10-24 09:00:00';
 recTZ = 'America/Los_Angeles';
+
+%% set up an All glider map
+
+% set colors
+col_sg639 = [1 1 0];   % yellow - inshore A 
+col_sg680 = [1 0 0];   % red - inshore B
+col_sg679 = [1 0.4 0]; % orange - offshore
+ 
+% load any config file to get started.
+cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
+	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
+CONFIG = agate(cnfFile);
+
+% create basemap plot
+[baseFigAll] = createBasemap(CONFIG, 'bathy', 1, 'contourOn', 0, 'figNum', 20);
+mapFigPosition = [60   60   900    650];
+baseFigAll.Position = mapFigPosition;
+
+% add newport label
+scatterm(44.64, -124.05, 200, 'white', 'p', 'filled', 'MarkerEdgeColor', 'black');
+textm(44.48, -124.05, 'Newport, OR', 'FontSize', 10, 'Color', 'white');
+% add Eureka label
+scatterm(40.8, -124.16, 300, 'white', 'p', 'filled', 'MarkerEdgeColor', 'black');
+textm(40.8, -124.02, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
+
 
 %% SG639
 fprintf('\n\nDownloading/processing SG639 ... \n')
@@ -93,6 +119,19 @@ tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1)
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
 recovery, recTZ, 1);
 
+% (5) Add to ALL glider map
+set(0, 'currentfigure', baseFigAll);
+[targets, ~] = readTargetsFile(CONFIG, targetsSimple); 
+h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
+	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
+	'HandleVisibility', 'off');
+textm(targets.lat+0.1, targets.lon-0.1, targets.name, 'FontSize', 10)
+% pull properly formatted locations for pp
+[lat, lon] = ppToGPSSurf(CONFIG, pp);
+h(2) = plotm(lat, lon, 'Color', col_sg639, 'LineWidth', 1.5, ...
+	'DisplayName', CONFIG.glider);
+
+
 %% SG679
 fprintf('\n\nDownloading/processing SG679 ... \n')
 % initialize agate
@@ -146,6 +185,21 @@ tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1)
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
 recovery, recTZ, 1);
 
+% (5) Add to ALL glider map
+set(0, 'currentfigure', baseFigAll);
+[targets, ~] = readTargetsFile(CONFIG, targetsSimple); 
+h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
+	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
+	'HandleVisibility', 'off');
+textm(targets.lat+0.1, targets.lon-0.1, targets.name, 'FontSize', 10)
+% pull properly formatted locations for pp
+[lat, lon] = ppToGPSSurf(CONFIG, pp);
+% remove the bad fix for SG679
+lat(244:245) = [];
+lon(244:245) = [];
+h(2) = plotm(lat, lon, 'Color', col_sg679, 'LineWidth', 1.5, ...
+	'DisplayName', CONFIG.glider);
+
 %% SG680
 fprintf('\n\nDownloading/processing SG680 ... \n')
 % initialize agate
@@ -198,4 +252,37 @@ printErrors(CONFIG, size(pp,1), pp)
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
 recovery, recTZ, 1);
+
+% (5) Add to ALL glider map
+set(0, 'currentfigure', baseFigAll);
+[targets, ~] = readTargetsFile(CONFIG, targetsSimple); 
+h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
+	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
+	'HandleVisibility', 'off');
+textm(targets.lat+0.1, targets.lon-0.1, targets.name, 'FontSize', 10)
+% pull properly formatted locations for pp
+[lat, lon] = ppToGPSSurf(CONFIG, pp);
+h(2) = plotm(lat, lon, 'Color', col_sg680, 'LineWidth', 1.5, ...
+	'DisplayName', CONFIG.glider);
+
+%% Save all glider map
+
+set(0, 'currentfigure', baseFigAll);
+exportgraphics(gca, fullfile(path_repo, 'maps', 'allGliders_progressMap.png'), ...
+    'Resolution', 300);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
