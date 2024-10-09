@@ -37,16 +37,16 @@ addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
 path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
 % specify planned recovery date and time
-recovery = '2024-10-24 09:00:00';
+recovery = '2024-10-24 16:00:00';
 recTZ = 'America/Los_Angeles';
 
 %% set up an All glider map
 
 % set colors
-col_sg639 = [1 1 0];   % yellow - inshore A 
+col_sg639 = [1 1 0];   % yellow - inshore A
 col_sg680 = [1 0 0];   % red - inshore B
 col_sg679 = [1 0.4 0]; % orange - offshore
- 
+
 % load any config file to get started.
 cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
 	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
@@ -95,7 +95,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-14');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-30');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label
@@ -109,7 +109,7 @@ textm(40.8, -124.02, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
 savefig(fullfile(path_status, [CONFIG.glider '_map.fig']))
 % and as a .png (for quick/easy view)
 exportgraphics(gca, fullfile(path_status, [CONFIG.glider '_map.png']), ...
-    'Resolution', 300)
+	'Resolution', 300)
 
 % (4) print mission summary
 % print errors reported on most recent dive
@@ -117,11 +117,11 @@ printErrors(CONFIG, size(pp,1), pp)
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
-recovery, recTZ, 1);
+	recovery, recTZ, 1);
 
 % (5) Add to ALL glider map
 set(0, 'currentfigure', baseFigAll);
-[targets, ~] = readTargetsFile(CONFIG, targetsSimple); 
+[targets, ~] = readTargetsFile(CONFIG, targetsSimple);
 h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
 	'HandleVisibility', 'off');
@@ -150,6 +150,11 @@ downloadBasestationFiles(CONFIG);
 pp = extractPilotingParams(CONFIG, fullfile(CONFIG.path.mission, 'basestationFiles'), ...
 	fullfile(CONFIG.path.mission, 'flightStatus'), 1);
 % change last argument from 0 to 1 to load existing data and append new dives/rows
+% Dive 121-123 had 5 bad GPS readings so dist over ground calc is bad
+% manually set and saved based on 12 km btwn end 121 and end 123. 
+% only have to run once or again if pp is not preloaded. 
+% pp.dog_km(122) = 6;
+% pp.dog_km(123) = 6;
 
 % save it to the default location as .mat and .xlsx
 save(fullfile(CONFIG.path.mission, 'flightStatus', ['diveTracking_' ...
@@ -175,7 +180,7 @@ textm(40.8, -124.02, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
 savefig(fullfile(path_status, [CONFIG.glider '_map.fig']))
 % and as a .png (for quick/easy view)
 exportgraphics(gca, fullfile(path_status, [CONFIG.glider '_map.png']), ...
-    'Resolution', 300)
+	'Resolution', 300)
 
 % (4) print mission summary
 % print errors reported on most recent dive
@@ -183,11 +188,11 @@ printErrors(CONFIG, size(pp,1), pp)
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
-recovery, recTZ, 1);
+	recovery, recTZ, 1);
 
 % (5) Add to ALL glider map
 set(0, 'currentfigure', baseFigAll);
-[targets, ~] = readTargetsFile(CONFIG, targetsSimple); 
+[targets, ~] = readTargetsFile(CONFIG, targetsSimple);
 h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
 	'HandleVisibility', 'off');
@@ -243,7 +248,7 @@ textm(40.8, -124.02, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
 savefig(fullfile(path_status, [CONFIG.glider '_map.fig']))
 % and as a .png (for quick/easy view)
 exportgraphics(gca, fullfile(path_status, [CONFIG.glider '_map.png']), ...
-    'Resolution', 300)
+	'Resolution', 300)
 
 % (4) print mission summary
 % print errors reported on most recent dive
@@ -251,11 +256,11 @@ printErrors(CONFIG, size(pp,1), pp)
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
-recovery, recTZ, 1);
+	recovery, recTZ, 1);
 
 % (5) Add to ALL glider map
 set(0, 'currentfigure', baseFigAll);
-[targets, ~] = readTargetsFile(CONFIG, targetsSimple); 
+[targets, ~] = readTargetsFile(CONFIG, targetsSimple);
 h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
 	'HandleVisibility', 'off');
@@ -269,7 +274,7 @@ h(2) = plotm(lat, lon, 'Color', col_sg680, 'LineWidth', 1.5, ...
 
 set(0, 'currentfigure', baseFigAll);
 exportgraphics(gca, fullfile(path_repo, 'maps', 'allGliders_progressMap.png'), ...
-    'Resolution', 300);
+	'Resolution', 300);
 
 
 
