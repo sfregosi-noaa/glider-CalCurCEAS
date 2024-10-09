@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>A_Nearshore_2024-09-30_withMidpoints.kml</name>
+	<Style id="inline">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="inline0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#inline</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#inline1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="inline1">
+		<LineStyle>
+			<color>ff00ffff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>A_Nearshore_withMidpoints_trimmed</name>
+		<open>1</open>
+		<styleUrl>#inline0</styleUrl>
+		<LineString>
+			<tessellate>1</tessellate>
+			<coordinates>
+				-124.7494131136179,44.55972047353674,0 -125.083072689996,44.46676307329639,0 -125.4247829810255,44.37000872391491,0 -125.7410413461034,44.27790670089305,0 -126.1358043932494,44.1640290778201,0 -125.8004849473483,44.01110890195569,0 -125.4949161734789,43.87412625549793,0 -125.1245701715139,43.70255305990604,0 -124.7462686661606,43.5223715214231,0 -125.0358663932362,43.33045061505375,0 -125.3316108772395,43.14327162942369,0 -125.6923920363307,42.90841448231712,0 -125.4066078109355,42.7206548444878,0 -125.150327489258,42.55578710694011,0 -124.8989168504554,42.38624832100557,0 -125.0964422053696,42.20936015191771,0 -125.3490261988074,41.97082297377452,0 -125.5777503913233,41.74861008309176,0 -125.235238449791,41.51168599649442,0 -124.9478100742292,41.30989835284968,0 -124.6588352654415,41.29081203549599,0 -124.9541779145098,41.02214283042004,0 -124.744634382418,40.91084729423208,0 -124.5306974672447,40.79754325037978,0 
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>

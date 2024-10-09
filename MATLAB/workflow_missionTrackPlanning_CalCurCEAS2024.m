@@ -31,6 +31,7 @@
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
+addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
 
 col_sg639 = [1 1 0];   % yellow - inshore A 
 col_sg680 = [1 0 0];   % red - inshore B
@@ -44,7 +45,7 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 	'agate_config_sg639_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-09-14.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'A_Nearshore_2024-09-30.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -228,5 +229,5 @@ textm(40.7990, -124.08, 'Eureka', 'Color', 'white', 'FontSize', 12)
 
 % save as .png
 exportgraphics(gcf, fullfile(path_repo, 'mission_planning', ...
-	'option6_three_gliders_2024-09-14.png'), 'Resolution', 300)
+	'option6_three_gliders_2024-09-30.png'), 'Resolution', 300)
 

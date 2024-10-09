@@ -27,6 +27,7 @@
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
+addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
 
 
 %% SG639 - Track A - Nearshore
@@ -35,7 +36,7 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning',  ...
-	'A_Nearshore_2024-09-14_withMidpoints.kml');
+	'A_Nearshore_2024-09-30_withMidpoints.kml');
 radius = 2000;
 
 % original targets file was created with prefix based naming but need to

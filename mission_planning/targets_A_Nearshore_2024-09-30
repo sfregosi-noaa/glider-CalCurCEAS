@@ -1,0 +1,14 @@
+/ Targets file for mission sg639_CalCurCEAS_Sep2024
+/ Created on 2024-09-30 19:59 UTC
+/ Deployment will take place at AN01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+AN01 lat=4433.5832 lon=-12444.9648 radius=2000 goto=AN02
+AN02 lat=4409.8417 lon=-12608.1483 radius=2000 goto=AN03
+AN03 lat=4331.3423 lon=-12444.7761 radius=2000 goto=AN04
+AN04 lat=4254.5049 lon=-12541.5435 radius=2000 goto=AN05
+AN05 lat=4223.1749 lon=-12453.9350 radius=2000 goto=AN06
+AN06 lat=4144.9166 lon=-12534.6650 radius=2000 goto=AN07
+AN07 lat=4118.5939 lon=-12456.8686 radius=2000 goto=AN08
+AN08 lat=4117.4487 lon=-12439.5301 radius=2000 goto=AN09
+AN09 lat=4101.3286 lon=-12457.2507 radius=2000 goto=RECV
+RECV lat=4047.8526 lon=-12431.8418 radius=2000 goto=RECV
