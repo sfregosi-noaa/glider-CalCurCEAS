@@ -106,7 +106,7 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 	'agate_config_sg680_CalCurCEAS_Sep2024.cnf'));
 
 % (1) Generate targets file from Google Earth path saved as .kmml
-kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-09-14.kml');
+kmlFile = fullfile(path_repo, 'mission_planning', 'B_Nearshore_2024-10-14.kml');
 radius = 2000;
 
 % create targets file, use prefix-based naming
@@ -114,7 +114,7 @@ alphaNum = 'BN'; % Any two letters make easy to reference and read options
 targetsFile = makeTargetsFile(CONFIG, kmlFile, alphaNum, radius);
 % load if already created
 targetsFile = fullfile(path_repo, 'mission_planning', ...
-	'targets_B_Nearshore_2024-09-14');
+	'targets_B_Nearshore_2024-10-14');
 [targets, ~] = readTargetsFile(CONFIG, targetsFile); 
 [~, targetsName, ~] = fileparts(targetsFile);
 legendName = 'SG680 - Nearshore B';

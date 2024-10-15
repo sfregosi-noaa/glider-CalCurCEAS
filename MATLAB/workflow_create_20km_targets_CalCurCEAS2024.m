@@ -51,7 +51,7 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 
 % (1) Generate targets file from Google Earth path saved as .kmml
 kmlFile = fullfile(path_repo, 'mission_planning', ...
-	'B_Nearshore_2024-09-14_withMidpoints.kml');
+	'B_Nearshore_2024-10-14_withMidpoints.kml');
 radius = 2000;
 
 % original targets file was created with prefix based naming but need to
