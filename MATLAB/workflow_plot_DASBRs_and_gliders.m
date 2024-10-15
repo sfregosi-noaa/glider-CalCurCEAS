@@ -40,13 +40,15 @@ CONFIG = agate(cnfFile);
 CONFIG.map.latLim;
 CONFIG.map.lonLim;
 % rounded limits (for bathy loading) to make sure all right sizes
-latLimWide = [40 46];
+latLimWide = [40 48];
 lonLimWide = [-130 -122];
 
 % load bathy/contour data
 	[Z, refvec] = readgeoraster(CONFIG.map.bathyFile, 'OutputType', 'double', ...
 		'CoordinateSystemType', 'geographic');
 	[Z, refvec] = geocrop(Z, refvec, latLimWide, lonLimWide);
+% this is upsidedown for some reason. flip it
+Z = flipud(Z);
 
 	Z(Z >= 10) = 100;
 	% define axes limits (can't use refvec in non-map axes)
@@ -75,7 +77,7 @@ targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-30');
 h(1) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
 	'HandleVisibility', 'off');
-text(targets.lon-0.1, targets.lat+0.1, targets.name, 'FontSize', 10)
+text(targets.lon-0.1, targets.lat+0.1, targets.name, 'FontSize', 6)
 % pull properly formatted locations for pp
 load(fullfile(CONFIG.path.mission, 'flightStatus', ['diveTracking_' ...
 	CONFIG.glider '.mat']));
@@ -83,7 +85,7 @@ surfSimp = ppToGPSSurf(CONFIG, pp);
 h(2) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 	surfSimp.time_UTC, surfSimp.time_UTC, 'LineWidth', 1.5, ...
 	'DisplayName', CONFIG.glider);
-colormap(hot);
+% colormap(hot);
 
 % sg680
 cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
@@ -91,18 +93,18 @@ cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
 CONFIG = agate(cnfFile);
 targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-14');
 [targets, ~] = readTargetsFile(CONFIG, targetsSimple);
-h(1) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
+h(3) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
 	'HandleVisibility', 'off');
-text(targets.lon-0.1, targets.lat+0.1, targets.name, 'FontSize', 10)
+text(targets.lon-0.1, targets.lat+0.1, targets.name, 'FontSize', 6)
 % pull properly formatted locations for pp
 load(fullfile(CONFIG.path.mission, 'flightStatus', ['diveTracking_' ...
 	CONFIG.glider '.mat']));
 surfSimp = ppToGPSSurf(CONFIG, pp);
-h(2) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
+h(4) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 	surfSimp.time_UTC, surfSimp.time_UTC, 'LineWidth', 1.5, ...
 	'DisplayName', CONFIG.glider);
-colormap(hot);
+% colormap(hot);
 
 % sg679
 cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
@@ -110,25 +112,32 @@ cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
 CONFIG = agate(cnfFile);
 targetsSimple = fullfile(CONFIG.path.mission, 'targets_C_Offshore_2024-08-15');
 [targets, ~] = readTargetsFile(CONFIG, targetsSimple);
-h(1) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
+h(5) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
 	'HandleVisibility', 'off');
-text(targets.lon-0.1, targets.lat+0.1, targets.name, 'FontSize', 10)
+text(targets.lon-0.1, targets.lat+0.1, targets.name, 'FontSize', 6)
 % pull properly formatted locations for pp
 load(fullfile(CONFIG.path.mission, 'flightStatus', ['diveTracking_' ...
 	CONFIG.glider '.mat']));
 surfSimp = ppToGPSSurf(CONFIG, pp);
 % remove the bad fixes for SG679
 surfSimp(244:245,:) = [];
-
-h(2) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
+h(6) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 	surfSimp.time_UTC, surfSimp.time_UTC, 'LineWidth', 1.5, ...
 	'DisplayName', CONFIG.glider);
-colormap(hot);
+% colormap(hot);
 
 
 %% add DASBR tracks
+dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
+	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
 
+for f = 1:length(dasbrs)
+	dasbrs(f).Number = f;
+	h(6+f) = plot(dasbrs(f).Lon, dasbrs(f).Lat, 'Color', 'white', ...
+		'LineWidth', 1.5, 'DisplayName', dasbrs(f).Name);
+
+end
 %% link the axes and turn off top layer
 linkaxes([ax1 ax2])
 ax2.Visible = 'off';
@@ -146,10 +155,10 @@ colormap(ax2,'jet')
 
 
 
+
 %% Save all glider map
 
-set(0, 'currentfigure', baseFigAll);
-exportgraphics(gca, fullfile(path_repo, 'maps', 'DASBRs_and_gliders.png'), ...
+exportgraphics(gcf, fullfile(path_repo, 'maps', 'DASBRs_and_gliders.png'), ...
 	'Resolution', 300);
 
 

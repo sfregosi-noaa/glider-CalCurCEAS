@@ -12,7 +12,7 @@
 CONFIG.glider = 'sg680';  % glider serial number
 CONFIG.mission = 'CalCurCEAS_Sep2024'; % mission identifier defined in sg_calib_constants.m 
 CONFIG.sgVer = 67.0; % 66.12 or 67.0, firmware version displayed on glider start up
-CONFIG.tmd = 42; % target mission duration in days
+CONFIG.tmd = 41; % target mission duration in days
 
 % define paths
 % mission path - path to umbrella folder that either contains previously 

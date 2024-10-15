@@ -127,9 +127,9 @@ h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
 	'HandleVisibility', 'off');
 textm(targets.lat+0.1, targets.lon-0.1, targets.name, 'FontSize', 10)
 % pull properly formatted locations for pp
-[lat, lon] = ppToGPSSurf(CONFIG, pp);
-h(2) = plotm(lat, lon, 'Color', col_sg639, 'LineWidth', 1.5, ...
-	'DisplayName', CONFIG.glider);
+surfSimp = ppToGPSSurf(CONFIG, pp);
+h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg639, ...
+	'LineWidth', 1.5, 'DisplayName', CONFIG.glider);
 
 
 %% SG679
@@ -198,12 +198,12 @@ h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
 	'HandleVisibility', 'off');
 textm(targets.lat+0.1, targets.lon-0.1, targets.name, 'FontSize', 10)
 % pull properly formatted locations for pp
-[lat, lon] = ppToGPSSurf(CONFIG, pp);
+surfSimp = ppToGPSSurf(CONFIG, pp);
 % remove the bad fix for SG679
-lat(244:245) = [];
-lon(244:245) = [];
-h(2) = plotm(lat, lon, 'Color', col_sg679, 'LineWidth', 1.5, ...
-	'DisplayName', CONFIG.glider);
+surfSimp(244:245,:) = [];
+
+h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg679, ...
+	'LineWidth', 1.5, 'DisplayName', CONFIG.glider);
 
 %% SG680
 fprintf('\n\nDownloading/processing SG680 ... \n')
@@ -266,9 +266,9 @@ h(1) = plotm(targets.lat, targets.lon, 'Marker', 'o', 'MarkerSize', 4, ...
 	'HandleVisibility', 'off');
 textm(targets.lat+0.1, targets.lon-0.1, targets.name, 'FontSize', 10)
 % pull properly formatted locations for pp
-[lat, lon] = ppToGPSSurf(CONFIG, pp);
-h(2) = plotm(lat, lon, 'Color', col_sg680, 'LineWidth', 1.5, ...
-	'DisplayName', CONFIG.glider);
+surfSimp = ppToGPSSurf(CONFIG, pp);
+h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg680, ...
+	'LineWidth', 1.5, 'DisplayName', CONFIG.glider);
 
 %% Save all glider map
 
