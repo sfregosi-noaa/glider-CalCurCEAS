@@ -30,8 +30,10 @@
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 %
 %	FirstVersion: 	01 June 2023
-%	Updated:        06 September 2024
+%	Updated:        13 September 2024
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% add agate to the path
+addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
 
 % initialize agate
 cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
@@ -122,7 +124,7 @@ printErrors(CONFIG, size(pp,1), pp)
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 
 % specify planned recovery date and time
-recovery = '2024-10-31 09:00:00';
+recovery = '2024-10-25 09:00:00';
 recTZ = 'America/Los_Angeles';
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
 recovery, recTZ, 1);

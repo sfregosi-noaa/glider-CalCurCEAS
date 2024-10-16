@@ -1,0 +1,31 @@
+/ Targets file for mission sg680_CalCurCEAS_Sep2024
+/ Created on 2024-10-15 02:17 UTC
+/ Deployment will take place at BN01, recovery at RECV
+/ template WPxx lat=DDMM.MMMM lon=DDDMM.MMMM radius=XXXX goto=WPzz
+BN01 lat=4433.5710 lon=-12444.9561 radius=2000 goto=BNaa
+BNaa lat=4435.6375 lon=-12508.3174 radius=2000 goto=BN02
+BN02 lat=4437.3731 lon=-12528.7360 radius=2000 goto=BNba
+BNba lat=4426.8378 lon=-12520.6650 radius=2000 goto=BNbb
+BNbb lat=4414.4154 lon=-12511.1927 radius=2000 goto=BN03
+BN03 lat=4402.0189 lon=-12501.6870 radius=2000 goto=BNca
+BNca lat=4354.8764 lon=-12517.2244 radius=2000 goto=BNcb
+BNcb lat=4347.4074 lon=-12533.2904 radius=2000 goto=BNcc
+BNcc lat=4340.4141 lon=-12548.2059 radius=2000 goto=BN04
+BN04 lat=4332.7482 lon=-12604.4568 radius=2000 goto=BNda
+BNda lat=4325.0566 lon=-12550.4938 radius=2000 goto=BNdb
+BNdb lat=4316.7731 lon=-12535.2817 radius=2000 goto=BNdc
+BNdc lat=4306.9226 lon=-12517.8742 radius=2000 goto=BN05
+BN05 lat=4257.6557 lon=-12501.2773 radius=2000 goto=BNea
+BNea lat=4247.7725 lon=-12515.4829 radius=2000 goto=BNeb
+BNeb lat=4238.3150 lon=-12529.2433 radius=2000 goto=BNec
+BNec lat=4228.5744 lon=-12543.2116 radius=2000 goto=BN06
+BN06 lat=4216.6439 lon=-12559.9089 radius=2000 goto=BNfa
+BNfa lat=4210.1650 lon=-12540.9345 radius=2000 goto=BNfb
+BNfb lat=4203.4165 lon=-12520.9981 radius=2000 goto=BNfc
+BNfc lat=4156.4512 lon=-12500.8969 radius=2000 goto=BN07
+BN07 lat=4148.8095 lon=-12439.4127 radius=2000 goto=BNga
+BNga lat=4133.3888 lon=-12452.9435 radius=2000 goto=BNgb
+BNgb lat=4118.1884 lon=-12505.8301 radius=2000 goto=BN08
+BN08 lat=4106.2564 lon=-12516.3206 radius=2000 goto=BNha
+BNha lat=4057.6557 lon=-12455.4427 radius=2000 goto=RECV
+RECV lat=4047.9041 lon=-12431.8783 radius=2000 goto=RECV

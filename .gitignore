@@ -1,0 +1,5 @@
+# large fig files
+.fig
+
+# large matlab files
+.mat

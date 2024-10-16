@@ -12,7 +12,7 @@
 CONFIG.glider = 'sg680';  % glider serial number
 CONFIG.mission = 'CalCurCEAS_Sep2024'; % mission identifier defined in sg_calib_constants.m 
 CONFIG.sgVer = 67.0; % 66.12 or 67.0, firmware version displayed on glider start up
-CONFIG.tmd = 70; % target mission duration in days
+CONFIG.tmd = 41; % target mission duration in days
 
 % define paths
 % mission path - path to umbrella folder that either contains previously 
@@ -31,7 +31,7 @@ CONFIG.bs.cnfFile = 'C:\Users\Selene.Fregosi\Documents\gliders_local\basestation
 % specify path to store downloaded basestation files
 CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
 % specify path to remote files (e.g., glider's current/mission folder)
-CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg680/2024-09-12_CalCurCEAS_Sep2024';
+CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg680/2024-09-14_CalCurCEAS_Sep2024';
 
 
 % %%%% OPTIONAL - acoustics %%%%%%%%%%%%%%%%%
@@ -68,7 +68,7 @@ CONFIG.map.scaleMinor = [0:25:50];
 % piloting plot settings
 % pre allocate fig numbers so figures are updated rather than created new
 CONFIG.plots.figSeed = 680; % suggest using the glider serial e.g., 639
-% CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
+CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
 % figNumList (1) = battery, (2) = voltagePackUse, (3) = humidity
 % and pressure, (4) = map, (5) = zoomed map, (6) = minimum voltage, 
 % (7) = voltage normalized, (8) = ERMA detections, (9) = ERMA reference
