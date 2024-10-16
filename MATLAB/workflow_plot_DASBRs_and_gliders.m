@@ -17,9 +17,11 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % add agate to the path
-addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+% addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+% path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
+addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
 %% set up the basemap
 
 % set colors
@@ -132,10 +134,14 @@ h(6) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 
 
 %% add DASBR tracks
-dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
-	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
+% dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
+% 	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
 
-for f = 1:length(dasbrs)
+dasbrList = dir(fullfile(path_repo, 'DASBRs', '*.csv'));
+
+
+for f = 1:length(dasbrList)
+    dasbr = readtable(fullfile(dasbrList(f).folder, dasbrList(f).name));
 	dasbrs(f).Number = f;
 	h(6+f) = plot(dasbrs(f).Lon, dasbrs(f).Lat, 'Color', 'white', ...
 		'LineWidth', 1.5, 'DisplayName', dasbrs(f).Name);
