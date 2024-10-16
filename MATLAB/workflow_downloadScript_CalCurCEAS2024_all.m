@@ -33,8 +33,11 @@
 %	Updated:        15 September 2024
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % add agate to the path
-addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+% addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+% path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+
+addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
 
 % specify planned recovery date and time
 recovery = '2024-10-24 16:00:00';
@@ -48,8 +51,8 @@ col_sg680 = [1 0 0];   % red - inshore B
 col_sg679 = [1 0.4 0]; % orange - offshore
 
 % load any config file to get started.
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg639_CalCurCEAS_Sep2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % create basemap plot
@@ -68,8 +71,8 @@ textm(40.8, -124.02, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
 %% SG639
 fprintf('\n\nDownloading/processing SG639 ... \n')
 % initialize agate
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg639_CalCurCEAS_Sep2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % define flightStatus path
@@ -135,8 +138,8 @@ h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg639, ...
 %% SG679
 fprintf('\n\nDownloading/processing SG679 ... \n')
 % initialize agate
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg679_CalCurCEAS_Aug2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg679_CalCurCEAS_Aug2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % define flightStatus path
@@ -208,8 +211,8 @@ h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg679, ...
 %% SG680
 fprintf('\n\nDownloading/processing SG680 ... \n')
 % initialize agate
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg680_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg680_CalCurCEAS_Sep2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % define flightStatus path
