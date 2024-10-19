@@ -79,7 +79,7 @@ CONFIG = agate(cnfFile);
 path_status = fullfile(CONFIG.path.mission, 'flightStatus'); % where to store output plots/tables
 
 % (1) download files from the basestation
-downloadBasestationFiles(CONFIG);
+% downloadBasestationFiles(CONFIG);
 
 % (2) extract piloting parameters
 % create piloting parameters (pp) table from downloaded basestation files
@@ -146,7 +146,7 @@ CONFIG = agate(cnfFile);
 path_status = fullfile(CONFIG.path.mission, 'flightStatus'); % where to store output plots/tables
 
 % (1) download files from the basestation
-downloadBasestationFiles(CONFIG);
+% downloadBasestationFiles(CONFIG);
 
 % (2) extract piloting parameters
 % create piloting parameters (pp) table from downloaded basestation files
@@ -188,6 +188,9 @@ exportgraphics(gca, fullfile(path_status, [CONFIG.glider '_map.png']), ...
 % (4) print mission summary
 % print errors reported on most recent dive
 printErrors(CONFIG, size(pp,1), pp)
+% flying by heading makes this not work...brute force it
+pp.tgtName{264} = 'COfh';
+pp.distTGT_km(264) = 22;
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
@@ -219,7 +222,7 @@ CONFIG = agate(cnfFile);
 path_status = fullfile(CONFIG.path.mission, 'flightStatus'); % where to store output plots/tables
 
 % (1) download files from the basestation
-downloadBasestationFiles(CONFIG);
+% downloadBasestationFiles(CONFIG);
 
 % (2) extract piloting parameters
 % create piloting parameters (pp) table from downloaded basestation files
