@@ -191,6 +191,8 @@ printErrors(CONFIG, size(pp,1), pp)
 % flying by heading makes this not work...brute force it
 pp.tgtName{264} = 'COfh';
 pp.distTGT_km(264) = 22;
+pp.tgtName{277} = 'COfi';
+pp.distTGT_km(277) = 7.5;
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
