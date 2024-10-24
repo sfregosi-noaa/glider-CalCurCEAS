@@ -40,7 +40,7 @@ addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
 path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
 
 % specify planned recovery date and time
-recovery = '2024-10-24 16:00:00';
+recovery = '2024-10-25 16:00:00'; % in UTC
 recTZ = 'America/Los_Angeles';
 
 %% set up an All glider map
@@ -98,7 +98,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-30');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-10-24_recovery_simple');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label
@@ -193,6 +193,10 @@ pp.tgtName{264} = 'COfh';
 pp.distTGT_km(264) = 22;
 pp.tgtName{277} = 'COfi';
 pp.distTGT_km(277) = 7.5;
+pp.tgtName{280} = 'COfj';
+pp.distTGT_km(280) = 15;
+pp.tgtName{288} = 'COfk';
+pp.distTGT_km(288) = 2; 
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
@@ -242,7 +246,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-14');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-24_recovery_simple');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label
