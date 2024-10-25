@@ -189,14 +189,16 @@ exportgraphics(gca, fullfile(path_status, [CONFIG.glider '_map.png']), ...
 % print errors reported on most recent dive
 printErrors(CONFIG, size(pp,1), pp)
 % flying by heading makes this not work...brute force it
-pp.tgtName{264} = 'COfh';
-pp.distTGT_km(264) = 22;
-pp.tgtName{277} = 'COfi';
-pp.distTGT_km(277) = 7.5;
-pp.tgtName{280} = 'COfj';
-pp.distTGT_km(280) = 15;
-pp.tgtName{288} = 'COfk';
-pp.distTGT_km(288) = 2; 
+% pp.tgtName{264} = 'COfh';
+% pp.distTGT_km(264) = 22;
+% pp.tgtName{277} = 'COfi';
+% pp.distTGT_km(277) = 7.5;
+% pp.tgtName{280} = 'COfj';
+% pp.distTGT_km(280) = 15;
+% pp.tgtName{288} = 'COfk';
+% pp.distTGT_km(288) = 2; 
+pp.tgtName{297} = 'RECV';
+pp.distTGT_km(297) = 24; 
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
