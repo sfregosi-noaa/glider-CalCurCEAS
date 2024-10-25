@@ -33,11 +33,14 @@
 %	Updated:        15 September 2024
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % add agate to the path
-addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+% addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+% path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+
+addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
 
 % specify planned recovery date and time
-recovery = '2024-10-24 16:00:00';
+recovery = '2024-10-25 16:00:00'; % in UTC
 recTZ = 'America/Los_Angeles';
 
 %% set up an All glider map
@@ -48,8 +51,8 @@ col_sg680 = [1 0 0];   % red - inshore B
 col_sg679 = [1 0.4 0]; % orange - offshore
 
 % load any config file to get started.
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg639_CalCurCEAS_Sep2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % create basemap plot
@@ -68,15 +71,15 @@ textm(40.8, -124.02, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
 %% SG639
 fprintf('\n\nDownloading/processing SG639 ... \n')
 % initialize agate
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg639_CalCurCEAS_Sep2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % define flightStatus path
 path_status = fullfile(CONFIG.path.mission, 'flightStatus'); % where to store output plots/tables
 
 % (1) download files from the basestation
-downloadBasestationFiles(CONFIG);
+% downloadBasestationFiles(CONFIG);
 
 % (2) extract piloting parameters
 % create piloting parameters (pp) table from downloaded basestation files
@@ -95,7 +98,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-30');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-10-24_recovery_simple');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label
@@ -135,15 +138,15 @@ h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg639, ...
 %% SG679
 fprintf('\n\nDownloading/processing SG679 ... \n')
 % initialize agate
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg679_CalCurCEAS_Aug2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg679_CalCurCEAS_Aug2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % define flightStatus path
 path_status = fullfile(CONFIG.path.mission, 'flightStatus'); % where to store output plots/tables
 
 % (1) download files from the basestation
-downloadBasestationFiles(CONFIG);
+% downloadBasestationFiles(CONFIG);
 
 % (2) extract piloting parameters
 % create piloting parameters (pp) table from downloaded basestation files
@@ -185,6 +188,17 @@ exportgraphics(gca, fullfile(path_status, [CONFIG.glider '_map.png']), ...
 % (4) print mission summary
 % print errors reported on most recent dive
 printErrors(CONFIG, size(pp,1), pp)
+% flying by heading makes this not work...brute force it
+% pp.tgtName{264} = 'COfh';
+% pp.distTGT_km(264) = 22;
+% pp.tgtName{277} = 'COfi';
+% pp.distTGT_km(277) = 7.5;
+% pp.tgtName{280} = 'COfj';
+% pp.distTGT_km(280) = 15;
+% pp.tgtName{288} = 'COfk';
+% pp.distTGT_km(288) = 2; 
+pp.tgtName{297} = 'RECV';
+pp.distTGT_km(297) = 24; 
 % print mission/recovery stats
 tm = printTravelMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), 1);
 tm = printRecoveryMetrics(CONFIG, pp, fullfile(CONFIG.path.mission, 'targets'), ...
@@ -208,15 +222,15 @@ h(2) = plotm(surfSimp.latitude, surfSimp.longitude, 'Color', col_sg679, ...
 %% SG680
 fprintf('\n\nDownloading/processing SG680 ... \n')
 % initialize agate
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg680_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg680_CalCurCEAS_Sep2024_pseudorca.cnf');
 CONFIG = agate(cnfFile);
 
 % define flightStatus path
 path_status = fullfile(CONFIG.path.mission, 'flightStatus'); % where to store output plots/tables
 
 % (1) download files from the basestation
-downloadBasestationFiles(CONFIG);
+% downloadBasestationFiles(CONFIG);
 
 % (2) extract piloting parameters
 % create piloting parameters (pp) table from downloaded basestation files
@@ -234,7 +248,7 @@ writetable(pp, fullfile(path_status, ['diveTracking_' CONFIG.glider '.xlsx']));
 % loaded targets file (interpolated waypoints)
 targetsLoaded = fullfile(CONFIG.path.mission, 'targets');
 % simple targets file (waypoints only at 'turns')
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-14');
+targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-24_recovery_simple');
 plotGliderPath_etopo(CONFIG, pp, targetsSimple, CONFIG.map.bathyFile);
 
 % add newport label

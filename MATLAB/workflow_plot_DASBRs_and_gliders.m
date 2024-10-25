@@ -17,9 +17,11 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % add agate to the path
-addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+% addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+% path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
+addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
 %% set up the basemap
 
 % set colors
@@ -29,8 +31,8 @@ col_sg679 = [1 0.4 0]; % orange - offshore
 dasbrs = [0 1 0];	   % green - dasbrs
 
 % load any config file to get started.
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg639_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg639_CalCurCEAS_Sep2024.cnf');
 CONFIG = agate(cnfFile);
 
 % cannot use createBasemap because axes need to NOT be a map axis to
@@ -44,6 +46,7 @@ latLimWide = [40 48];
 lonLimWide = [-130 -122];
 
 % load bathy/contour data
+CONFIG.map.bathyFile = 'C:\Users\selene\onedrive\GIS\etopo\ETOPO2022_ice_15arcsec_OR_wide.tiff';
 	[Z, refvec] = readgeoraster(CONFIG.map.bathyFile, 'OutputType', 'double', ...
 		'CoordinateSystemType', 'geographic');
 	[Z, refvec] = geocrop(Z, refvec, latLimWide, lonLimWide);
@@ -72,7 +75,8 @@ ax2 = axes;
 hold on; 
 
 % sg639
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-30');
+% targetsSimple = fullfile(CONFIG.path.mission, 'targets_A_Nearshore_2024-09-30');
+targetsSimple = fullfile(path_repo, 'mission_planning', 'targets_A_Nearshore_2024-09-30');
 [targets, ~] = readTargetsFile(CONFIG, targetsSimple);
 h(1) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
@@ -89,10 +93,11 @@ h(2) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 % colormap(hot);
 
 % sg680
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg680_CalCurCEAS_Sep2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg680_CalCurCEAS_Sep2024.cnf');
 CONFIG = agate(cnfFile);
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-14');
+% targetsSimple = fullfile(CONFIG.path.mission, 'targets_B_Nearshore_2024-10-14');
+targetsSimple = fullfile(path_repo, 'mission_planning', 'targets_B_Nearshore_2024-10-14');
 [targets, ~] = readTargetsFile(CONFIG, targetsSimple);
 h(3) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
@@ -109,10 +114,11 @@ h(4) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 % colormap(hot);
 
 % sg679
-cnfFile = ['C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\' ...
-	'MATLAB\fregosi_config_files\agate_config_sg679_CalCurCEAS_Aug2024.cnf'];
+cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+    'agate_config_sg679_CalCurCEAS_Aug2024.cnf');
 CONFIG = agate(cnfFile);
-targetsSimple = fullfile(CONFIG.path.mission, 'targets_C_Offshore_2024-08-15');
+% targetsSimple = fullfile(CONFIG.path.mission, 'targets_C_Offshore_2024-08-15');
+targetsSimple = fullfile(path_repo, 'mission_planning', 'targets_C_Offshore_2024-08-15');
 [targets, ~] = readTargetsFile(CONFIG, targetsSimple);
 h(5) = plot(targets.lon, targets.lat, 'Marker', 'o', 'MarkerSize', 4, ...
 	'MarkerEdgeColor', [0 0 0], 'MarkerFaceColor', [0 0 0], 'Color', [0 0 0], ...
@@ -132,10 +138,14 @@ h(6) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 
 
 %% add DASBR tracks
-dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
-	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
+% dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
+% 	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
 
-for f = 1:length(dasbrs)
+dasbrList = dir(fullfile(path_repo, 'DASBRs', '*.csv'));
+
+
+for f = 1:length(dasbrList)
+    dasbr = readtable(fullfile(dasbrList(f).folder, dasbrList(f).name));
 	dasbrs(f).Number = f;
 	h(6+f) = plot(dasbrs(f).Lon, dasbrs(f).Lat, 'Color', 'white', ...
 		'LineWidth', 1.5, 'DisplayName', dasbrs(f).Name);
