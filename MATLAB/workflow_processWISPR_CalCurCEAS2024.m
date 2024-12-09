@@ -19,6 +19,7 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+addpath(genpath('C:\Users\selene.fregosi\Documents\MATLAB\wispr3'))
 path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
 
 missionStrs = {'sg639_CalCurCEAS_Sep2024';
@@ -34,11 +35,6 @@ mtp = missionStrs{mtpNum};
 CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
     ['agate_config_' mtp '.cnf']));
 
-%%
-
-
-% update restartDir if needed after errors
-CONFIG.pm.restartDir = 'pm0045b';  % re-start conversion at this directory
 
 % convert!
-convertPmarFun(CONFIG)
+convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac');
