@@ -37,4 +37,5 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 
 
 % convert!
-convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac');
+convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac', ...
+    'restartDir', '240919');
