@@ -26,7 +26,7 @@ missionStrs = {'sg639_CalCurCEAS_Sep2024';
 	'sg679_CalCurCEAS_Aug2024';
     'sg680_CalCurCEAS_Sep2024'};
 
-mtpNum = 1; % mission to process - UPDATE THIS TO RUN THROUGH EACH GLIDER
+mtpNum = 2; % mission to process - UPDATE THIS TO RUN THROUGH EACH GLIDER
 mtp = missionStrs{mtpNum};
 
 % initialize agate
@@ -37,5 +37,6 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 
 
 % convert!
-convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac', ...
-    'restartDir', '240919');
+convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac');
+% convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac', ...
+%     'restartDir', '240919');
