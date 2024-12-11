@@ -26,17 +26,16 @@ missionStrs = {'sg639_CalCurCEAS_Sep2024';
 	'sg679_CalCurCEAS_Aug2024';
     'sg680_CalCurCEAS_Sep2024'};
 
-mtpNum = 2; % mission to process - UPDATE THIS TO RUN THROUGH EACH GLIDER
-mtp = missionStrs{mtpNum};
+mtpNum = 3; % mission to process - UPDATE THIS TO RUN THROUGH EACH GLIDER
 
 % initialize agate
 % make sure configuration file now has updated WISPR Settings section
 % (not required during mission so may not be set yet)
 CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
-    ['agate_config_' mtp '.cnf']));
+    ['agate_config_' missionStrs{mtpNum} '.cnf']));
 
 
 % convert!
-convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac');
-% convertWisprToFlac(CONFIG, 'showProgress', true, 'outExt', '.flac', ...
+convertWispr(CONFIG, 'showProgress', true, 'outExt', '.flac');
+% convertWispr(CONFIG, 'showProgress', true, 'outExt', '.flac', ...
 %     'restartDir', '240919');
