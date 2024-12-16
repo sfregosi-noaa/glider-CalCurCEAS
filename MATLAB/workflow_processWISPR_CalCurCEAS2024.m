@@ -19,14 +19,14 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-addpath(genpath('C:\Users\selene.fregosi\Documents\MATLAB\wispr3'))
+% addpath(genpath('C:\Users\selene.fregosi\Documents\MATLAB\wispr3'))
 path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
 
 missionStrs = {'sg639_CalCurCEAS_Sep2024';
 	'sg679_CalCurCEAS_Aug2024';
     'sg680_CalCurCEAS_Sep2024'};
 
-mtpNum = 3; % mission to process - UPDATE THIS TO RUN THROUGH EACH GLIDER
+mtpNum = 2; % mission to process - UPDATE THIS TO RUN THROUGH EACH GLIDER
 
 % initialize agate
 % make sure configuration file now has updated WISPR Settings section
