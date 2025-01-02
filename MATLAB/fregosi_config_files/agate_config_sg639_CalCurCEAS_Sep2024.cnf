@@ -41,15 +41,14 @@ CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg639/2024-09-14_Cal
 % WISPR settings
 % only needed after mission is complete (no piloting functionality for WISPR)
 CONFIG.ws.loggers = 1; % 1 for active, 0 for inactive
-CONFIG.ws.inDir = 'F:\sg639_CalCurCEAS_Sep2024_raw_acoustic_data';   % path to raw WISPR.dat files
+CONFIG.ws.inDir = 'F:\sg639_CalCurCEAS_Sep2024_raw_acoustic_data';   % path to raw .dat files
 CONFIG.ws.outDir = 'D:\sg639_CalCurCEAS_Sep2024\flac';   % path to save converted files
-% CONFIG.ws.fileLength = 60; % in seconds
-% CONFIG.ws.sampleRate = 200000; % sample rate; from header of a .dat file
-% CONFIG.ws.dateFormat = 'yyMMdd_HHmmss';
-% CONFIG.ws.dateStart = 7; % what character of file name starts the date format
-% example file name: WISPR_230504_202206.wav
-% CONFIG.ws.inTemplate = '*.dat';   % search template for input files
-% CONFIG.ws.outExt = '.flac';   % determines output format
+CONFIG.ws.outExt = '.flac';   % determines output format
+CONFIG.ws.fileLength = 60; % in seconds
+CONFIG.ws.dateFormat = 'yyMMdd_HHmmss'; % format of timestamp in filename
+CONFIG.ws.dateStart = 7; % character of filename where date starts
+% example file name: WISPR_230504_202206.flac
+
 
 % %%%% OPTIONAL - plotting %%%%%%%%%%%%%%%%%%
 % maps

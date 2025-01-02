@@ -33,7 +33,7 @@
 %	Authors:
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %
-%	Updated:        02 December 2024
+%	Updated:        31 December 2024
 %
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,6 +58,11 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 [gpsSurfT, locCalcT] = extractPositionalData(CONFIG, 1);
 % 0 in plotOn argument will not plot 'check' figures, but change to 1 to
 % plot basic figures for output checking
+
+% note SG639 Dives 73-76 have incomplete/bad .nc files (due to compass
+% calibration errors) so those dives have some NA values in the GPS surface
+% table where correct depth and current data could not be calculated and
+% those dives are missing from the calculated location table
 
 % manually fix the bad inshore fix for SG679 on Dives 122/123
 if strcmp(mtp, 'sg679_CalCurCEAS_Aug2024')
@@ -189,7 +194,7 @@ if ~exist('pamFiles', 'var')
         [CONFIG.gmStr, '_pamFiles.mat']))
 end
 
-timeBuffer = 180;
+timeBuffer = 80; % seconds
 pamFilePosits = extractPAMFilePosits(pamFiles, locCalcT, timeBuffer);
 
 % save it
@@ -210,7 +215,7 @@ if ~exist('pamFiles', 'var')
         [CONFIG.gmStr, '_pamFiles.mat']))
 end
 if ~exist('pamByDive', 'var')
-    load(fullfile(CONFIG.path.mission, 'profiles', ...
+    load(fullfile(CONFIG.path.mission, 'profiles', ...th
         [CONFIG.gmStr, '_pamByDive.mat']))
 end
 
