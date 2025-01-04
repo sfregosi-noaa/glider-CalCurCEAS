@@ -17,11 +17,12 @@
 %
 %	Created with MATLAB ver.: 9.10.0.1739362 (R2021a) Update 5
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
+
+addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
 cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
-    'agate_config_sg639_CalCurCEAS_Sep2024_pseudorca.cnf');
+    'agate_config_sg639_CalCurCEAS_Sep2024.cnf');
 CONFIG = agate(cnfFile);
 
 % colors
