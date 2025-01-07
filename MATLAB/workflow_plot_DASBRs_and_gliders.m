@@ -17,18 +17,16 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % add agate to the path
-% addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-% path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
+addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
-addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
 %% set up the basemap
 
 % set colors
 col_sg639 = [1 1 0];   % yellow - inshore A
 col_sg680 = [1 0 0];   % red - inshore B
 col_sg679 = [1 0.4 0]; % orange - offshore
-dasbrs = [0 1 0];	   % green - dasbrs
+col_dasbr = [0 1 0];	   % green - dasbrs
 
 % load any config file to get started.
 cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
@@ -46,7 +44,8 @@ latLimWide = [40 48];
 lonLimWide = [-130 -122];
 
 % load bathy/contour data
-CONFIG.map.bathyFile = 'C:\Users\selene\onedrive\GIS\etopo\ETOPO2022_ice_15arcsec_OR_wide.tiff';
+CONFIG.map.bathyFile = ['C:\Users\Selene.Fregosi\Documents\GIS\etopo\' ...
+    'ETOPO2022_ice_15arcsec_OR_wide.tiff'];
 	[Z, refvec] = readgeoraster(CONFIG.map.bathyFile, 'OutputType', 'double', ...
 		'CoordinateSystemType', 'geographic');
 	[Z, refvec] = geocrop(Z, refvec, latLimWide, lonLimWide);
@@ -143,14 +142,33 @@ h(6) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 
 dasbrList = dir(fullfile(path_repo, 'DASBRs', '*.csv'));
 
-
-for f = 1:length(dasbrList)
+% for f = 1:length(dasbrList)
+for f = [3, 5:15, 18]
     dasbr = readtable(fullfile(dasbrList(f).folder, dasbrList(f).name));
-	dasbrs(f).Number = f;
-	h(6+f) = plot(dasbrs(f).Lon, dasbrs(f).Lat, 'Color', 'white', ...
-		'LineWidth', 1.5, 'DisplayName', dasbrs(f).Name);
+    dasbr.datenum = datenum(dasbr.UTC);
+	% h(6+f) = plot(dasbr.Longitude, dasbr.Latitude, 'Color', 'white', ...
+	% 	'LineWidth', 1.5, 'DisplayName', 'dasbr');
+    h(6+f) = color_line3(dasbr.Longitude, dasbr.Latitude, ...
+	dasbr.datenum, dasbr.datenum, 'LineWidth', 1.5, ...
+	'DisplayName', ['dasbr' num2str(f)]);
 
+    text(dasbr.Longitude(1)-0.05, dasbr.Latitude(1)+0.05, ['d' num2str(f)], ...
+        'FontSize', 10, 'Color', 'white')
+    text(dasbr.Longitude(end)-0.05, dasbr.Latitude(end)+0.05, ['d' num2str(f)], ...
+        'FontSize', 10, 'Color', 'white')
+	% dasbrs(f).Number = f;
+	% h(6+f) = plot(dasbrs(f).Lon, dasbrs(f).Lat, 'Color', 'white', ...
+	% 	'LineWidth', 1.5, 'DisplayName', dasbrs(f).Name);
 end
+
+%%  add some other labels
+% add newport label
+scatter(-124.05, 44.64, 200, 'white', 'p', 'filled', 'MarkerEdgeColor', 'black');
+text(-124.05, 44.48, 'Newport, OR', 'FontSize', 10, 'Color', 'white');
+% add Eureka label
+scatter(-124.16, 40.8, 300, 'white', 'p', 'filled', 'MarkerEdgeColor', 'black');
+text(-124.02, 40.8, 'Eureka, CA', 'FontSize', 10, 'Color', 'white');
+
 %% link the axes and turn off top layer
 linkaxes([ax1 ax2])
 ax2.Visible = 'off';
@@ -166,12 +184,16 @@ colormap(ax1, cmap)
 colormap(ax2,'jet')
 % caxis([datenum(subTime(1)) datenum(subTime(2))]);
 
+xlim([-128.2 -123.5])
+ylim([40.4 45])
 
-
+% want to add colorbar but it gets written on top of the bathy map...
+% and labels are bad
+% colorbar(ax2, 'south')
 
 %% Save all glider map
 
-exportgraphics(gcf, fullfile(path_repo, 'maps', 'DASBRs_and_gliders.png'), ...
+exportgraphics(gcf, fullfile(path_repo, 'maps', 'DASBRs_and_gliders_coloredByTime.png'), ...
 	'Resolution', 300);
 
 
