@@ -3,3 +3,6 @@
 
 # large matlab files
 .mat
+
+# files to not share publically
+/secret/
