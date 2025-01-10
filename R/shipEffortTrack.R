@@ -59,7 +59,10 @@ ep <- subset(ep, Event != 'B')
 # remove comments
 ep <- subset(ep, Event != 'C')
 
+# plot to check
 plot(ep$Lon, ep$Lat)
+# write to csv
+write.csv(ep, file = here('secret', 'ship_effort.csv'))
 
 
 # ALTERNATIVE could extract effort data as track segments
