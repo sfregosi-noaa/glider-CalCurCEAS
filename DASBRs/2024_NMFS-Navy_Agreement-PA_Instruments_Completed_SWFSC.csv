@@ -1,0 +1,32 @@
+Status,Sensor Type,Deployment ID,Location,DeploymentRecovery_Date,Sampling Rate,Sampling Schedule - Recording Duration,Sampling Schedule - Recording Interval,Approximate Sensor Depth
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_001,"46.881667 , -126.157",08/17/24 - 08/25/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_002,"45.556043 , -125.230057",08/20/24 - 08/30/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_003,"45.733755 , -126.415088",08/20/24 - 08/30/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_004,"45.919688 , -127.678205",08/21/24 - 08/28/24,384 kHz,6,6,100 m
+Lost,Drifting Vertical Array w/Soundtraps,CalCurCEAS_005,"44.664737 , -126.752712",08/22/24 - NA,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_006,"44.814023 , -128.041533",08/23/24 - 08/30/24,384 kHz,6,6,100 m
+Partially Sunk,Drifting Vertical Array w/Soundtraps,CalCurCEAS_007,"44.42917 , -125.586",09/11/24 - 09/20/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_008,"43.747667 , -128.273333",09/13/24 - 09/21/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_009,"43.426 , -126.96783",09/14/24 - 09/23/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_010,"42.25467 , -127.2365",09/14/24 - 09/24/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_011,"43.208 , -125.6977",09/15/24 - 09/22/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_012,"41.061167 , -124.6165",10/01/24 - 10/05/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_013,"40.893198 , -124.722005",10/02/24 - 10/04/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_014,"40.974037 , -124.72036",10/02/24 - 10/05/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_015,"40.822945 , -126.193742",10/05/24 - 10/11/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,OPPS_17,"40.76728 , -126.189512",10/05/24 - 10/05/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_016,"39.675837 , -126.560938",10/06/24 - 10/13/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_017,"41.0785 , -127.481667",10/06/24 - 10/12/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_018,"40.038188 , -127.711952",10/06/24 - 10/11/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,OPPS_18,"39.9295 , -128.073",10/07/24 - 10/07/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_019,"39.336533 , -125.253857",10/09/24 - 10/15/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_020,"36.552167 , -124.549167",10/26/24 - 11/09/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_021,"36.231905 , -123.357812",10/27/24 - 11/07/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_022,"34.952358 , -123.60935",10/27/24 - 11/09/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_023,"34.611478 , -122.446243",10/28/24 - 11/11/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,OPPS_19,"36.2086 , -123.31683",11/07/24 - 11/07/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_024,"34.2805 , -121.302167",11/11/24 - 11/24/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_025,"32.6905 , -120.4281",11/20/24 - 12/03/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_026,"32.9462 , -121.5761",11/22/24 - 12/02/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,CalCurCEAS_027,"33.2813 , -121.6528",11/23/24 - 12/03/24,384 kHz,6,6,100 m
+Complete,Drifting Vertical Array w/Soundtraps,OPPS_20,"33.554 , -123.885",12/01/24 - 12/01/24,384 kHz,6,6,100 m
