@@ -13,7 +13,7 @@
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 %
-%	Updated:   06 January 2025
+%	Updated:   10 January 2025
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % add agate to the path
@@ -37,8 +37,11 @@ CONFIG = agate(cnfFile);
 % colorize the trackline by a z value (time). But pull pieces from it
 
 % get axis limits
-CONFIG.map.latLim;
-CONFIG.map.lonLim;
+% CONFIG.map.latLim;
+% CONFIG.map.lonLim;
+latLim = [40.25 45];
+lonLim = [-129 -123.2];
+
 % rounded limits (for bathy loading) to make sure all right sizes
 latLimWide = [40 48];
 lonLimWide = [-130 -122];
@@ -135,7 +138,7 @@ h(6) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 	'DisplayName', CONFIG.glider);
 % colormap(hot);
 
-
+hCount = 6; % for keeping track of h objects 
 %% add DASBR tracks
 % dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
 % 	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
@@ -143,12 +146,14 @@ h(6) = color_line3(surfSimp.longitude, surfSimp.latitude, ...
 dasbrList = dir(fullfile(path_repo, 'DASBRs', '*.csv'));
 
 % for f = 1:length(dasbrList)
+% loop through just the ones that fall within the map axes
 for f = [3, 5:15, 18]
+    hCount = hCount + 1;
     dasbr = readtable(fullfile(dasbrList(f).folder, dasbrList(f).name));
     dasbr.datenum = datenum(dasbr.UTC);
 	% h(6+f) = plot(dasbr.Longitude, dasbr.Latitude, 'Color', 'white', ...
 	% 	'LineWidth', 1.5, 'DisplayName', 'dasbr');
-    h(6+f) = color_line3(dasbr.Longitude, dasbr.Latitude, ...
+    h(hCount) = color_line3(dasbr.Longitude, dasbr.Latitude, ...
 	dasbr.datenum, dasbr.datenum, 'LineWidth', 1.5, ...
 	'DisplayName', ['dasbr' num2str(f)]);
 
@@ -160,6 +165,24 @@ for f = [3, 5:15, 18]
 	% h(6+f) = plot(dasbrs(f).Lon, dasbrs(f).Lat, 'Color', 'white', ...
 	% 	'LineWidth', 1.5, 'DisplayName', dasbrs(f).Name);
 end
+
+%% add the ship
+ ship = readtable(fullfile(path_repo, 'secret', 'ship_effort.csv'));
+ ship.datenum = datenum(ship.DateTime);
+ 
+ % trim to just the area we want (otherwise color axis will be off)
+trimIdx = find(ship.Lat >= latLim(1) & ship.Lat <= latLim(2) & ...
+    ship.Lon >= lonLim(1) & ship.Lon <= lonLim(2));
+% trimIdx = unique([latIdx; lonIdx]);
+shipTrim = ship(trimIdx,:);
+
+ % loop through each segment separately so they aren't connected
+ for f = 1:max(shipTrim.SegID)
+     shipSeg = shipTrim(shipTrim.SegID == f,:);
+ hCount = hCount + 1;
+ h(hCount) = color_line3(shipSeg.Lon, shipSeg.Lat, shipSeg.datenum, ...
+     shipSeg.datenum, 'LineWidth', 1.5, 'DisplayName', 'ship');
+ end
 
 %%  add some other labels
 % add newport label
@@ -184,16 +207,20 @@ colormap(ax1, cmap)
 colormap(ax2,'jet')
 % caxis([datenum(subTime(1)) datenum(subTime(2))]);
 
-xlim([-128.2 -123.5])
-ylim([40.4 45])
-
+xlim(lonLim)
+ylim(latLim)
+% set the axis ratio. 
+dLon = 111*cosd(40); 
+ratio = dLon/111;
+pbaspect(ax1, [ratio 1 1])
+pbaspect(ax2, [ratio 1 1])
 % want to add colorbar but it gets written on top of the bathy map...
 % and labels are bad
 % colorbar(ax2, 'south')
 
 %% Save all glider map
 
-exportgraphics(gcf, fullfile(path_repo, 'maps', 'DASBRs_and_gliders_coloredByTime.png'), ...
+exportgraphics(gcf, fullfile(path_repo, 'maps', 'DASBRs_and_gliders_and_ship_coloredByTime.png'), ...
 	'Resolution', 300);
 
 
