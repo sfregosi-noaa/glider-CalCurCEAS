@@ -1,0 +1,78 @@
+% %%%% agate - mission configuration file %%%
+% create a new file for each glider and mission
+% Guide for creating configuration files:  
+%    https://sfregosi.github.io/agate-public/configuration.html
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%% SG639 CalCurCEAS Sep 2024 - Nearshore A %%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %%%% REQUIRED CONFIG PARAMETERS %%%%%%%%%%%
+% define glider and mission information
+CONFIG.glider = 'sg639';  % glider serial number
+CONFIG.mission = 'CalCurCEAS_Sep2024'; % mission identifier defined in sg_calib_constants.m 
+CONFIG.sgVer = 66.12; % 66.12 or 67.0, firmware version displayed on glider start up
+CONFIG.tmd = 41; % target mission duration in days
+
+% define paths
+% mission path - path to umbrella folder that either contains previously 
+%                downloaded basestation and output files or will contain 
+%                downloaded and processed/produced files and figures
+CONFIG.path.mission = 'C:\Users\selene\Desktop\sg639_CalCurCEAS_Sep2024';
+% analysis path - optional path to an 'analysis' folder that would typically
+%                 contain the outputs of acoustic analyses (e.g., Pamguard
+%                 or Triton)
+% CONFIG.path.analysis = 'C:\Users\User.Name\project\analysis';
+
+
+% %%%% OPTIONAL - basestation %%%%%%%%%%%%%%%
+% specify basestation configuration file
+CONFIG.bs.cnfFile = 'C:\Users\selene\Documents\gliders_local\basestation_configuration\basestation_config_seagliderpub.cnf';
+% specify path to store downloaded basestation files
+CONFIG.path.bsLocal = fullfile(CONFIG.path.mission, 'basestationFiles\');
+% specify path to remote files (e.g., glider's current/mission folder)
+CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg639/2024-09-14_CalCurCEAS_Sep2024';
+
+
+% %%%% OPTIONAL - acoustics %%%%%%%%%%%%%%%%%
+% PMAR settings
+% CONFIG.pm.loggers = 0; % 1 for active, 0 for inactive
+
+% WISPR settings
+% only needed after mission is complete (no piloting functionality for WISPR)
+% CONFIG.ws.loggers = 0; % 1 for active, 0 for inactive
+% CONFIG.ws.fileLength = 60; % in seconds
+% CONFIG.ws.sampleRate = 180000; % sample rate
+% CONFIG.ws.dateFormat = 'yyMMdd_HHmmss';
+% CONFIG.ws.dateStart = 7; % what character of file name starts the date format
+% example file name: WISPR_230504_202206.wav
+
+% %%%% OPTIONAL - plotting %%%%%%%%%%%%%%%%%%
+% maps
+% path to basemap files (land shape files and bathymetry rasters)
+CONFIG.path.shp = 'C:\Users\selene\OneDrive\GIS\';
+% optional: can specify full path to bathymetry file, otherwise agate 
+% will prompt to select file
+CONFIG.map.bathyFile =  'C:\Users\selene\OneDrive\GIS\etopo\ETOPO2022_ice_15arcsec_OR_wide.tiff';
+% define map extents and location of map elements
+CONFIG.map.latLim = [40.25 45.00];
+CONFIG.map.lonLim = [-129.50 -123.00];
+CONFIG.map.naLat = 44.4; % optional arguments for north arrow location on map; 
+                          % leave empty '[]' for no north arrow
+CONFIG.map.naLon = -129;
+CONFIG.map.scalePos = [-0.042 0.775]; % optional arguments for scale bar location 
+                             % and ticks, leave empty '[]' for no scale bar
+CONFIG.map.scaleMajor = [0:50:100];
+CONFIG.map.scaleMinor = [0:25:50];
+
+% piloting plot settings
+% pre allocate fig numbers so figures are updated rather than created new
+CONFIG.plots.figSeed = 639; % suggest using the glider serial e.g., 639
+CONFIG.plots.figNumList = CONFIG.plots.figSeed + [0 1 2 3 4 5 6 7 8 9]; 
+% figNumList (1) = battery, (2) = voltagePackUse, (3) = humidity
+% and pressure, (4) = map, (5) = zoomed map, (6) = minimum voltage, 
+% (7) = voltage normalized, (8) = ERMA detections, (9) = ERMA reference
+
+% load plot positions 
+% load('C:\Users\User.Name\Documents\gliders\figPositions.mat');
+% CONFIG.plots.positions = positions;

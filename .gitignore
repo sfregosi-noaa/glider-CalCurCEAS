@@ -1,5 +1,35 @@
+
+
+# files to not share publically
+/secret/
+
+######################
+#### MATLAB FILES ####
+######################
 # large fig files
 .fig
 
 # large matlab files
 .mat
+
+#################
+#### R FILES ####
+#################
+# History files
+.Rhistory
+.Rapp.history
+
+# RStudio files
+.Rproj.user/
+
+
+######################
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

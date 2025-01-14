@@ -17,17 +17,18 @@
 %
 %	Created with MATLAB ver.: 9.10.0.1739362 (R2021a) Update 5
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-addpath(genpath('C:\Users\selene\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\selene\Documents\GitHub\glider-CalCurCEAS\';
+
+addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 
 cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
-    'agate_config_sg639_CalCurCEAS_Sep2024_pseudorca.cnf');
+    'agate_config_sg639_CalCurCEAS_Sep2024.cnf');
 CONFIG = agate(cnfFile);
 
 % colors
 % col_ship = [1 1 0.5]; % yellow
 col_ship = [0.6 0 0.6]; % purple
-
+col_ship = [1 1 1]; % white
 
 % create basemap plot
 [baseFigAll] = createBasemap(CONFIG, 'bathy', 1, 'contourOn', 0, 'figNum', 20);
@@ -47,11 +48,11 @@ ship = kml2struct(fullfile(path_repo, 'DASBRs', 'CalCurCEAS_effort_through202410
 % readgeotable(fullfile(path_repo, 'DASBRs', 'CalCurCEAS_effort_through20241014.kml'));
 
 for f = 1:length(ship)
-plotm(ship(f).Lat, ship(f).Lon, 'Color', col_ship, 'LineWidth', 2);
+    plotm(ship(f).Lat, ship(f).Lon, 'Color', col_ship, 'LineWidth', 2);
 end
 
-exportgraphics(gcf, fullfile(path_repo, 'maps', 'ship_tracks_purple_thick.png'), ...
-	'Resolution', 300);
+exportgraphics(gcf, fullfile(path_repo, 'maps', 'ship_tracks_white_thick.png'), ...
+    'Resolution', 300);
 
 
 

@@ -19,6 +19,41 @@ If you have questions, suggestions, or problems, please open an [ISSUE](https://
 
 [Trackline options](https://docs.google.com/document/d/1NwKQ2VxagRuMKWgMJnZO26QlkgC2rQFMd823x6BZVJk/edit)
 
+#### Data availability
+
+Recordings will be made available at NCEI once they have been fullying processed and screened. The link will be provided here. 
+
+Glider piloting/environmental data and raw and processed acoustic data are stored on the PIFSC server (too large to store via GitHub). The folder structure is as as follows:
+
+```
+glider_CalCurCEAS2024
+├───sg639_CalCurCEAS_Sep2024
+│   ├───piloting
+│   │   ├───basestationFiles
+│   │   ├───flightStatus
+│   │   └───profiles
+│   └───recordings
+│       ├───flac
+│       └───raw
+├───sg679_CalCurCEAS_Aug2024
+│   ├───piloting
+│   │   ├───basestationFiles
+│   │   ├───flightStatus
+│   │   └───profiles
+│   └───recordings
+│       ├───flac
+│       └───raw
+└───sg680_CalCurCEAS_Sep2024
+    ├───piloting
+    │   ├───basestationFiles
+    │   ├───flightStatus
+    │   └───profiles
+    └───recordings
+        ├───flac
+        └───raw
+```
+
+
 ## Disclaimer
 
 <sub>The scientific results and conclusions, as well as any views or opinions expressed herein, are those of the author(s) and do not necessarily reflect the views of NOAA or the Department of Commerce.</sub>
