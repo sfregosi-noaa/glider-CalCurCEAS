@@ -51,6 +51,15 @@ for(i in 1:length(df_proc_sub$line_num)) {
   }
 }
 
+# Deal with timezones - import assumes UTC but is in local time
+# set separately for during/after daylight savings, switch was on Sun Nov 3 2024
+pdt <- which(df_proc_sub$DateTime < "2024-11-03 00:00:00") 
+df_proc_sub$DateTime[pdt] <- lubridate::force_tz(df_proc_sub$DateTime[pdt], 'PDT')
+pst <- which(df_proc_sub$DateTime > "2024-11-03 00:00:00")
+df_proc_sub$DateTime[pst] <- lubridate::force_tz(df_proc_sub$DateTime[pst], 'PST')
+# update the column name 
+colnames(df_proc_sub)[colnames(df_proc_sub) == 'DateTime'] <- 'DateTime_UTC'
+
 # clean up output
 # remove off effort lines
 ep <- subset(df_proc_sub, SegID > 0)
