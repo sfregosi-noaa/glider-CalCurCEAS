@@ -1,0 +1,30 @@
+Calibration information for CalCurCEAS 2024 Glider Survey
+
+
+SG639 - INCOMPLETE
+WISPR3 (no4, v1.3.0)
+Hydrophone HTI-92-WB SN#635013
+	- sensitivity -164.5 dB @ 3 kHz 
+	- Fc = 25 Hz
+	- no Navy calibration
+Preamp
+No gain (0 dB)
+
+
+SG679 - INCOMPLETE
+WISPR2 (??)
+Hydrophone HTI-92-WB SN#653007
+	- sensitivity -162.5 dB @ 3 kHz
+	- Fc = 25 Hz
+	- detailed Navy calibration curve available
+Preamp 
+No gain (0 dB)
+
+
+SG680 - INCOMPLETE
+WISPR3 (no3, v1.3.0)
+Hydrophone HTI-92-WB SN#121100? (either 1211001 or 1211002)
+	- sensitivity 164.? dB @ 3 kHz (either -164.5 or -164.0)
+	- detailed Navy calibration curve available in pdf form, needs to be transcribed to csv
+Preamp
+No gain (0 dB)
