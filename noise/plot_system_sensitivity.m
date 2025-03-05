@@ -13,7 +13,7 @@ xline(62500, 'k-.', 'DisplayName', 'Upper limit for valid data');
 
 set(gca, 'XScale', 'log');
 grid on;
-xlabel('sensitivity [dB]');
-ylabel('frequency [Hz]');
+ylabel('sensitivity [dB]');
+xlabel('frequency [Hz]');
 xlim([0 max(frqSys)]);
 legend('Location', 'west');
