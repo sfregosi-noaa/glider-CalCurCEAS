@@ -1,6 +1,6 @@
 # glider-CalCurCEAS
 
-Repository for passive acoustic glider efforts overlapping with CalCurCEAS (California Current Cetacean and Ecosystem Assessment Survey) 2024. This project is part of NOAA's [IRA PAM Strategic Initiative](https://nmfs-ost.github.io/PAM_National_NMFS_Network/content/SI_Coordination.html) and IRA UxS Strategic Initiative. 
+Repository for passive acoustic glider efforts overlapping with CalCurCEAS (California Current Cetacean and Ecosystem Assessment Survey) 2024. This project is part of NOAA's [PAM Strategic Initiative](https://nmfs-ost.github.io/PAM_National_NMFS_Network/content/SI_Coordination.html) and UxS Strategic Initiative. 
 
 This repository contains survey planning and analysis documentation and code. 
 Glider piloting files, raw acoustic files, and large analysis outputs *should not* be stored here. 
@@ -8,7 +8,7 @@ Glider piloting files, raw acoustic files, and large analysis outputs *should no
 #### Working with this repository
 To avoid upstream/downstream conflicts, please **fork** this repository to your GitHub account. Then, make any changes directly in your fork of the repository. If you have made changes that should be incorporated into the main repository, then create a **pull request** to pull your changes to the primary repository. 
 
-If you have questions, suggestions, or problems, please open an [ISSUE](https://github.com/sfregosi/glider-CalCurCEAS/issues)
+If you have questions, suggestions, or problems, please open an [ISSUE](https://github.com/sfregosi-noaa/glider-CalCurCEAS/issues)
 
 #### Google Drive Links
 [CalCurCEAS Glider 2024 folder](https://drive.google.com/drive/u/0/folders/1h6PC8eH8BzDcbnq1kNLVLJI7YYhtB4r8)
