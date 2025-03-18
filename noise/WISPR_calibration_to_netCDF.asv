@@ -155,14 +155,30 @@ axis tight;
 xlim([0 max(freq)/2]); % xlim([0 max(freq)];
 ylabel('sensitivity [dB]');
 xlabel('frequency [Hz]');
-title(sprintf('Mission: %s, Hyd SN: %s, Preamp Ver/SN: %s/%s', ...
-    mission, hSN, paVer, paSN), 'Interpreter', 'none');
+title(sprintf('Hydrophone SN: %s, Preamp SN: %s, Preamp Ver: %s', ...
+    hSN, paSN, paVer));
 legend('Location', 'west');
 
 exportgraphics(gcf, fullfile(path_calibrations, sprintf('%s_sensitivity_%s.png', ...
-    mission, datetime('now', 'Format', 'yyyy-MM-dd'))), 'Resolution', 300)
+    mission, datestr(now('yyyy-mm-dd'))), 'Resolution', 180)
 
-% 
-% 
-% [freqTable] = getBandTable(fftBinSize, bin1CenterFrequency, fs, base, ...
-%     bandsPerDivision, firstOutputBandCenterFrequency, useFFTResAtBottom);
+sprintf('sensitivity_%s.mat', datestr(now, 'yyyymmdd'))
+
+set(0,'DefaultAxesFontSize',12)
+hold on
+plot(freq, repmat(hSens, size(freq)), '--ro');
+plot(freq, paGain, '--bo')
+plot(freq, sysResp, 'ks', 'markersize', 10)   % original
+plot(bcf, R, 'k', 'linewidth', 1.5)   % interpolated
+axis tight; yl = get(gca, 'Ylim'); plot(2200+[0 0],yl+[-1 1]*5,'k--')
+legend('Hydrophone sensitivity','Pre-amp gain','System response, original',...
+    'System Response, interpolated','Upper limit for valid data','Location','west')
+xlabel('Frequency (Hz)'); ylabel('dB')
+hydrophoneID = ("Hydrophone SN: "+ char(AUH.hydrophoneSN) +", PreAmpSN: "...
+    + num2str(cell2mat(AUH.PreAmpSN)) +", PreAmpVer: "+ char(AUH.PreAmpVer));
+title(hydrophoneID)
+jpgname = (deploymentID +"_sensitivity.jpg");
+print(jpgname,'-djpeg99','-r300');
+
+[freqTable] = getBandTable(fftBinSize, bin1CenterFrequency, fs, base, ...
+    bandsPerDivision, firstOutputBandCenterFrequency, useFFTResAtBottom);
