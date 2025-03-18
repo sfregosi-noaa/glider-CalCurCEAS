@@ -7,7 +7,7 @@ Hydrophone HTI-92-WB SN#635013
 	- sensitivity -164.5 dB @ 3 kHz 
 	- Fc = 25 Hz
 	- no Navy calibration
-Preamp
+Preamp - integrated?
 No gain (0 dB)
 
 
