@@ -1,0 +1,168 @@
+% WISPR_CALIBRATION_TO_NETCDF.M
+%	Generate netCDF file and  summary plot of WISPR system calibration
+%
+%	Description:
+%       Generate netCDF files and summary plots of WISPR system
+%       calibration metadata including hydrophone and preamp sensitivities,
+%       user-defined system gain, and anti-aliasing filters. The netCDF
+%       files are used by PyPAM Based Processin (PBP) when creating daily
+%       files of hybrid millidecade spectra.
+%
+%	Notes
+%       This script is based off the NRS_calibration_to_netcdf.m script
+%       written by J. Ryan (MBARI) and S. Haver (NEFSC) available at
+%       https://github.com/sahav/NRS
+%
+%	See also
+%
+%
+%	Authors:
+%		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
+%
+%	Updated:   17 March 2025
+%
+%	Created with MATLAB ver.: 24.2.0.2740171 (R2024b) Update 1
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Set mission and calibration path
+% define glider mission
+mission = 'sg679_CalCurCEAS_Aug2024';
+% mission = 'sg639_CalCurCEAS_Sep2024';
+path_calibrations = 'C:\Users\selene.fregosi\Documents\GitHub\PAM-glider-CalCurCEAS\noise\test_calibrations';
+
+% define analysis frequency range (may change with mission sample rate)
+fRange = [1 90000]; % in Hz
+
+%% Parse correct mission info
+% In the future, will either read in a mission record table, or a single
+% csv or xlsx for each mission, or something else to parse the relevant
+% metadata. For now, hard coding for testing/building an example.
+if strcmp(mission, 'sg679_CalCurCEAS_Aug2024')
+    % recorder type
+    loggerType = 'WISPR2';      % e.g., PMARXL, WISPR2, WISPR3
+    loggerVer = '0.2';          % string
+    loggerSN = '';              % string
+
+    % recorder settings
+    sampleRate = 180000;        % in Hz
+    decimationFactor = 4;       % integer like 4, 8, 16
+    bitRate = 24;               % bits per sample - 16, 24, etc
+    adcVoltRef = 5;             % voltage referece - 5
+
+    % hydrophone info
+    hSN = '653007';         % string (or should be numeric?)
+    hSens = -162.5;         % in dB, from manufacturer, or could be a curve?
+    hydroFc = 25;               % in Hz (high pass filter setting?)
+
+    % system gain
+    sysGain = 0;             % integer e.g., 0, 6, 12, 18
+
+    % preamp info
+    paVer = 'WBRev6';        % string
+    paSN = '015';           % string
+
+    % preampGain = ;              % this should be a matrix
+    % preampGain = [-2.9 6.8 13.6 15.7 16.3 16.6 16.8 17.3 19.9 23.9 ...
+    %     29.1 36.3 41.2 44.5 45.6 45.5 45.2 44.9 44.6 44.3 ...
+    %     44 43.5]; % From gain curve file
+    % preampFreq = ;              % this should be a matrix
+    paFile = 'preamp_WISPR2_rev6_board15_2023-08-22.csv';
+
+    % anti-aliasing filter info
+    % use hand-extracted values from LTC2512 materials
+    % select the csv based on input sample rate/decimation factor
+    aaFile = 'LTC2512-24_antialiasingFilter_200kHz_df4.csv';
+    % antiAliasGain = [zeros(1,length(frqSys)-7) ...
+    %     -5 -108 -108 -108 -108 -110 -112];
+
+elseif strcmp(mission, 'sg639_CalCurCEAS_Sep2024')
+    % recorder type
+    loggerType = 'WISPR3';      % e.g., PMARXL, WISPR2, WISPR3
+    loggerVer = '1.3.0';        % string
+    loggerSN = 'no4';           % string
+
+    % hydrophone info
+    hSN = '635013';         % string (or should be numeric?)
+    hSens = -164.5;         % in dB, from manufacturer, or could be a curve?
+
+    % system gain
+    sysGain = 0;             % integer e.g., 0, 6, 12, 18
+
+    % anti-aliasing filter info
+    % use hand-extracted values from LTC2512 materials
+    % select the csv based on input sample rate/decimation factor
+    aaFile = 'LTC2512-24_antialiasingFilter_200kHz_df4.csv';
+    % antiAliasGain = [zeros(1,length(frqSys)-7) ...
+    %     -5 -108 -108 -108 -108 -110 -112];
+
+end
+
+% % read in stuff instead of hard coding here...
+% freq = [1 2 5 10 20 50 100 200 500 1000 ...
+%         2000 5000 10000 20000 50000 60000 70000 80000 90000 100000 ...
+%         110000 120000];
+
+%% Calculate general system response
+
+% read in preamp and anti aliasing filter
+paGain = readmatrix(fullfile(path_calibrations, paFile));
+aaFilt = readmatrix(fullfile(path_calibrations, aaFile));
+
+% sampled frequencies of gain curves may not match - standardize to add
+% find all unique frequencies
+freq = unique([paGain(:,1); aaFilt(:,1)]);
+% interpolate both curves at those frequencies
+paGain = interp1(paGain(:,1), paGain(:,2), freq);
+aaFilt = interp1(aaFilt(:,1), aaFilt(:,2), freq);
+
+%***May need to add hydrophone sensitivity curves***
+
+% calculate general system response
+sysResp = hSens + paGain + sysGain + aaFilt;
+
+
+%% Calculate HMD bands
+% Compute HMD bands centers, and interpolate calibration data
+%  This should use the revised code from Martin et al., after they
+%  corrected an error.
+fftBinSize = 1; %P.fs = 5000;
+mDecBands = getBandTable(fftBinSize, 0, sampleRate, 10, 1000, 1, 1);
+bcf = mDecBands(:,2);  % band center frequency
+% subset to standard frequency range for NRS stations
+k = find(bcf >= fRange(1) & bcf <= fRange(2));
+bcf = bcf(k);
+% interpolate
+R = interp1(freq, sysResp, bcf);
+
+
+%% Plot
+% Produce summary plot, to screen and png file
+figure(8);
+clf;
+set(gcf, 'position', [100 100 1000 500], 'color', 'w');
+hold on;
+plot(freq, repmat(hSens, size(freq)), 'ro--', 'DisplayName', 'Hydrophone Sensitivity');
+plot(freq, paGain, 'bo--', 'DisplayName', 'Pre-amp gain');
+plot(freq, aaFilt, 'go--', 'DisplayName', 'Anti-aliasing filter')%
+plot(freq, sysResp, 'ks', 'MarkerSize', 10, 'DisplayName', ...
+    'System response - original'); % combined/original
+plot(bcf, R, 'k', 'LineWidth', 1.5, 'DisplayName', ...
+    'System response - interpolated'); % interpolated
+xline(fRange(2), 'k-.', 'DisplayName', 'Upper limit for valid data');
+set(gca, 'XScale', 'log', 'FontSize', 12)
+grid on;
+axis tight;
+xlim([0 max(freq)/2]); % xlim([0 max(freq)];
+ylabel('sensitivity [dB]');
+xlabel('frequency [Hz]');
+title(sprintf('Mission: %s, Hyd SN: %s, Preamp Ver/SN: %s/%s', ...
+    mission, hSN, paVer, paSN), 'Interpreter', 'none');
+legend('Location', 'west');
+
+exportgraphics(gcf, fullfile(path_calibrations, sprintf('%s_sensitivity_%s.png', ...
+    mission, datetime('now', 'Format', 'yyyy-MM-dd'))), 'Resolution', 300)
+
+% 
+% 
+% [freqTable] = getBandTable(fftBinSize, bin1CenterFrequency, fs, base, ...
+%     bandsPerDivision, firstOutputBandCenterFrequency, useFFTResAtBottom);
