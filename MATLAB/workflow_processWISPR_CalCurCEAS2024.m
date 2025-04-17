@@ -12,8 +12,7 @@
 %	Authors:
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %
-%	FirstVersion: 	04 December 2024
-%	Updated:
+%	Updated:       11 April 2025
 %
 %	Created with MATLAB ver.: 24.2.0.2740171 (R2024b) Update 1
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,4 +37,4 @@ CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
 % convert!
 % convertWispr(CONFIG, 'showProgress', true, 'outExt', '.flac');
 convertWispr(CONFIG, 'showProgress', true, 'outExt', '.flac', ...
-    'restartDir', '241008');
+    'restartDir', '240901');

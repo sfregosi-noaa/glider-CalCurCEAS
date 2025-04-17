@@ -42,7 +42,7 @@ CONFIG.path.bsRemote = '/home/jails/noaaosu/gliderjail/home/sg680/2024-09-14_Cal
 % only needed after mission is complete (no piloting functionality for WISPR)
 CONFIG.ws.loggers = 1; % 1 for active, 0 for inactive
 CONFIG.ws.inDir = 'F:\sg680_CalCurCEAS_Sep2024_raw_acoustic_data';   % path to raw .dat files
-CONFIG.ws.outDir = 'D:\sg680_CalCurCEAS_Sep2024\flac';   % path to save converted files
+CONFIG.ws.outDir = 'E:\sg680_CalCurCEAS_Sep2024\flac';   % path to save converted files
 CONFIG.ws.outExt = '.flac';   % determines output format
 CONFIG.ws.fileLength = 60; % in seconds
 CONFIG.ws.dateFormat = 'yyMMdd_HHmmss'; % format of timestamp in filename
