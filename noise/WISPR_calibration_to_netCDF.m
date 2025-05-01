@@ -19,7 +19,7 @@
 %	Authors:
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %
-%	Updated:   17 March 2025
+%	Updated:   1 May 2025
 %
 %	Created with MATLAB ver.: 24.2.0.2740171 (R2024b) Update 1
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,10 +28,18 @@
 % define glider mission
 mission = 'sg679_CalCurCEAS_Aug2024';
 % mission = 'sg639_CalCurCEAS_Sep2024';
-path_calibrations = 'C:\Users\selene.fregosi\Documents\GitHub\PAM-glider-CalCurCEAS\noise\test_calibrations';
+
+% set path to calibration data files
+path_calibrations = 'C:\Users\selene.fregosi\Documents\GitHub\glider-CalCurCEAS\noise\test_calibrations';
+
+% set path/add path to Samara's NRS repo
+path_NRS = 'C:\Users\selene.fregosi\Documents\GitHub\NRS';
+addpath(genpath(path_NRS));
 
 % define analysis frequency range (may change with mission sample rate)
 fRange = [1 90000]; % in Hz
+% sg679 sample rate was 180 kHz so using Nyquist, but because of filter
+% drop off may make sense to use value lower than Nyquist?
 
 %% Parse correct mission info
 % In the future, will either read in a mission record table, or a single
@@ -95,12 +103,33 @@ elseif strcmp(mission, 'sg639_CalCurCEAS_Sep2024')
     % antiAliasGain = [zeros(1,length(frqSys)-7) ...
     %     -5 -108 -108 -108 -108 -110 -112];
 
+elseif strcmp(mission, 'sg680_CalCurCEAS_Sep2024')
+    % recorder type
+    loggerType = 'WISPR3';      % e.g., PMARXL, WISPR2, WISPR3
+    loggerVer = '1.3.0';        % string
+    loggerSN = 'no2';           % string
+    % note DAT FILE HEADERS STATE no3. THIS IS INCORRECT!
+
+    % hydrophone info
+    hSN = '635013';         % string (or should be numeric?)
+    hSens = -164.5;         % in dB, from manufacturer, or could be a curve?
+
+    % system gain
+    sysGain = 0;             % integer e.g., 0, 6, 12, 18
+
+    % anti-aliasing filter info
+    % use hand-extracted values from LTC2512 materials
+    % select the csv based on input sample rate/decimation factor
+    aaFile = 'LTC2512-24_antialiasingFilter_200kHz_df4.csv';
+    % antiAliasGain = [zeros(1,length(frqSys)-7) ...
+    %     -5 -108 -108 -108 -108 -110 -112];
 end
 
-% % read in stuff instead of hard coding here...
-% freq = [1 2 5 10 20 50 100 200 500 1000 ...
-%         2000 5000 10000 20000 50000 60000 70000 80000 90000 100000 ...
-%         110000 120000];
+% set hydrophone ID string for this configuration
+% hydrophoneID = sprintf('Mission: %s, Hydrophone SN: %s, Preamp SN_Ver: %s_%s', ...
+%     mission, hSN, paSN, paVer); % with mission string
+hydrophoneID = sprintf('Hydrophone SN: %s, Preamp SN: %s, Preamp Ver: %s', ...
+   hSN, paSN, paVer);
 
 %% Calculate general system response
 
@@ -126,9 +155,11 @@ sysResp = hSens + paGain + sysGain + aaFilt;
 %  This should use the revised code from Martin et al., after they
 %  corrected an error.
 fftBinSize = 1; %P.fs = 5000;
+% [freqTable] = getBandTable(fftBinSize, bin1CenterFrequency, fs, base, ...
+%     bandsPerDivision, firstOutputBandCenterFrequency, useFFTResAtBottom);
 mDecBands = getBandTable(fftBinSize, 0, sampleRate, 10, 1000, 1, 1);
 bcf = mDecBands(:,2);  % band center frequency
-% subset to standard frequency range for NRS stations
+% subset to analysis frequency range set at top
 k = find(bcf >= fRange(1) & bcf <= fRange(2));
 bcf = bcf(k);
 % interpolate
@@ -139,7 +170,7 @@ R = interp1(freq, sysResp, bcf);
 % Produce summary plot, to screen and png file
 figure(8);
 clf;
-set(gcf, 'position', [100 100 1000 500], 'color', 'w');
+set(gcf, 'position', [100 100 900 450], 'color', 'w');
 hold on;
 plot(freq, repmat(hSens, size(freq)), 'ro--', 'DisplayName', 'Hydrophone Sensitivity');
 plot(freq, paGain, 'bo--', 'DisplayName', 'Pre-amp gain');
@@ -153,16 +184,58 @@ set(gca, 'XScale', 'log', 'FontSize', 12)
 grid on;
 axis tight;
 xlim([0 max(freq)/2]); % xlim([0 max(freq)];
+% ylim([min([paGain; aaFilt; sysResp; sysGain; hSens])-2, ...
+%     max([paGain; aaFilt; sysResp; sysGain; hSens])]+2)
 ylabel('sensitivity [dB]');
 xlabel('frequency [Hz]');
-title(sprintf('Mission: %s, Hyd SN: %s, Preamp Ver/SN: %s/%s', ...
-    mission, hSN, paVer, paSN), 'Interpreter', 'none');
+title(hydrophoneID, 'Interpreter', 'none');
 legend('Location', 'west');
 
 exportgraphics(gcf, fullfile(path_calibrations, sprintf('%s_sensitivity_%s.png', ...
     mission, datetime('now', 'Format', 'yyyy-MM-dd'))), 'Resolution', 300)
 
-% 
-% 
-% [freqTable] = getBandTable(fftBinSize, bin1CenterFrequency, fs, base, ...
-%     bandsPerDivision, firstOutputBandCenterFrequency, useFFTResAtBottom);
+%% save as netCDF
+
+ncFilename = fullfile(path_calibrations, sprintf('%s_sensitivity_%s.nc', ...
+    mission,  datetime('now', 'Format', 'yyyy-MM-dd')));
+ncid = netcdf.create(ncFilename, 'CLOBBER');
+
+% global attributes
+varid = netcdf.getConstant('NC_GLOBAL');
+
+% title
+ttl = sprintf(['%s WISPR system response interpolated to center ', ...
+    'frequencies of hybrid millidecade bands, fs = %i Hz.'], mission, sampleRate);
+netcdf.putAtt(ncid, varid, 'title', ttl);
+
+% Hydrophone ID
+netcdf.putAtt(ncid, varid, 'hydrophone ID', hydrophoneID);
+
+% Metadata source
+% ms = ("Excel file "+ xlfilename +", sheet name "+ xlsheetname);
+ms = sprintf('Preamp CSV %s, filter CSV %s, and script %s', ...
+    paFile, aaFile, 'WISPR_calibration_to_netCDF.m');
+netcdf.putAtt(ncid, varid, 'metadata source', ms);
+
+% vectors for frequency dependent sensitivity
+% frequency
+dimidt = netcdf.defDim(ncid, 'frequency', length(bcf));
+varid = netcdf.defVar(ncid, 'frequency', 'NC_DOUBLE', dimidt);
+netcdf.endDef(ncid) % end define mode for attributes
+netcdf.putVar(ncid, varid, bcf)
+netcdf.reDef(ncid); % Re-enter define mode for attributes
+netcdf.putAtt(ncid, varid, 'long_name', 'frequency of hybrid millidecade band center')
+netcdf.putAtt(ncid, varid, 'units', 'Hz')
+% sensitivity
+varid = netcdf.defVar(ncid, 'sensitivity', 'NC_DOUBLE', dimidt);
+netcdf.endDef(ncid)
+netcdf.putVar(ncid, varid, R)
+netcdf.reDef(ncid); % Re-enter define mode for attributes
+netcdf.putAtt(ncid, varid, 'long_name', 'hydrophone sensitivity')
+netcdf.putAtt(ncid, varid, 'units', 'dB V re micropascal')
+
+% close
+netcdf.close(ncid)
+
+% display summary of written file
+ncdisp(ncFilename)
