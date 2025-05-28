@@ -239,3 +239,11 @@ netcdf.close(ncid)
 
 % display summary of written file
 ncdisp(ncFilename)
+
+%% save as csv
+
+csvFilename = fullfile(path_calibrations, sprintf('%s_sensitivity_%s.csv', ...
+    mission,  datetime('now', 'Format', 'yyyy-MM-dd')));
+
+ot = table(bcf, R, 'VariableNames', {'frequency', 'sensitivity'});
+writetable(ot, csvFilename);
