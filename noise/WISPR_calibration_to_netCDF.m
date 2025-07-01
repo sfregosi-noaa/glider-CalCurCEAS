@@ -26,26 +26,29 @@
 
 %% Set mission and calibration path
 % define glider mission
-mission = 'sg679_CalCurCEAS_Aug2024';
+% mission = 'sg679_CalCurCEAS_Aug2024';
+mission = 'sg679_MHI_May2023';
 % mission = 'sg639_CalCurCEAS_Sep2024';
 
 % set path to calibration data files
-path_calibrations = 'C:\Users\selene.fregosi\Documents\GitHub\glider-CalCurCEAS\noise\test_calibrations';
+path_calibrations = 'C:\Users\selene.fregosi\Documents\GitHub\glider-lab\calibration';
 
 % set path/add path to Samara's NRS repo
 path_NRS = 'C:\Users\selene.fregosi\Documents\GitHub\NRS';
 addpath(genpath(path_NRS));
 
 % define analysis frequency range (may change with mission sample rate)
-fRange = [1 90000]; % in Hz
-% sg679 sample rate was 180 kHz so using Nyquist, but because of filter
-% drop off may make sense to use value lower than Nyquist?
+fRange = [1 70000]; % in Hz
+% sg679 WISPR2 sample rate was 180 kHz but filter has steep drop off at
+% around 67 kHz so using 70 kHz
+% similar to how Nyquist for NRS is 2500 Hz but only analyze to 2200 Hz
 
 %% Parse correct mission info
 % In the future, will either read in a mission record table, or a single
 % csv or xlsx for each mission, or something else to parse the relevant
 % metadata. For now, hard coding for testing/building an example.
-if strcmp(mission, 'sg679_CalCurCEAS_Aug2024')
+if strcmp(mission, 'sg679_CalCurCEAS_Aug2024') || ...
+    strcmp(mission, 'sg679_MHI_May2023')
     % recorder type
     loggerType = 'WISPR2';      % e.g., PMARXL, WISPR2, WISPR3
     loggerVer = '0.2';          % string
