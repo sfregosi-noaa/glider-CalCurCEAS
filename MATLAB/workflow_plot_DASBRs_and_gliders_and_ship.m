@@ -148,11 +148,13 @@ hCount = 6; % for keeping track of h objects
 % dasbrs = kml2struct(fullfile(path_repo, 'DASBRs', ...
 % 	'CalCurCEAS_2024_DASBR_and_effort_thru_Sep26.kml'));
 
-dasbrList = dir(fullfile(path_repo, 'DASBRs', '*.csv'));
+dasbrList = dir(fullfile(path_repo, 'DASBRs', 'CalCurCEAS*GPS.csv'));
 
 % for f = 1:length(dasbrList)
 % loop through just the ones that fall within the map axes
+% note Drift 5 was lost, Drift 7 unusable 
 for f = [3, 5:15, 18]
+   
     hCount = hCount + 1;
     dasbr = readtable(fullfile(dasbrList(f).folder, dasbrList(f).name));
     dasbr.datenum = datenum(dasbr.UTC);
@@ -241,11 +243,17 @@ colormap(ax2,'jet')
 
 xlim(lonLim)
 ylim(latLim)
-% set the axis ratio.
+
+% fix aspect ratio
+fixLatLonAspect([ax1 ax2]);
+
 dLon = 111*cosd(40);
 ratio = dLon/111;
 pbaspect(ax1, [ratio 1 1])
 pbaspect(ax2, [ratio 1 1])
+% fix aspect ratio
+fixLatLonAspect([ax1 ax2]);
+
 
 % add colorbar
 % Position has to be manually set so first set size then cb posit
