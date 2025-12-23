@@ -1,5 +1,5 @@
-% WORKFLOW_PLOT_DASBRS_AND_GLIDERS_AND_SHIP.M
-%	Script to make a map of the DASBRs, gliders and ship colored by time
+% WORKFLOW_PLOTGlidersAndShipTracks.M
+%	Script to make a map of the gliders and ship tracks 
 %
 %	Description:
 %
@@ -26,7 +26,8 @@ path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS\';
 col_sg639 = [1 1 0];   % yellow - inshore A
 col_sg680 = [1 0 0];   % red - inshore B
 col_sg679 = [1 0.4 0]; % orange - offshore
-col_dasbr = [0 1 0];	   % green - dasbrs
+% col_dasbr = [0 1 0];	   % green - dasbrs
+col_ship = [1 1 1];
 
 % load any config file to get started.
 cnfFile = fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
