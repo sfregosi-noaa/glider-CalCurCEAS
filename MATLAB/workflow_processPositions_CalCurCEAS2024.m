@@ -45,7 +45,7 @@ missionStrs = {'sg639_CalCurCEAS_Sep2024';
     'sg679_CalCurCEAS_Aug2024';
     'sg680_CalCurCEAS_Sep2024'};
 
-mtpNum = 2; % mission to process
+mtpNum = 1; % mission to process
 mtp = missionStrs{mtpNum};
 
 % initialize agate
