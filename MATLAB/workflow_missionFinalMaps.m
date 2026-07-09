@@ -1,5 +1,5 @@
 % WORKFLOW_MISSIONFINALMAPS.M
-%	Create various final maps of CalCurCEAS glider mission 
+%	Create various final maps of WHICEAS glider mission 
 %
 %	Description:
 %       May include ships, DASBRs, sperm whales, etc. 
