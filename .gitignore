@@ -7,10 +7,10 @@
 #### MATLAB FILES ####
 ######################
 # large fig files
-.fig
+*fig
 
 # large matlab files
-.mat
+*.mat
 
 #################
 #### R FILES ####
@@ -22,6 +22,23 @@
 # RStudio files
 .Rproj.user/
 
+# Session Data files
+.RData
+.RDataTmp
+
+# User-specific files
+.Ruserdata
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+# R Environment Variables
+.Renviron
 
 ######################
 # OS generated files #
