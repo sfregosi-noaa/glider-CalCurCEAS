@@ -1,0 +1,660 @@
+---
+title: "Summary Plots and Statistics for CalCurCEAS 2024 gliders"
+# subtitle: 'optional subtitle with added details'
+author: "Selene Fregosi"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: margin = 1cm
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 4
+    code_folding: hide
+    # keep_md: yes
+editor_options:
+  chunk_output_type: console
+params:
+  useParamsFlag: TRUE # TRUE if using params, false if prompting for files/paths
+  # filter: TRUE # TRUE to load and compare an unfiltered and filtered AcousticStudy
+  log: TRUE # set to TRUE to generate log file
+  survey: sg680_CalCurCEAS_Sep2024 # for report printing/building filenames, e.g., SCOPE_2024 
+  path_acSt: Q:/CalCurCEAS_fall_2024/analysis/pamguard/acoustic_studies # path to AcousticStudies, e.g., 'R:/McCullough/PAMpal/Acoustic_Studies' 
+  acousticStudy: pam20217a_glider_banter_sg680_CalCurCEAS_Sep2024_acousticStudy.rds # name of AcousticStudy RDS file, e.g., 2024_SCOPE_2404_ch5.rds 
+  acousticStudyFiltered: pam20217a_glider_banter_sg680_CalCurCEAS_Sep2024_acousticStudyFiltered.rds #name of filtered AcousticStudy RDS file, optional
+  dbFile: Q:/CalCurCEAS_fall_2024/analysis/pamguard/databases/pam20217a_glider_banter_sg680_CalCurCEAS_Sep2024.sqlite3 # full path to PG database file, e.g., 'S:/SCOPE_2024_Recording/Database/PAM20210ae_SCOPE_Recording_20240430.sqlite3' 
+  path_binaries: Q:/CalCurCEAS_fall_2024/analysis/pamguard/binaries/pam20217a_glider_banter_sg680_CalCurCEAS_Sep2024 # path to PG binaries folder, e.g., 'S:/SCOPE_2024_Recording/Binaries', note must use drive letter (not //)
+  path_out: Q:/CalCurCEAS_fall_2024/analysis/event_reports
+  snrThreshold: 15 # SNR threshold for "good" clicks
+  refSpec: FALSE
+  path_to_refSpec: FALSE # path to reference spectra files, e.g., '//piccrp4nas/grampus/llharp/processingCode/llamp/files/reference_spectra'
+  refSpecList: !r c() # use !r to call r then
+  refSpecSp: !r c() #left it empty on purpose for the moment
+  calFile: FALSE
+---
+
+# Survey: `r params$survey`
+
+`r paste0("Summaries generated: ", format(Sys.time(), "%Y %b %d %H:%M %Z"))`
+
+
+## Setup
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  cache = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 4,
+  fig.asp = 1
+)
+
+# write progress to a log file (OPTIONAL)
+if (exists("log", where = params) & (params$log == TRUE)) {
+  logFile <- file.path(params$path_out, 
+                       paste0("processing_log_", params$survey, "_", 
+                              format(Sys.time(), "%Y%m%d_%H%M%S"), ".txt"))
+  processingStartTime <- Sys.time() 
+  writeLines(paste("Processing started:", Sys.time()), logFile)
+} else if (!exists("log", where = params)){
+  params$log <- FALSE # set to false if it doesn't exist
+}
+
+```
+
+Load needed libraries.
+```{r library, results = 'hide'}
+# install specialty packages from github and load
+# install can be slow so skip if not needed
+# devtools::install_github('taikisan21/PAMpal') # this can be slow so only do if necessary
+# install.packages('crputils', repos=c('https://pifsc-protected-species-division.r-universe.dev',
+#                                     'https://cloud.r-project.org'))
+library(PAMpal)
+library(crputils)
+
+# load standard CRAN packages (assuming already installed)
+library(tcltk)
+library(kableExtra)
+library(ggplot2)
+library(RSQLite)
+library(tuneR)
+# library(here) # not used anymore
+```
+
+**crputils** version: `r packageVersion("crputils")`
+
+**PAMpal** version: `r packageVersion("PAMpal")`
+
+Build survey-specific variables.
+```{r set-vars, results = 'hide'}
+# For generic run, prompt/select all files and paths
+
+# if not using params, prompt for paths/files
+if ((!exists("useParamsFlag", where = params)) |
+    ((exists("useParamsFlag", where = params) & params$useParamsFlag == FALSE))) {
+  # select database file
+  dbFile <- tk_choose.files(
+    default = "", caption = "Select PAMguard database file",
+    filters = matrix(c("sqlite3 files", ".sqlite3", "all files", "*"), 2, 2, 
+                     byrow = TRUE))
+  # select path to binaries to go with the selected database
+  path_binaries <- choose.dir(default = "", caption = "Select PAMguard binaries folder")
+  
+  # select AcousticStudy RDS file
+  acStFile <- tk_choose.files(
+    default = "", caption = "Select AcousticStudy detection data file",
+    filters = matrix(c("rds files", ".rds", "all files", "*"), 2, 2, byrow = TRUE))
+  
+  # select filtered AcousticStudy RDS file (if applicable)
+  acStFileFilt <- tk_choose.files(
+    default = "", caption = "Select filtered
+                                    AcousticStudy detection data file",
+    filters = matrix(c("rds files", ".rds", "all files", "*"), 2, 2, byrow = TRUE))
+  
+  # select output folder for event tables and event reports
+  path_out <- choose.dir(default = "", caption = "Select output event_reports folder")
+
+  # if using params, assemble and check path/file variables
+} else if (params$useParamsFlag == TRUE) {
+  ###############################
+  # if using params, set variables based on params values
+
+  # could add whatever params you may want to assemble names and paths to loop
+  # through drifts or deployments with less changing of the Rmd
+  # e.g., define single path_pg and assemble filepaths and paths
+  # dbFile <- file.path(params$path_pg, "Databases", params$pgDatabaseFileName)
+  # path_binaries <- file.path(params$path_pg, 'Binaries')
+  ###############################
+
+  # check for specified AcousticStudy file
+  if (exists("acousticStudy", where = params) & exists("path_acSt", where = params)) {
+    acStFile <- file.path(params$path_acSt, params$acousticStudy)
+    if (!file.exists(acStFile)) {
+      acStFile <- tk_choose.files(
+        default = "", caption = "Select AcousticStudy detection data file",
+        filters = matrix(c("rds files", ".rds", "all files", "*"),
+          2, 2,
+          byrow = TRUE
+        )
+      )
+    }
+  }
+
+  # check for specified filtered AcousticStudy file
+  if (exists("acousticStudyFiltered", where = params) & exists("path_acSt", where = params)) {
+    acStFiltFile <- file.path(params$path_acSt, params$acousticStudyFiltered)
+    if (!file.exists(acStFiltFile)) {
+      # select filtered AcousticStudy RDS file (if applicable)
+      acStFiltFile <- tk_choose.files(
+        default = "", caption = "Select filtered
+                                    AcousticStudy detection data file",
+        filters = matrix(c("rds files", ".rds", "all files", "*"),
+          2, 2,
+          byrow = TRUE
+        )
+      )
+    }
+  }
+
+  # check for specified dbFile or prompt
+  if (exists("dbFile", where = params) & (file.exists(params$dbFile))) {
+    dbFile <- params$dbFile
+  } else {
+    dbFile <- tk_choose.files(
+      default = "", caption = "Select PAMguard database file",
+      filters = matrix(c("sqlite3 files", ".sqlite3", "all files", "*"),
+        2, 2,
+        byrow = TRUE
+      )
+    )
+  }
+
+  # check for specified binaries folder
+  if (exists("path_binaries", where = params) & (dir.exists(params$path_binaries))) {
+    path_binaries <- params$path_binaries
+  } else {
+    path_binaries <- choose.dir(default = "", caption = "Select PAMguard binaries folder")
+  }
+
+  # OPTIONAL check for specified calibration file
+  if (exists("calFile", where = params) & (params$calFile != FALSE)) {
+    if (file.exists(params$acousticStudy_filtered)) {
+      calFile <- params$calFile
+    } else {
+      calFile <- tk_choose.files(
+        default = "", caption = "Select calibration file",
+        filters = matrix(c("txt files", ".txt", "all files", "*"),
+          2, 2,
+          byrow = TRUE
+        )
+      )
+    }
+  }
+
+  # OPTIONAL reference spectra -set files and colors (will load later)
+  if (exists("refSpec", where = params) & (params$refSpec != FALSE)) {
+    # read in or define the path to the reference spectra
+    if (exists("path_refSpec", where = params) & (dir.exists(params$path_refSpec))) {
+      path_refSpec <- params$path_refSpec
+    } else {
+      path_refSpec <- choose.dir(default = "", caption = "Select PAMguard binaries folder")
+    }
+    # assemble the reference spectra paths
+    if (!exists("refSpecList", where = params) | !exist("refSpecSp", where = params)) {
+      stop("Error: reference spectra list or species not specified in params")
+    } else {
+      refSpecs <- list()
+      refSpecs$path_refSpec <- file.path(params$path_to_refSpec) # pull from YAML
+      refSpecs$refSpecList <- params$refSpecList # pull from YAML
+      refSpecs$refSpecSp <- params$refSpecSp # pull from YAML
+      # reference spectra colors - allows for up to 6 ref specs
+      # pastel
+      # rsPalette <- c('#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3',
+      #                '#a6d854', '#ffd92f')
+      # bold
+      refSpecs$rsPalette <- c(
+        "#1b9e77", "#d95f02", "#7570b3", "#e7298a",
+        "#66a61e", "#e6ab02"
+      )
+    }
+  }
+}
+
+# more misc set up
+# set up datebase driver
+sqlite <- dbDriver("SQLite")
+
+# set time zone to UTC
+Sys.setenv(TZ = "UTC")
+```
+
+#### Load and prep AcousticStudies
+
+Load an existing `acSt` PAMpal AcousticStudy object for event processing. Load both the unfiltered `acSt` and filtered `acStFilt` AcousticStudies to compare total detection counts from each; plots and summary tables will be from filtered data. Optionally, this can be turned off with `params$filter = FALSE`. 
+
+```{r prep-acSt, results = 'hide'}
+# load existing acSt AcousticStudy (created with
+# workflow_generate_acousticStudies.R)
+if (file.exists(acStFile)) {
+  acSt <- readRDS(acStFile)
+  cat("Loaded", acStFile, "\n")
+} else {
+  stop("No AcousticStudy 'acSt' file available. Exiting report.", "\n")
+}
+# update file paths if needed
+acSt <- updateFiles(acSt, db = dbFile, bin = path_binaries)
+
+if (file.exists(acStFiltFile)) {
+  acStFilt <- readRDS(acStFiltFile)
+  cat("Loaded", acStFiltFile, "\n")
+} else {
+  stop("No AcousticStudy 'acStFilt' file available. Exiting report.", "\n")
+  # acStFilt <- acSt # **hack for looking at unfiltered data** use this if testing/no filtered AS exists
+}
+
+# update file paths if needed (e.g., data was moved on HD or server)
+acStFilt <- updateFiles(acStFilt, db = dbFile, bin = path_binaries)
+
+# summarize how many events
+nEvents <- length(names(events(acSt)))
+# number of events may change after filtering (all clicks may be filtered out)
+nEventsFilt <- length(names(events(acStFilt)))
+```
+
+Loaded `r acStFile` and `r acStFiltFile`:
+
+**`r nEvents` events** before filtering and **`r nEventsFilt` events** after initial filtering of clicks to remove noise.
+
+
+#### Load reference spectra, if specified
+
+Load the reference spectra for plotting, if set with `refSpecList`.
+```{r load-refSpec}
+# refSpecList is specified in YAML params. Can be one or multiple species
+# for single species specify as char string without quotations e.g., refSpecPc
+# for multiple species, specify with call to R and c()
+#     e.g., !r c('meanSpecGm', 'refSpecPc_LLHARP')
+
+if (exists("refSpec", where = params) & (params$calFile != FALSE)) {
+  if (!is.null(refSpecs)) {
+    for (rs in refSpecs$refSpecList) {
+      refSpecs[[rs]] <- read.csv(file.path(refSpecs$path_to_refSpec, paste0(rs, ".csv")))
+    }
+  }
+} else {
+  refSpecs <- NULL
+}
+```
+
+## Summarize and filter events by false killer whale criteria
+
+Containing summary metrics for each event. Some filtering is done based on the values in this table. Events that do not meet the below criteria are removed: 
+
+- Events contain at least 10 signals in at least one detector (clicks or whistles)
+- Median peak frequency of echolocation clicks is < 22 kHz 
+- Median begin frequency of whistles is < 8.1 kHz
+- 50% of whistles have a begin frequency between 4 and 8 kHz
+- Concatenated spectrogram slope *in progress*
+- Currently two variations of the peak frequency slope are displayed - one for all clicks and one based just on the 25th to 75th quantile clicks
+
+```{r event-table}
+# set up output data frame
+evTable <- data.frame(
+  survey = character(nEventsFilt),
+  eventId = character(nEventsFilt)
+) # ,
+# species = character(nEvents))
+
+# populate with cruise string and event names
+evTable$survey <- paste0(params$survey)
+evTable$eventId <- names(PAMpal::events(acStFilt))
+
+# get all click data
+allClicks <- getClickData(acStFilt)
+# pull click summary stats
+evClickSummary <- allClicks %>%
+  group_by(eventId) %>%
+  summarise(
+    numClicks = n(),
+    # numClicks_d0 = sum(detectorName == 'Click_Detector_0', na.rm = TRUE),
+    numClicks_d1 = sum(detectorName == "Click_Detector_1", na.rm = TRUE),
+    numClicks_d2 = sum(detectorName == "Click_Detector_2", na.rm = TRUE),
+    numClicks_d3 = sum(detectorName == "Click_Detector_3", na.rm = TRUE),
+    numClicks_d4 = sum(detectorName == "Click_Detector_4", na.rm = TRUE),
+    numClicks_d5 = sum(detectorName == "Click_Detector_5", na.rm = TRUE),
+    click_medPeakFreq_kHz = median(peak, na.rm = TRUE),
+    click_p25PeakFreq_kHz = quantile(peak, 0.25, na.rm = TRUE),
+    click_p75PeakFreq_kHz = quantile(peak, 0.75, na.rm = TRUE)
+  )
+# add to output evTable
+evTable <- evTable %>%
+  left_join(evClickSummary, by = c("eventId" = "eventId"))
+
+# get all whistle data
+allWhistles <- getWhistleData(acStFilt)
+# pull whistle summary stats
+evWhistleSummary <- allWhistles %>%
+  group_by(eventId) %>%
+  summarise(
+    numWhistles = n(),
+    # whistle_medCenterFreq_Hz = median(freqCenter, na.rm = TRUE),
+    # whistle_medMedFreq_Hz = median(freqMedian, na.rm = TRUE),
+    whistle_medBeginFreq_Hz = median(freqBeg, na.rm = TRUE),
+    whistle_percBeginFreq4to8kHz = sum(freqBeg >= 4000 & freqBeg <= 8000) / n()
+    # whistle_percCenterFreq5to7kHz = sum(freqCenter >= 5000 & freqCenter <= 7000)/n(),
+    # whistle_percMedianFreq5to7kHz = sum(freqMedian >= 5000 & freqMedian <= 7000)/n()
+  )
+# add to output evTable
+evTable <- evTable %>%
+  left_join(evWhistleSummary, by = c("eventId" = "eventId"))
+
+# add some columns that will be filled in during the event summary loop
+
+evTable$click_lmPeakFreqSlope_Hz <- NA
+evTable$click_lmPeakFreqIntercept_Hz <- NA
+evTable$click_lmPeakFreqRsqd <- NA
+
+# add column for keeping/removing based on median peak frequency
+evTable$keep <- FALSE # set all to false, will mark keepers as TRUE in loop
+# mark true where events meet criteria
+evTable$keep[which( # evTable$numClicks >= 10 &
+  (evTable$numClicks_d1 >= 10 |
+    evTable$numClicks_d2 >= 10 |
+    evTable$numClicks_d3 >= 10 |
+    evTable$numClicks_d4 >= 10 |
+    evTable$numClicks_d5 >= 10 |
+    evTable$numWhistles >= 10) &
+    (is.na(evTable$numClicks) | # if there are clicks check for freq criteria
+      evTable$click_medPeakFreq_kHz <= 22) &
+    (is.na(evTable$numWhistles) | # if there are whistles, check for freq criteria
+      evTable$whistle_medBeginFreq_Hz <= 8100 &
+        evTable$whistle_percBeginFreq4to8kHz >= .5)
+)] <- TRUE
+
+evTableTrimmed <- evTable[which(evTable$keep == TRUE), ]
+
+# save event table as CSV - saves to path_out in params or chosen
+write.csv(evTable, file = file.path(
+  params$path_out,
+  paste0(
+    "eventTable_", params$survey, "_",
+    Sys.Date(), ".csv"
+  )
+))
+write.csv(evTableTrimmed, file = file.path(params$path_out,
+  paste0(
+    "eventTableTrimmed_", params$survey,
+    "_", Sys.Date(), ".csv"
+  )
+))
+# the above will be overwritten during the loop below, but this creates placeholders
+```
+
+**`r nrow(evTableTrimmed)` events** meet the false killer whale filtering 
+criteria of minimum number of signals and frequency characteristics. Only events
+that meet the criteria will be plotted below. 
+
+
+## Event summaries
+
+Loop through each detection event (n = `r nrow(evTableTrimmed)`) create plots 
+and a table of summary statistics for click and whistle detections. This process
+uses AcousticStudy objects that have detection data for each event, and also 
+pulls information from the Pamguard binaries associated with each AcousticStudy. 
+
+Click plots (other than the SNR plot) only show clicks with SNRs >= 
+`r params$snrThreshold` dB. 
+
+```{r process-events-true, results = 'asis'}
+# set up processing order
+eventList <- events(acStFilt)
+eventNames <- names(events(acStFilt))
+# # possible fkw first, then others
+# fkwPoss <- eventNames[evTable$keep]
+# other <- eventNames[!evTable$keep]
+# eventOrder <- c(fkwPoss, other)
+# # for testing
+# # eventOrder <- eventOrder[c(1:2, 9:10)]
+
+for (iEvent in seq_along(eventNames)){
+  # iEvent <- 1 # for testing
+  # ("pagebreak \n")
+
+  # extract this event UID string
+  eventUID <- eventNames[iEvent]
+  evTableIdx <- which(evTable$eventId == eventUID)
+  
+  # log and console output for progress tracking
+  logMsg <- paste0("[", format(Sys.time(), "%H:%M:%S"), "] iEvent = ", 
+                   iEvent, " / ", nEventsFilt, " | eventUID = ", eventUID)
+  message(logMsg)  # Print to console
+  if (params$log == TRUE) {
+    cat(logMsg, file = logFile, append = TRUE, sep = "\n")
+  }
+
+  # # if first fkw or first other, add header
+  # if (eventUID == fkwPoss[1]) {
+  #   cat("\n\n### Possible false killer whale events")
+  # } else if (eventUID == other[1]) {
+  #   cat("\n\n### Other cetacean events")
+  #   cat(
+  #     "\n\nThese events did not meet the criteria indicating the need for",
+  #     "additional review as possible false killer whale events. "
+  #   )
+  # }
+
+  # set header for this event and print time
+  cat("\n\n#### Event ID:   ", eventUID, "\n")
+  cat(
+    "Time:   ", format(
+      eventList[[eventUID]]@ancillary$grouping$start,
+      "%Y-%m-%d %H:%M%Z"
+    ), " to ",
+    format(eventList[[eventUID]]@ancillary$grouping$end, "%Y-%m-%d %H:%M%Z"),
+    "\n"
+  )
+
+  ###### summarize clicks ######
+  cl <- crputils::er_clickSummary(acStFilt, eventUID)
+
+  cat(
+    "\nEvent contains", nrow(getClickData(acSt[[eventUID]])),
+    "original clicks,", paste0("**", cl$nClicks), "valid clicks** after",
+    "filtering noise.\n"
+  )
+  cat("\n")
+
+  # to log
+  if (params$log == TRUE) {
+    cat("   Clicks summarized\n", file = logFile, append = TRUE)
+  }
+  
+  ###### summarize whistles ######
+  wl <- crputils::er_whistleSummary(acStFilt, eventUID)
+
+  cat("\nEvent contains", paste0("**", wl$nWhistles), "whistles**.\n")
+  cat("\n")
+
+    # to log
+  if (params$log == TRUE) {
+    cat("   Whistles summarized\n", file = logFile, append = TRUE)
+  }
+  
+  ###### click plots and table ######
+
+  # if any clicks...
+  if (cl$nClicks > 0 & ("snr" %in% names(cl))) {
+    cat("\n##### Click plots and table\n")
+    cat(
+      "\n SNR histogram includes all filtered clicks. Other plots contain only",
+      "clicks with SNR >=", params$snrThreshold, "dB",
+      paste0("(**n = ", cl$nGoodClicks, " clicks**).\n")
+    )
+    cat("\n")
+
+    # plot histogram of all clicks and SNR >= snrThreshold dB cut off
+    crputils::er_plotClickSNRHist(cl, params$snrThreshold)
+
+    # if sufficient good clicks...
+    if (cl$nGoodClicks > 0) {
+      # plot histogram of click durations - good clicks only
+      crputils::er_plotClickDurationHist(cl)
+
+      cat("\n")
+      cat("\n")
+
+
+      # Calculate and plot Concatenated and Mean Spectrum for clicks w/ max SNR > 15dB
+      # NB: JLKM uses more exaggerated SNR (>40 dB) for BWs bc actual spectra may
+      # be noisy for single clicks
+      # reducing wl can give more accurate noise floor but 'smoother' spectrum
+      # increasing wl will give more exact spectrum but may exclude too many
+      # clicks based on SNR (noise measure will overlap with click output; noise
+      # is just measured as same wl from start of binary snippet and binaries
+      # binary snippets are v short)
+      # Trial and error - 256 works ok for LLHARP data = 1.28 ms
+      # NB: JLKM uses 500 for beaked whales with samp rate 288k
+      avgSpec <- PAMpal::calculateAverageSpectra(acStFilt,
+        evNum = eventUID,
+        wl = 256, channel = 1,
+        norm = TRUE, noise = TRUE,
+        sort = TRUE,
+        snr = params$snrThreshold,
+        plot = c(TRUE, FALSE)
+      )
+      # plot concatenated spectrogram - plotted within calculation function
+
+      # plot average spectrum separately bc added median and refSpecs
+      if (!is.null(avgSpec)) {
+        crputils::er_plotSpectra(avgSpec, cl,
+          refSpecs = refSpecs,
+          xLims = c(0, 100),
+          snrThreshold = params$snrThreshold
+        )
+      }
+
+      # SKIPPING concatenated slope - not useful for me
+      # # plot slope of concatenated spectrogram
+      # csAll <- crputils::er_concatenatedSlope(cl)
+      # # calculate and plot slope for just the 25-75th quantile of clicks
+      # csMed <- crputils::er_concatenatedSlope(cl, quantLimit = c(.25, .75))
+
+      # # add model outputs to exported evTable
+      # if (!exists("csAll")) {
+      #   evTable$click_lmPeakFreqSlope_Hz[evTableIdx] <- round(coef(csAll)[2] * 1000, 2)
+      #   evTable$click_lmPeakFreqIntercept_Hz[evTableIdx] <- round(coef(csAll)[1] * 1000, 2)
+      #   evTable$click_lmPeakFreqRsqd[evTableIdx] <- round(coef(csAll)[2] * 1000, 2)
+      # 
+      #   cat("\n Slope of peak frequencies in concatenated spectrogram: \n")
+      #   cat("\n")
+      #   cat("\n")
+      #   cat("         All clicks -", round(coef(csAll)[2] * 1000, 2), "Hz\n")
+      #   cat(
+      #     "         Only clicks within 25th to 75th quantile -",
+      #     round(coef(csMed)[2] * 1000, 2), "Hz\n"
+      #   )
+      # }
+
+      # NB: JLKM BW approach has additional plots here:
+      # IPI
+      # Waveform of strongest click
+      # Wigner plot
+      # We are not including those here because not really useful for FKW, but if
+      # interested in adding back in, see:
+      #       https://github.com/jlkeating/PAMGuard_Event_Code
+
+      cat("\n")
+      cat("\n")
+
+      # create median stats table for clicks with psuedo-SNR dB TK noise cut off
+      cat(
+        "\n\n##### Median statistics for", cl$nGoodClicks, "high SNR clicks with",
+        "SNR >=", params$snrThreshold, "dB."
+      )
+      cat("\n")
+
+      cat(knitr::kable(cl$mt,
+        format = "html", caption = "", align = "l",
+        row.names = FALSE
+      ) %>%
+        kable_styling(
+          bootstrap_options = c("basic", "condensed"),
+          full_width = F
+        ))
+    } else { # no good clicks so no summary plots/table
+      cat("\nNo clicks of sufficient SNR to plot or summarize.\n")
+    }
+  } else {
+    cat("\nNo clicks present after filtering for noise.\n")
+  }
+
+
+  ###### whistle plots and table ######
+
+  # if whistles present ...
+  if (wl$nWhistles > 0) {
+    cat("\n##### Whistle plots and table\n")
+
+
+    # plot whistle contours
+    crputils::er_plotWhistleContours(acStFilt, eventUID, xMax = 1.5, yMax = 20)
+
+    # plot histogram of median frequency
+    crputils::er_plotWhistleBeginFreqHist(wl)
+
+    cat("\n")
+    cat("\n")
+
+    cat("Median statistics for n = ", wl$nWhistles, "whistles.\n")
+    # create median stats table for all whistles
+    cat(knitr::kable(wl$mt,
+      format = "html", caption = "", align = "l",
+      row.names = FALSE
+    ) %>%
+      kable_styling(
+        bootstrap_options = c("basic", "condensed"),
+        full_width = F
+      ))
+  } else {
+    cat("\nNo whistles present.\n")
+  }
+
+  cat("\n")
+  cat("\n\n --- \n\n")
+  cat("\n")
+  
+  # clean up after each event
+  # remove event-specific variables
+    rm(cl, wl, eventUID, evTableIdx)
+  if (exists("avgSpec")) rm(avgSpec)
+  if (exists("csAll")) rm(csAll)
+  if (exists("csMed")) rm(csMed)
+    # run garbage collection to free up memory
+    invisible(gc(verbose = FALSE))
+    #close out graphic device
+    # invisible(dev.off())
+}
+```
+
+## Save final event tables
+```{r event-table-final}
+# trim again
+evTableTrimmed <- evTable[which(evTable$keep == TRUE), ]
+
+# save event table as CSV - overwrites temp files from event-tables chunk above
+# and saves to specified/chosen path_out
+write.csv(evTable, file = file.path(path_out, paste0("eventTable_", params$survey, 
+                                                     "_", Sys.Date(), ".csv")))
+write.csv(evTableTrimmed, file = file.path(params$path_out, 
+                                           paste0("eventTableTrimmed_", 
+                                                  params$survey, "_",
+                                                  Sys.Date(), ".csv")))
+
+# close out the log with elapsed time
+if (params$log == TRUE) {
+  elapsedTime <- Sys.time() - processingStartTime
+  logMsg <- paste0("Processing complete: ", Sys.time(), 
+                   " (Elapsed time: ", round(elapsedTime, 2), ")")
+  cat(logMsg, file = logFile, append = TRUE, sep = "\n")
+}
+```
