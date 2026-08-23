@@ -562,7 +562,15 @@ if (exists("reCalc", where = params) & params$reCalc == TRUE) {
     # run garbage collection to free up memory
     invisible(gc(verbose = FALSE))
   }
-} # check for params$reCalc flag
+} else { # check for params$reCalc flag
+  if (params$log == TRUE) {
+  cat(paste("    Skipping summary stats/plots - already created"),
+    file = logFile,
+    append = TRUE, sep = "\n"
+  )
+  }
+}
+
 
 ```
 
