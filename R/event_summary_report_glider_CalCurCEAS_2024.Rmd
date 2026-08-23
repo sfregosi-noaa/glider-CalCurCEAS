@@ -30,6 +30,7 @@ params:
   refSpecList: !r c() # use !r to call r then
   refSpecSp: !r c() #left it empty on purpose for the moment
   calFile: FALSE
+  reCalc: FALSE # don't re-run calc-heavy summary stats and plot generation - useful for just updating text
 ---
 
 ```{r setup, include = FALSE}
@@ -39,8 +40,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.width = 4,
-  fig.asp = 1
-)
+  fig.asp = 1)
 
 figSize <- 4
 figRes <- 96
@@ -49,10 +49,8 @@ figRes <- 96
 ```{r set-survey, include=FALSE}
 if (!exists("survey", where = params) | is.null(params$survey) | params$survey == "") {
   params$survey <- tclvalue(tkdialog.default(
-    default = "survey_YYYYMMDD",
-    title = "Survey Name",
-    message = "Enter survey name for this report:"
-  ))
+    default = "survey_YYYYMMDD", title = "Survey Name", 
+    message = "Enter survey name for this report:"))
 }
 ```
 
@@ -70,12 +68,11 @@ if (exists("log", where = params) & (params$log == TRUE)) {
   logFile <- file.path(params$path_out, 
                        paste0("processing_log_", params$survey, "_", 
                               format(Sys.time(), "%Y%m%d_%H%M%S"), ".txt"))
-  processingStartTime <- Sys.time() 
+  processingStartTime <- Sys.time()
   writeLines(paste("Processing started:", Sys.time()), logFile)
-} else if (!exists("log", where = params)){
+} else if (!exists("log", where = params)) {
   params$log <- FALSE # set to false if it doesn't exist
 }
-
 ```
 
 #### Load libraries
@@ -223,15 +220,13 @@ if ((!exists("useParamsFlag", where = params)) |
       refSpecs$rsPalette <- c(
         "#1b9e77", "#d95f02", "#7570b3", "#e7298a",
         "#66a61e", "#e6ab02"
-      )
-    }
-  }
-}
+      )}}}
 
-# set up figures output subdirectory in path_out
-path_figs <- file.path(path_out, paste0('figures_', params$survey))
-if (!dir.exists(path_figs)) {
-  dir.create(path_figs)
+# set up cache output subdirectory in path_out
+path_cache <- file.path(path_out, 'event_cache', 
+                       paste0(params$survey, '_', Sys.Date()))
+if (!dir.exists(path_cache)) {
+  dir.create(path_cache)
 }
 
 # # more misc set up
@@ -309,15 +304,15 @@ if (exists("refSpec", where = params) & (params$calFile != FALSE)) {
 }
 ```
 
-## Summarize events
+## Generate event summary table
 
-Create an event summary table with by-event summary metrics. These can be used 
-in manual assessment and can be used to further flag certain events based on
-species-specific criteria. Information extracted here can be used to plot event
-summary tiles in different groupings, if desired (e.g., possible false killer
-whales first).
+Summarize all events and create an event summary table with by-event summary 
+statistics. This table can be used to guide and track manual assessment and can
+be used to flag candidate events based on species-specific criteria. Information
+extracted here can be used to plot event summary tiles in different groupings, 
+if desired (e.g., possible false killer whales first).
 
-In this run, no flagging of events as possible individual species is done. 
+In this run, no flagging of candidate events for a particular species is done. 
 
 ```{r event-table}
 # set up output data frame
@@ -361,9 +356,9 @@ evWhistleSummary <- allWhistles %>%
     numWhistles = n(),
     # whistle_medCenterFreq_Hz = median(freqCenter, na.rm = TRUE),
     # whistle_medMedFreq_Hz = median(freqMedian, na.rm = TRUE),
-    whistle_medBeginFreq_Hz = median(freqBeg, na.rm = TRUE),
-    whistle_percBeginFreq4to8kHz = sum(freqBeg >= 4000 & freqBeg <= 8000) / n()
-    # whistle_percCenterFreq5to7kHz = sum(freqCenter >= 5000 & freqCenter <= 7000)/n(),
+    whistle_medBeginFreq_Hz = median(freqBeg, na.rm = TRUE)
+    # whistle_percBeginFreq4to8kHz = sum(freqBeg >= 4000 & freqBeg <= 8000) / n()
+    # whistle_percCenterFreq5to7kHz = sum(freqCenter >= 5000 & freqCenter <= 7000)/n()
     # whistle_percMedianFreq5to7kHz = sum(freqMedian >= 5000 & freqMedian <= 7000)/n()
   )
 # add to output evTable
@@ -398,7 +393,7 @@ write.csv(evTable, file = file.path(path_out, paste0("eventTable_", params$surve
 # the above will be overwritten during the loop below, but this creates placeholders
 ```
 
-## Generate event summaries
+## Summarize individual events
 
 Loop through each event to calculate a suite of summary statistics and generate 
 standardized plots for both clicks and whistles (if present). Summary stats and
@@ -406,148 +401,168 @@ plots are saved in a "figures" subdirectory of the specified output path for
 future reference and plotting. 
 
 ```{r process-events}
-
 if (params$log == TRUE) {
-  cat(paste("Generating summary stats and plots:", Sys.time()), file = logFile, 
-      append = TRUE, sep = "\n")
+  cat(paste("Generating summary stats and plots:", Sys.time()),
+    file = logFile,
+    append = TRUE, sep = "\n"
+  )
 }
+
 # get events to process
 eventList <- events(acStFilt)
 eventNames <- names(events(acStFilt))
 
-for (iEvent in seq_along(eventNames)){ #eventNames
-  # iEvent <- 1 # for testing
-  
-  # extract this event UID string
-  eventUID <- eventNames[iEvent]
-  evTableIdx <- which(evTable$eventId == eventUID)
-  
-  # log and console output for progress tracking
-  logMsg <- paste0("[", format(Sys.time(), "%H:%M:%S"), "] iEvent = ", 
-                   iEvent, " / ", nEventsFilt, " | eventUID = ", eventUID)
-  message(logMsg)  # Print to console
-  if (params$log == TRUE) {
-    cat(logMsg, file = logFile, append = TRUE, sep = "\n")
-  }
-  
-  # set up output filename prefix
-  filePrefix <- file.path(path_figs, eventUID)
-  
-  ###### summarize clicks ######
-  # this is a slow-ish step. Runs PAMpal::calculateAverageSpectra and creates 
-  # summary data for formatted tables
-  cl <- crputils::er_clickSummary(acStFilt, eventUID, params$snrThreshold)
-  
-  saveRDS(cl, file = paste0(filePrefix, '_cl.rds'))
-  
-  # save the table if there are valid whistles (its smol)
-  if (cl$nClicks > 0) {
-    write.csv(cl$mt, file = paste0(filePrefix, '_clickStats.csv'))
-  }
-  
-  ##### click plots ######  
-  # if any clicks...
-  if (("spec" %in% names(cl)) & 
+if (exists("reCalc", where = params) & params$reCalc == TRUE) {
+
+  for (iEvent in seq_along(eventNames)) { # eventNames
+    # iEvent <- 1 # for testing
+
+    # extract this event UID string
+    eventUID <- eventNames[iEvent]
+    evTableIdx <- which(evTable$eventId == eventUID)
+
+    # log and console output for progress tracking
+    logMsg <- paste0(
+      "[", format(Sys.time(), "%H:%M:%S"), "] iEvent = ",
+      iEvent, " / ", nEventsFilt, " | eventUID = ", eventUID
+    )
+    message(logMsg) # Print to console
+    if (params$log == TRUE) {
+      cat(logMsg, file = logFile, append = TRUE, sep = "\n")
+    }
+
+    # set up output filename prefix
+    filePrefix <- file.path(path_cache, eventUID)
+
+    ###### summarize clicks ######
+    # this is a slow-ish step. Runs PAMpal::calculateAverageSpectra and creates
+    # summary data for formatted tables
+    cl <- crputils::er_clickSummary(acStFilt, eventUID, params$snrThreshold)
+
+    saveRDS(cl, file = paste0(filePrefix, "_cl.rds"))
+
+    # save the table if there are valid whistles (its smol)
+    if (cl$nClicks > 0) {
+      write.csv(cl$mt, file = paste0(filePrefix, "_clickStats.csv"))
+    }
+
+    ##### click plots ######
+    # if any clicks...
+    if (("spec" %in% names(cl)) &
       (cl$nClicks > 0 & ("snrVals" %in% names(cl$spec)))) {
-    
-    # plot histogram of all clicks and SNR >= snrThreshold dB cut off
-    png(file = paste0(filePrefix, "_clickSNR.png"), width = figSize, 
-        height = figSize, res = figRes, units = 'in')
-    crputils::er_plotClickSNRHist(cl$spec, params$snrThreshold)
-    dev.off()
-    
-    # if sufficient good clicks...
-    if (cl$nGoodClicks > 0) {
-      # plot histogram of click durations - good clicks only
-      png(file = paste0(filePrefix, "_clickDuration.png"), width = figSize,
-          height = figSize, res = figRes, units = 'in')
-      crputils::er_plotClickDurationHist(cl)
+      # plot histogram of all clicks and SNR >= snrThreshold dB cut off
+      png(
+        file = paste0(filePrefix, "_clickSNR.png"), width = figSize,
+        height = figSize, res = figRes, units = "in"
+      )
+      crputils::er_plotClickSNRHist(cl$spec, params$snrThreshold)
       dev.off()
-      
-      # Calculate and plot Concatenated and Mean Spectrum for clicks w/ max SNR > 15dB
-      # NB: JLKM uses more exaggerated SNR (>40 dB) for BWs bc actual spectra may
-      # be noisy for single clicks
-      # reducing wl can give more accurate noise floor but 'smoother' spectrum
-      # increasing wl will give more exact spectrum but may exclude too many
-      # clicks based on SNR (noise measure will overlap with click output; noise
-      # is just measured as same wl from start of binary snippet and binaries
-      # binary snippets are v short)
-      # Trial and error - 256 works ok for LLHARP data = 1.28 ms
-      # NB: JLKM uses 500 for beaked whales with samp rate 288k
-      
-      # extracted from PAMpal for efficiency and to add refSpec and median
-      if (!is.null(cl$spec)) {
-        
-        # concatenated spectrogram
-        png(file = paste0(filePrefix, "_concatSpec.png"), width = figSize, 
-            height = figSize, res = figRes, units = 'in')
-        crputils::er_plotConcatSpec(cl$spec, sort = TRUE, 
-                                    snrThreshold = params$snrThreshold)
+
+      # if sufficient good clicks...
+      if (cl$nGoodClicks > 0) {
+        # plot histogram of click durations - good clicks only
+        png(
+          file = paste0(filePrefix, "_clickDuration.png"), width = figSize,
+          height = figSize, res = figRes, units = "in"
+        )
+        crputils::er_plotClickDurationHist(cl)
         dev.off()
-        
-        # average spectrum
-        png(file = paste0(filePrefix, "_avgSpectrum.png"), width = figSize, 
-            height = figSize, res = figRes, units = 'in')
-        crputils::er_plotSpectra(cl$spec, refSpecs = refSpecs, 
-                                 snrThreshold = params$snrThreshold)
-        dev.off()
-      }
-      
-      # NB: JLKM BW approach has additional plots here:
-      # IPI
-      # Waveform of strongest click
-      # Wigner plot
-      # We are not including those here because not really useful for FKW, but if
-      # interested in adding back in, see:
-      #       https://github.com/jlkeating/PAMGuard_Event_Code
-    } # check for good SNR clicks
-  } # check for any clicks
-  
-  # to log
-  if (params$log == TRUE) {
-    cat("   Clicks done\n", file = logFile, append = TRUE)
+
+        # Calculate and plot Concatenated and Mean Spectrum for clicks w/ max SNR > 15dB
+        # NB: JLKM uses more exaggerated SNR (>40 dB) for BWs bc actual spectra may
+        # be noisy for single clicks
+        # reducing wl can give more accurate noise floor but 'smoother' spectrum
+        # increasing wl will give more exact spectrum but may exclude too many
+        # clicks based on SNR (noise measure will overlap with click output; noise
+        # is just measured as same wl from start of binary snippet and binaries
+        # binary snippets are v short)
+        # Trial and error - 256 works ok for LLHARP data = 1.28 ms
+        # NB: JLKM uses 500 for beaked whales with samp rate 288k
+
+        # extracted from PAMpal for efficiency and to add refSpec and median
+        if (!is.null(cl$spec)) {
+          # concatenated spectrogram
+          png(
+            file = paste0(filePrefix, "_concatSpec.png"), width = figSize,
+            height = figSize, res = figRes, units = "in"
+          )
+          crputils::er_plotConcatSpec(cl$spec,
+            sort = TRUE,
+            snrThreshold = params$snrThreshold
+          )
+          dev.off()
+
+          # average spectrum
+          png(
+            file = paste0(filePrefix, "_avgSpectrum.png"), width = figSize,
+            height = figSize, res = figRes, units = "in"
+          )
+          crputils::er_plotSpectra(cl$spec,
+            refSpecs = refSpecs,
+            snrThreshold = params$snrThreshold
+          )
+          dev.off()
+        }
+
+        # NB: JLKM BW approach has additional plots here:
+        # IPI
+        # Waveform of strongest click
+        # Wigner plot
+        # We are not including those here because not really useful for FKW, but if
+        # interested in adding back in, see:
+        #       https://github.com/jlkeating/PAMGuard_Event_Code
+      } # check for good SNR clicks
+    } # check for any clicks
+
+    # to log
+    if (params$log == TRUE) {
+      cat("   Clicks done\n", file = logFile, append = TRUE)
+    }
+
+
+    ###### summarize whistles ######
+    wl <- crputils::er_whistleSummary(acStFilt, eventUID)
+
+    # save it no matter what (even if 0 whistles)
+    saveRDS(wl, file = paste0(filePrefix, "_wl.rds"))
+
+    # save the table if there are valid whistles (its smol)
+    if (wl$nWhistles > 0) {
+      write.csv(wl$mt, file = paste0(filePrefix, "_whistleStats.csv"))
+    }
+
+    ###### whistle plots and table ######
+
+    # if whistles present ...
+    if (wl$nWhistles > 0) {
+      # plot whistle contours
+      png(
+        file = paste0(filePrefix, "_whistleContours.png"), width = figSize,
+        height = figSize, res = figRes, units = "in"
+      )
+      crputils::er_plotWhistleContours(acStFilt, eventUID, xMax = 1.5, yMax = 20)
+      dev.off()
+
+      # plot histogram of median frequency
+      png(
+        file = paste0(filePrefix, "_whistleFreqHist.png"), width = figSize,
+        height = figSize, res = figRes, units = "in"
+      )
+      crputils::er_plotWhistleBeginFreqHist(wl)
+      dev.off()
+    }
+
+    # to log
+    if (params$log == TRUE) {
+      cat("   Whistles done\n", file = logFile, append = TRUE)
+    }
+
+    ###### clean up #####
+    rm(cl, wl, eventUID, evTableIdx)
+    # run garbage collection to free up memory
+    invisible(gc(verbose = FALSE))
   }
-  
-  
-  ###### summarize whistles ######
-  wl <- crputils::er_whistleSummary(acStFilt, eventUID)
-  
-  # save it no matter what (even if 0 whistles) 
-  saveRDS(wl, file = paste0(filePrefix, '_wl.rds'))
-  
-  # save the table if there are valid whistles (its smol)
-  if (wl$nWhistles > 0) {
-    write.csv(wl$mt, file = paste0(filePrefix, '_whistleStats.csv'))
-  }
-  
-  ###### whistle plots and table ######
-  
-  # if whistles present ...
-  if (wl$nWhistles > 0) {
-    
-    # plot whistle contours
-    png(file = paste0(filePrefix, "_whistleContours.png"), width = figSize, 
-        height = figSize, res = figRes, units = 'in')
-    crputils::er_plotWhistleContours(acStFilt, eventUID, xMax = 1.5, yMax = 20)
-    dev.off()
-    
-    # plot histogram of median frequency
-    png(file = paste0(filePrefix, "_whistleFreqHist.png"), width = figSize, 
-        height = figSize, res = figRes, units = 'in')
-    crputils::er_plotWhistleBeginFreqHist(wl)
-    dev.off()
-  }
-  
-  # to log
-  if (params$log == TRUE) {
-    cat("   Whistles done\n", file = logFile, append = TRUE)
-  }
-  
-  ###### clean up #####
-  rm(cl, wl, eventUID, evTableIdx)
-  # run garbage collection to free up memory
-  invisible(gc(verbose = FALSE))
-}
+} # check for params$reCalc flag
 
 ```
 
@@ -574,11 +589,11 @@ for (iEvent in seq_along(eventNames)){ #eventNames
   evTableIdx <- which(evTable$eventId == eventUID)
   
   # read in CSVs
-  filePrefix <- file.path(path_figs, eventUID)
+  filePrefix <- file.path(path_cache, eventUID)
   # clickStats <- read.csv(paste0(filePrefix, "_clickStats.csv"))
   # whistleStats <- read.csv(paste0(filePrefix, "_whistleStats.csv"))
-    cl <- readRDS(paste0(filePrefix, "_cl.rds"))
-    wl <- readRDS(paste0(filePrefix, "_wl.rds"))
+  cl <- readRDS(paste0(filePrefix, "_cl.rds"))
+  wl <- readRDS(paste0(filePrefix, "_wl.rds"))
   
   # set header for this event and print time
   cat("\n\n#### Event ID:   ", eventUID, "\n")
@@ -686,8 +701,8 @@ for (iEvent in seq_along(eventNames)){ #eventNames
 
 ## Save final event tables
 
-If any flagging of possible candidate events of a particular species was done, 
-this would save the final output tables. That is not used here. 
+If any flagging of candidate events of a particular species was done, this would
+save the final output tables. That is not used here. 
 ```{r event-table-final, results = 'hide'}
 # # trim again
 # evTableTrimmed <- evTable[which(evTable$keep == TRUE), ]
