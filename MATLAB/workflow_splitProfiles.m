@@ -40,7 +40,7 @@ load(fullfile('P:\glider', 'sg680_CalCurCEAS_Sep2024', 'piloting', 'profiles', .
 profileT = splitProfiles(gpsSurfT, locCalcT);
 
 % plot check
-figure(82); 
+figure(82);
 plot(locCalcT.time, -locCalcT.depth, 'k');
 hold on;
 xline(profileT.startTime, ':m');
@@ -48,7 +48,7 @@ xline(profileT.endTime, '--c');
 xline(profileT.midTime, '-.g');
 hold off;
 
-figure(83); 
+figure(83);
 plot(locCalcT.longitude, locCalcT.latitude, 'k');
 hold on;
 scatter(profileT.startLongitude, profileT.startLatitude, 'm');
@@ -62,8 +62,10 @@ hold off;
 % writetable(profileT, 'P:\glider\sg639_CalCurCEAS_Sep2024\piloting\profiles\sg639_CalCurCEAS_Sep2024_splitProfileTable.csv');
 
 % sg680
-save('P:\glider\sg639_CalCurCEAS_Sep2024\piloting\profiles\sg680_CalCurCEAS_Sep2024_splitProfileTable.mat', 'profileT');
-writetable(profileT, 'P:\glider\sg639_CalCurCEAS_Sep2024\piloting\profiles\sg680_CalCurCEAS_Sep2024_splitProfileTable.csv');
+save(['P:\glider\sg680_CalCurCEAS_Sep2024\piloting\profiles\', ...
+    'sg680_CalCurCEAS_Sep2024_splitProfileTable.mat'], 'profileT');
+writetable(profileT, ['P:\glider\sg680_CalCurCEAS_Sep2024\piloting\profiles\', ...
+    'sg680_CalCurCEAS_Sep2024_splitProfileTable.csv']);
 
 
 % add in trimming by PAM on/off
@@ -83,29 +85,29 @@ profileT.pamEndLongitude = profileT.endLongitude;
 % now adjust descent starts and ascent ends by PAM status
 for f = 1:nProf
     % pull out this profile indices and check for pam
-	inProf = locCalcT.time >= profileT.startTime(f) & ...
-		locCalcT.time <= profileT.endTime(f);
-	pamOn = inProf & locCalcT.pam == 1;
+    inProf = locCalcT.time >= profileT.startTime(f) & ...
+        locCalcT.time <= profileT.endTime(f);
+    pamOn = inProf & locCalcT.pam == 1;
 
-	if ~any(pamOn)
-		profileT.pamCoverage(f) = false;
-		continue
-	end
+    if ~any(pamOn)
+        profileT.pamCoverage(f) = false;
+        continue
+    end
 
-	switch profileT.phase(f)
-		case 'descent'
-			idxOn = find(pamOn, 1, 'first');
-			profileT.pamStartTime(f) = locCalcT.time(idxOn);
-			profileT.pamStartDateTime(f) = locCalcT.dateTime(idxOn);
-			profileT.pamStartLatitude(f) = locCalcT.latitude(idxOn);
-			profileT.pamStartLongitude(f) = locCalcT.longitude(idxOn);
-		case 'ascent'
-			idxOn = find(pamOn, 1, 'last');
-			profileT.pamEndTime(f) = locCalcT.time(idxOn);
-			profileT.pamEndDateTime(f) = locCalcT.dateTime(idxOn);
-			profileT.pamEndLatitude(f) = locCalcT.latitude(idxOn);
-			profileT.pamEndLongitude(f) = locCalcT.longitude(idxOn);
-	end
+    switch profileT.phase(f)
+        case 'descent'
+            idxOn = find(pamOn, 1, 'first');
+            profileT.pamStartTime(f) = locCalcT.time(idxOn);
+            profileT.pamStartDateTime(f) = locCalcT.dateTime(idxOn);
+            profileT.pamStartLatitude(f) = locCalcT.latitude(idxOn);
+            profileT.pamStartLongitude(f) = locCalcT.longitude(idxOn);
+        case 'ascent'
+            idxOn = find(pamOn, 1, 'last');
+            profileT.pamEndTime(f) = locCalcT.time(idxOn);
+            profileT.pamEndDateTime(f) = locCalcT.dateTime(idxOn);
+            profileT.pamEndLatitude(f) = locCalcT.latitude(idxOn);
+            profileT.pamEndLongitude(f) = locCalcT.longitude(idxOn);
+    end
 end
 
 % any dives with no PAM? set to NAs
@@ -121,13 +123,13 @@ profileT.pamEndLongitude(~profileT.pamCoverage) = NaN;
 % recalculate mid points
 % calculate pam mid times and mid locations for each phase
 profileT.pamMidTime = profileT.pamStartTime + ...
-	(profileT.pamEndTime - profileT.pamStartTime)/2;
+    (profileT.pamEndTime - profileT.pamStartTime)/2;
 profileT.pamMidDateTime = profileT.pamStartDateTime + ...
-	(profileT.pamEndDateTime - profileT.pamStartDateTime)/2;
+    (profileT.pamEndDateTime - profileT.pamStartDateTime)/2;
 profileT.pamMidLatitude = profileT.pamStartLatitude + ...
-	(profileT.pamEndLatitude - profileT.pamStartLatitude)/2;
+    (profileT.pamEndLatitude - profileT.pamStartLatitude)/2;
 profileT.pamMidLongitude = profileT.pamStartLongitude + ...
-	(profileT.pamEndLongitude - profileT.pamStartLongitude)/2;
+    (profileT.pamEndLongitude - profileT.pamStartLongitude)/2;
 
 % check stuff
 % what's the average time diff btwn
@@ -149,9 +151,9 @@ plot(locCalcT.time, -locCalcT.depth, 'k');
 hold on;
 % color points by pam status for a visual double-check
 scatter(locCalcT.time(locCalcT.pam == 1), -locCalcT.depth(locCalcT.pam == 1), ...
-	4, 'g', 'filled');
+    4, 'g', 'filled');
 scatter(locCalcT.time(locCalcT.pam == 0), -locCalcT.depth(locCalcT.pam == 0), ...
-	4, [0.6 0.6 0.6], 'filled');
+    4, [0.6 0.6 0.6], 'filled');
 % original max-depth-based bounds
 xline(profileT.startTime, ':m');
 xline(profileT.endTime, '--c');
