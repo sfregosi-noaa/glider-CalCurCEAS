@@ -38,8 +38,10 @@
 %	Created with MATLAB ver.: 9.13.0.2166757 (R2022b) Update 4
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
-path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
+% addpath(genpath('C:\Users\Selene.Fregosi\Documents\MATLAB\agate'))
+% path_repo = 'C:\Users\Selene.Fregosi\Documents\GitHub\glider-CalCurCEAS';
+addpath(genpath('C:\Users\pam_user\Documents\MATLAB\agate'))
+path_repo = 'C:\Users\pam_user\Documents\GitHub\glider-CalCurCEAS';
 
 missionStrs = {'sg639_CalCurCEAS_Sep2024';
     'sg679_CalCurCEAS_Aug2024';
@@ -49,8 +51,10 @@ mtpNum = 1; % mission to process
 mtp = missionStrs{mtpNum};
 
 % initialize agate
-CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
-    ['agate_config_' mtp '.cnf']));
+% CONFIG = agate(fullfile(path_repo, 'MATLAB', 'fregosi_config_files', ...
+%     ['agate_config_' mtp '.cnf']));
+CONFIG = agate(fullfile(path_repo, 'matlab', 'agate_configs_fregosi_pam-ww', ...
+    ['agate_config_' mtp '_pam-ww.cnf']));
 
 %% (1) Extract positional data
 % This step can take some time to process through all .nc files
@@ -227,3 +231,4 @@ end
 save(fullfile(CONFIG.path.mission, 'profiles', ...
     [CONFIG.gmStr, '_pamEffort.mat']), ...
     'pamByMin', 'pamMinPerHour', 'pamMinPerDay', 'pamHrPerDay');
+
