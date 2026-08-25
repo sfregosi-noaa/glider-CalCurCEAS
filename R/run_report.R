@@ -4,7 +4,7 @@
 
 # ###### MODIFY THESE #######
 # mission name (for report contents)
-mission <- 'sg680_CalCurCEAS_Sep2024'
+mission <- 'sg639_CalCurCEAS_Sep2024'
 # path to pamguard folder (for building filenames)
 path_pg <- 'Q:/CalCurCEAS_fall_2024/analysis/pamguard'
 # ###########################
@@ -46,7 +46,8 @@ rmarkdown::render(
     acousticStudyFiltered = acousticStudyFiltered,
     dbFile = dbFile,
     path_binaries = path_binaries,
-    path_out = path_out
+    path_out = path_out,
+    reCalc = TRUE
   ),
   output_file = file.path(path_out, paste0("event_summary_report_glider_", 
                                            mission, '_', Sys.Date(), ".html"))
