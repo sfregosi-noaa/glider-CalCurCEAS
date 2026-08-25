@@ -30,7 +30,7 @@ params:
   refSpecList: !r c() # use !r to call r then
   refSpecSp: !r c() #left it empty on purpose for the moment
   calFile: FALSE
-  reCalc: FALSE # don't re-run calc-heavy summary stats and plot generation - useful for just updating text
+  reCalc: TRUE # set to FALSE to skip calc-heavy summary stats and plot generation if just updating text
 ---
 
 ```{r setup, include = FALSE}
