@@ -20,7 +20,7 @@
 %	Authors:
 %		S. Fregosi <selene.fregosi@gmail.com> <https://github.com/sfregosi>
 %
-%	Updated:   2026 July 29
+%	Updated:   2026 September 3
 %
 %	Created with MATLAB ver.: 24.2.0.3212159 (R2024b) Update 9
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,15 +29,17 @@
 baseDir = getenv('USERPROFILE');   % C:\Users\Selene.Fregosi locally
 
 addpath(genpath(fullfile(baseDir, 'Documents', 'MATLAB', 'agate')));
-path_logs = 'Q:\CalCurCEAS_fall_2024\analysis\triton_logs';
+path_logs_in = 'Q:\CalCurCEAS_fall_2024\analysis\triton_logs';
+path_repo = 'C:\Users\pam_user\Documents\GitHub\glider-CalCurCEAS';
 
 %% set glider, log names
-% glider = 'sg639'; mission = 'CalCurCEAS_Sep2024'; 
+glider = 'sg639'; mission = 'CalCurCEAS_Sep2024'; 
 % glider = 'sg680'; mission = 'CalCurCEAS_Sep2024';
-glider = 'sg679'; mission = 'CalCurCEAS_Aug2024'; 
+% glider = 'sg679'; mission = 'CalCurCEAS_Aug2024'; 
 
-% logFile = fullfile(path_logs, [glider '_' mission '_Pm_mw.xlsx']);
-logFile = fullfile(path_logs, [glider '_' mission '_Pm_mw_sfReview.xlsx']);
+% logFile = fullfile(path_logs_in, [glider '_' mission '_Pm_mw.xlsx']);
+logFile = fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
+    [glider '_' mission '_Pm_mw_sfReview.xlsx']);
 eventGap = 15;
 
 %% collapse log events
@@ -46,14 +48,17 @@ eventGap = 15;
 
 % save as mat file
 [~, lfName, ~] = fileparts(logFile);
-save(fullfile(path_logs, [lfName '_collapsed.mat']), 'tl', 'tlm');
+save(fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
+    [lfName '_collapsed.mat']), 'tl', 'tlm');
 
 %% simplify format for PAMpal
 
 % create new simplified table for PAMpal
 tls = tritonLogToEventLog(tlm, glider);
-writetable(tls, fullfile(path_logs, [lfName '_collapsed_forPAMpal.csv']));
+writetable(tls, fullfile(path_repo, 'cetaceans', 'triton_log_products', ...
+    [lfName '_collapsed_forPAMpal.csv']));
 
 % add the eventID to tlm and re-save just in case
 tlm.eventID = tls.id;  % carry the eventID back onto tlm for cross-referencing
-save(fullfile(path_logs, [lfName '_collapsed.mat']), 'tl', 'tlm');
+save(fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
+    [lfName '_collapsed.mat']), 'tl', 'tlm');
