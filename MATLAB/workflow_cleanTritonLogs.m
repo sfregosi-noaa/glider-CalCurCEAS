@@ -33,13 +33,13 @@ path_logs_in = 'Q:\CalCurCEAS_fall_2024\analysis\triton_logs';
 path_repo = 'C:\Users\pam_user\Documents\GitHub\glider-CalCurCEAS';
 
 %% set glider, log names
-glider = 'sg639'; mission = 'CalCurCEAS_Sep2024'; 
-% glider = 'sg680'; mission = 'CalCurCEAS_Sep2024';
+% glider = 'sg639'; mission = 'CalCurCEAS_Sep2024'; 
+glider = 'sg680'; mission = 'CalCurCEAS_Sep2024';
 % glider = 'sg679'; mission = 'CalCurCEAS_Aug2024'; 
 
-% logFile = fullfile(path_logs_in, [glider '_' mission '_Pm_mw.xlsx']);
-logFile = fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
-    [glider '_' mission '_Pm_mw_sfReview.xlsx']);
+logFile = fullfile(path_logs_in, [glider '_' mission '_Pm_mw.xlsx']);
+% logFile = fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
+%     [glider '_' mission '_Pm_mw_sfReview.xlsx']);
 eventGap = 15;
 
 %% collapse log events
@@ -55,7 +55,7 @@ save(fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
 
 % create new simplified table for PAMpal
 tls = tritonLogToEventLog(tlm, glider);
-writetable(tls, fullfile(path_repo, 'cetaceans', 'triton_log_products', ...
+writetable(tls, fullfile(path_repo, 'cetaceans', 'triton_log_derived', ...
     [lfName '_collapsed_forPAMpal.csv']));
 
 % add the eventID to tlm and re-save just in case
